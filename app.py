@@ -93,28 +93,6 @@ def expiring():
 
     return render_template('results.html', **context)
 
-def get_min_temp(results):
-    """Returns the minimum temp for the given hourly weather objects."""
-    # Iterate through the list in search of the minimum hourly temperature
-    min_temp = results[0]['temp']
-    for i in range(len(results)):
-        temp = results[i]['temp']
-        # If new lowest temperature is found, set min_temp to it
-        if temp < min_temp:
-            min_temp = temp
-    return min_temp
-
-def get_max_temp(results):
-    """Returns the maximum temp for the given hourly weather objects."""
-    # Iterate through the list in search of the maximum hourly temperature
-    max_temp = results[0]['temp']
-    for i in range(len(results)):
-        temp = results[i]['temp']
-        # If new highest temperature is found, set max_temp to it
-        if temp > max_temp:
-            max_temp = temp
-    return max_temp
-
 
 if __name__ == '__main__':
     app.run(debug=True)
