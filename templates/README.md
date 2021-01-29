@@ -1,0 +1,1 @@
+This is where all HTML (all template files) files for this project will go. This is just a placeholder. Feel free to delete once actual files go here.
