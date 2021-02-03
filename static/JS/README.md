@@ -1,1 +1,0 @@
-This is where all JavaScript files for this project will go. This is just a placeholder. Feel free to delete once actual files go here.
