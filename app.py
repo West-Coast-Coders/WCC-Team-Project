@@ -60,35 +60,30 @@ def get_letter_for_units(units):
 @app.route('/expiring-soon')
 def expiring():
     """Displays results for titles that are expiring soon from Netflix."""
-    # Use 'request.args' to retrieve the city & units from the query parameters
-    city = request.args.get('city')
-    units = request.args.get('units')
+    # Use 'request.args' to retrieve the country code from the query parameters
+    country = request.args.get('countrycode')
 
     url = 'https://unogsng.p.rapidapi.com/expiring'
+
     params = {
-        # Unique API key
-        'appid': API_KEY,
-        # City name, possible included with state code and country code (comma-separated)
-        'q': city,
-        # Units of measurement for temperature
-        'units': units
+        "countrylist": country
     }
 
-    result_json = requests.get(url, params=params).json()
+    headers = {
+        'x-rapidapi-key': "391142fa44msh629bf4333450dbdp15459ajsn08b13a9231cf",
+        'x-rapidapi-host': "unogsng.p.rapidapi.com"
+    }
+    
+    result_json = requests.get(url, params=params, headers=headers).json()
 
     # Print the results of the API call
     pp.pprint(result_json)
 
     context = {
-        'date': datetime.now().strftime('%A, %B %d, %Y'),
-        'city': result_json['name'],
-        'description': result_json['weather'][0]['description'],
-        'temp': result_json['main']['temp'],
-        'humidity': result_json['main']['humidity'],
-        'wind_speed': result_json['wind']['speed'],
-        'sunrise': datetime.fromtimestamp(result_json['sys']['sunrise']).strftime('%I:%M:%S %p'),
-        'sunset': datetime.fromtimestamp(result_json['sys']['sunset']).strftime('%I:%M:%S %p'),
-        'units_letter': get_letter_for_units(units)
+        'expiredate': result_json['results']['expiredate'].strftime('%A, %B %d, %Y'),
+        'countrycode': result_json['results']['countrycode'],
+        'netflixid': result_json['results']['netflixid'],
+        'title': result_json['results']['title']
     }
 
     return render_template('results.html', **context)
