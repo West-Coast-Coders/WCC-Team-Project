@@ -12,7 +12,8 @@ $(document).ready(function () {
                 filter : $('#filter').val(),
                 order : $('#order').val(),
                 audio : $('#audio').val(),
-                subtitle : $('#subtitle').val()
+                subtitle : $('#subtitle').val(),
+                country_id : $('#country').val()
             },
             type : 'POST',
             url : '/process'
