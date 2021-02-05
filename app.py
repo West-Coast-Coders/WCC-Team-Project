@@ -64,7 +64,7 @@ def expiring():
     city = request.args.get('city')
     units = request.args.get('units')
 
-    url = 'http://api.openweathermap.org/data/2.5/weather'
+    url = 'https://unogsng.p.rapidapi.com/expiring'
     params = {
         # Unique API key
         'appid': API_KEY,
