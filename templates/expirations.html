@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section>
+    <h1>Leaving Soon from Netflix</h1>
+    
+    {% for i in range(result_json["results"]|length) %}
+    <ul>
+        <li>Title: {{ result_json["results"][i]["title"] }}</li>
+        <li>Expiration Date: {{ result_json["results"][i]["expiredate"] }}</li>
+    </ul>
+    {% endfor %}
+
+    <p>{{result_json}}</p>
+    
+</section>
+{% endblock %}

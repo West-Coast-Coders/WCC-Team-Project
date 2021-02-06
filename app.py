@@ -23,7 +23,7 @@ app = Flask(__name__)
 # Get the API key from the '.env' file
 load_dotenv()
 API_KEY = os.getenv('API_KEY')
-print(API_KEY)
+# print(API_KEY)
 
 
 # Settings for image endpoint
@@ -70,7 +70,7 @@ def expiring():
     }
 
     headers = {
-        'x-rapidapi-key': "391142fa44msh629bf4333450dbdp15459ajsn08b13a9231cf",
+        'x-rapidapi-key': API_KEY,
         'x-rapidapi-host': "unogsng.p.rapidapi.com"
     }
     
@@ -79,14 +79,15 @@ def expiring():
     # Print the results of the API call
     pp.pprint(result_json)
 
-    context = {
-        'expiredate': result_json['results']['expiredate'].strftime('%A, %B %d, %Y'),
-        'countrycode': result_json['results']['countrycode'],
-        'netflixid': result_json['results']['netflixid'],
-        'title': result_json['results']['title']
-    }
+    # context = {
+    #     'expiredate': result_json['results'][i]['expiredate'].strftime('%A, %B %d, %Y'),
+    #     'countrycode': result_json['results']['countrycode'],
+    #     'netflixid': result_json['results']['netflixid'],
+    #     'title': result_json['results']['title']
+    # }
 
-    return render_template('results.html', **context)
+    # return render_template('expirations.html', **result_json)
+    return render_template('expirations.html', result_json = result_json)
 
 
 if __name__ == '__main__':
