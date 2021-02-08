@@ -2,21 +2,25 @@
 
 $(document).ready(function () {
     
-    $('#filter-form').on('submit', function(event) {
+    $('.filter-form').on('submit', function(event) {
 
         $.ajax({
             data : {
-                imbd_rating : $('#imbd').val(),
-                year : $('#year').val(),
                 type : $('#type').val(),
-                filter : $('#filter').val(),
-                order : $('#order').val(),
-                audio : $('#audio').val(),
+                start_year : $('#start-year').val(),
+                order_by : $('#order').val(),
+                audiosubtitle_andor : $('andor').val(),
+                start_rating : $('#start-rating').val(),
+                end_rating : $('#end-rating').val(),
                 subtitle : $('#subtitle').val(),
-                country_id : $('#country').val()
+                country_list : $('#country-list').val(),
+                audio : $('#audio').val(),
+                country_andorunique : $('#andorunique').val(),
+                end_year : $('#end-year').val(),
+                current_list : $('#current-list').val(),
             },
             type : 'POST',
-            url : '/process'
+            url : '/process-filters'
         })
 
         event.preventDefault()
