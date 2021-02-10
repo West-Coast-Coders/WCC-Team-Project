@@ -3,6 +3,22 @@ html {
     font-family: 'Courier New', Courier, monospace;
 }
 
+.searchbar input[type=text] {
+    font-size: 25px;
+    width: 1000px;
+    height: 50px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+.searchbar{
+    display: flex;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+}
+
 #carousel {
     padding: 20px;
     margin: 20px;
