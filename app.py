@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, request, send_file
 from io import BytesIO
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from filters import filter_list
 
 
 ################################################################################
@@ -22,20 +23,23 @@ app = Flask(__name__)
 
 # Get the API key from the '.env' file
 load_dotenv()
-API_KEY = os.getenv('API_KEY')
+API_info = {
+    'x-rapidapi-key': os.getenv('API_KEY'),
+    'x-rapidapi-host': "unogsng.p.rapidapi.com"
+    }
 # print(API_KEY)
 
 
 # Settings for image endpoint
 # Written with help from http://dataviztalk.blogspot.com/2016/01/serving-matplotlib-plot-that-follows.html
-matplotlib.use('agg')
-plt.style.use('ggplot')
+# matplotlib.use('agg')
+# plt.style.use('ggplot')
 
-my_loader = jinja2.ChoiceLoader([
-    app.jinja_loader,
-    jinja2.FileSystemLoader('data'),
-])
-app.jinja_loader = my_loader
+# my_loader = jinja2.ChoiceLoader([
+#     app.jinja_loader,
+#     jinja2.FileSystemLoader('data'),
+# ])
+# app.jinja_loader = my_loader
 
 pp = PrettyPrinter(indent=4)
 
@@ -43,6 +47,7 @@ pp = PrettyPrinter(indent=4)
 ################################################################################
 ## ROUTES
 ################################################################################
+
 
 @app.route('/')
 def home():
@@ -74,7 +79,7 @@ def expiring():
         'x-rapidapi-host': "unogsng.p.rapidapi.com"
     }
     
-    result_json = requests.get(url, params=params, headers=headers).json()
+    result_json = requests.get(url, params=params, headers=API_info).json()
 
     # Save results from initial API call to `output_list`
     output_list = result_json['results']
@@ -100,6 +105,39 @@ def expiring():
 
     # return render_template('expirations.html', **result_json)
     return render_template('expirations.html', result_json = result_json)
+
+
+
+# FILTERS TESTING:
+# @app.route('/process-filters', methods=['POST'])
+# def process():
+#     title_type = request.form['type']
+#     start_year = request.form['start_year']
+#     order_by = request.form['order_by']
+#     audiosubtitle_andor = request.form['audiosubtitle_andor']
+#     start_rating = request.form['start_rating']
+#     end_rating = request.form['end_rating']
+#     subtitle = request.form['subtitle']
+#     country_list = request.form['country_list']
+#     audio = request.form['audio']
+#     country_andorunique = request.form['country_andorunique']
+#     end_year = request.form['end_year']
+#     current_list = request.form['current_list']
+
+#     filters = {
+#         "type":title_type
+#         "start_year":start_year,
+#         "orderby":order_by,
+#         "audiosubtitle_andor":audiosubtitle_andor,
+#         "start_rating":start_rating,
+#         "end_rating":end_rating,
+#         "subtitle":"english",
+#         "countrylist":country_list,
+#         "audio":audio,
+#         "country_andorunique":country_andorunique,
+#         "end_year":end_year
+#     }
+
 
 
 if __name__ == '__main__':
