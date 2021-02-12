@@ -3,7 +3,7 @@ API_info = {
     'x-rapidapi-host': "unogsng.p.rapidapi.com"
     }
 
-def filter_list(filters: dict, titles_json):
+def filter_list(filters, titles_json):
     url = "https://unogsng.p.rapidapi.com/search"
     response = requests.request("GET", url, headers=API_info, params=filters)
     response = response.text

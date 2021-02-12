@@ -16,6 +16,8 @@ API_info = {
 def main():
     pass
 
+
+# FILTERS TESTING:
 # @app.route('/process-filters', methods=['POST'])
 # def process():
 #     title_type = request.form['type']
