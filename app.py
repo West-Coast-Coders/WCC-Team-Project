@@ -5,7 +5,7 @@ import os
 import pytz
 import requests
 import sqlite3
-
+import json
 from pprint import PrettyPrinter
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
@@ -46,52 +46,35 @@ pp = PrettyPrinter(indent=4)
 
 @app.route('/')
 def home():
-    """Displays the homepage with forms for current or historical data."""
-    context = {
-        'min_date': (datetime.now() - timedelta(days=5)),
-        'max_date': datetime.now()
-    }
-    return render_template('home.html', **context)
+    """Search function to browse avalible movies on nexflix."""
 
-def get_letter_for_units(units):
-    """Returns a shorthand letter for the given units."""
-    return 'F' if units == 'imperial' else 'C' if units == 'metric' else 'K'
+    return render_template('home.html')
 
-@app.route('/expiring-soon')
-def expiring():
-    """Displays results for titles that are expiring soon from Netflix."""
-    # Use 'request.args' to retrieve the city & units from the query parameters
-    city = request.args.get('city')
-    units = request.args.get('units')
+# def get_letter_for_units(units):
+#     """Returns a shorthand letter for the given units."""
+#     return 'F' if units == 'imperial' else 'C' if units == 'metric' else 'K'
 
-    url = 'http://api.openweathermap.org/data/2.5/weather'
-    params = {
-        # Unique API key
-        'appid': API_KEY,
-        # City name, possible included with state code and country code (comma-separated)
-        'q': city,
-        # Units of measurement for temperature
-        'units': units
+@app.route('/search_results')
+def results():
+    """Search Result"""
+
+
+    url = "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi"
+
+    querystring = {"q":"get:new7-!1900,2018-!0,5-!0,10-!0-!Any-!Any-!Any-!gt100-!{downloadable}","t":"ns","cl":"all","st":"adv","ob":"Relevance","p":"1","sa":"and"}
+
+    headers = {
+    'x-rapidapi-key': "5a290bcfe7mshae1b67802e67c81p1499cfjsneb78dae05462",
+    'x-rapidapi-host': "unogs-unogs-v1.p.rapidapi.com"
     }
 
-    result_json = requests.get(url, params=params).json()
+    response = requests.request("GET", url, headers=headers, params=querystring)
+    print(response.text)
+    # context = {
 
-    # Print the results of the API call
-    pp.pprint(result_json)
-
-    context = {
-        'date': datetime.now().strftime('%A, %B %d, %Y'),
-        'city': result_json['name'],
-        'description': result_json['weather'][0]['description'],
-        'temp': result_json['main']['temp'],
-        'humidity': result_json['main']['humidity'],
-        'wind_speed': result_json['wind']['speed'],
-        'sunrise': datetime.fromtimestamp(result_json['sys']['sunrise']).strftime('%I:%M:%S %p'),
-        'sunset': datetime.fromtimestamp(result_json['sys']['sunset']).strftime('%I:%M:%S %p'),
-        'units_letter': get_letter_for_units(units)
-    }
-
-    return render_template('results.html', **context)
+    # }
+    # , **context
+    return render_template('results.html')
 
 
 if __name__ == '__main__':
