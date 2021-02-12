@@ -76,8 +76,20 @@ def expiring():
     
     result_json = requests.get(url, params=params, headers=headers).json()
 
+    # Save results from initial API call to `output_list`
+    output_list = result_json['results']
+
+    # Create empty dictionary to hold results from GET request for title details
+    title_details = {}
+
+    for i in range(len(output_list)):
+        # Select the netflixid for each title from the returned JSON object
+        netflixid = output_list[i]['netflixid']
+        # Send a GET request for title details and add the resulting dictionary to the title_details dictionary
+        title_details += requests.get(url=https://unogsng.p.rapidapi.com/title, params={'netflixid': netflixid}, headers=headers).json()["results"][0]
+
     # Print the results of the API call
-    pp.pprint(result_json)
+    # pp.pprint(result_json)
 
     # context = {
     #     'expiredate': result_json['results'][i]['expiredate'].strftime('%A, %B %d, %Y'),
