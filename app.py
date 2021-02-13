@@ -5,11 +5,12 @@ import os
 import pytz
 import requests
 import sqlite3
+import simplejson
 
 from pprint import PrettyPrinter
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, redirect, url_for
 from io import BytesIO
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from filters import filter_list
@@ -51,19 +52,11 @@ pp = PrettyPrinter(indent=4)
 
 @app.route('/')
 def home():
-    """Displays the homepage with forms for current or historical data."""
-    context = {
-        'min_date': (datetime.now() - timedelta(days=5)),
-        'max_date': datetime.now()
-    }
-    return render_template('home.html', **context)
+    """Displays the homepage"""
+    return render_template("index.html")
 
-def get_letter_for_units(units):
-    """Returns a shorthand letter for the given units."""
-    return 'F' if units == 'imperial' else 'C' if units == 'metric' else 'K'
-
-@app.route('/expiring-soon')
-def expiring():
+@app.route('/expiring-soon', methods=['GET', 'POST'])
+def expiring(result_json=None):
     """Displays results for titles that are expiring soon from Netflix."""
     # Use 'request.args' to retrieve the country code from the query parameters
     country = request.args.get('countrycode')
@@ -73,13 +66,9 @@ def expiring():
     params = {
         "countrylist": country
     }
-
-    headers = {
-        'x-rapidapi-key': API_KEY,
-        'x-rapidapi-host': "unogsng.p.rapidapi.com"
-    }
     
-    result_json = requests.get(url, params=params, headers=API_info).json()
+    if not result_json:
+        result_json = requests.get(url, params=params, headers=API_info).json()
 
     # Save results from initial API call to `output_list`
     output_list = result_json['results']
@@ -87,11 +76,11 @@ def expiring():
     # Create empty dictionary to hold results from GET request for title details
     title_details = {}
 
-    for i in range(len(output_list)):
-        # Select the netflixid for each title from the returned JSON object
-        netflixid = output_list[i]['netflixid']
-        # Send a GET request for title details and add the resulting dictionary to the title_details dictionary
-        title_details += requests.get(url=https://unogsng.p.rapidapi.com/title, params={'netflixid': netflixid}, headers=headers).json()["results"][0]
+    # for i in range(len(output_list)):
+    #     # Select the netflixid for each title from the returned JSON object
+    #     netflixid = output_list[i]['netflixid']
+    #     # Send a GET request for title details and add the resulting dictionary to the title_details dictionary
+    #     title_details += requests.get(url="https://unogsng.p.rapidapi.com/title", params={'netflixid': netflixid}, headers=API_info).json()["results"][0]
 
     # Print the results of the API call
     # pp.pprint(result_json)
@@ -103,41 +92,18 @@ def expiring():
     #     'title': result_json['results']['title']
     # }
 
+    if request.method == 'POST':
+        filters_json = request.json
+        print(filters_json)
+        # filters = simplejson.loads(filters_json)
+        filtered_list = filter_list(filters_json, result_json)
+
+        print(filtered_list)
+
+        return redirect(url_for('expiring', result_json = filtered_list))
+
     # return render_template('expirations.html', **result_json)
-    return render_template('expirations.html', result_json = result_json)
-
-
-
-# FILTERS TESTING:
-# @app.route('/process-filters', methods=['POST'])
-# def process():
-#     title_type = request.form['type']
-#     start_year = request.form['start_year']
-#     order_by = request.form['order_by']
-#     audiosubtitle_andor = request.form['audiosubtitle_andor']
-#     start_rating = request.form['start_rating']
-#     end_rating = request.form['end_rating']
-#     subtitle = request.form['subtitle']
-#     country_list = request.form['country_list']
-#     audio = request.form['audio']
-#     country_andorunique = request.form['country_andorunique']
-#     end_year = request.form['end_year']
-#     current_list = request.form['current_list']
-
-#     filters = {
-#         "type":title_type
-#         "start_year":start_year,
-#         "orderby":order_by,
-#         "audiosubtitle_andor":audiosubtitle_andor,
-#         "start_rating":start_rating,
-#         "end_rating":end_rating,
-#         "subtitle":"english",
-#         "countrylist":country_list,
-#         "audio":audio,
-#         "country_andorunique":country_andorunique,
-#         "end_year":end_year
-#     }
-
+    return render_template('expirations.html', result_json = result_json, title_details = title_details)
 
 
 if __name__ == '__main__':
