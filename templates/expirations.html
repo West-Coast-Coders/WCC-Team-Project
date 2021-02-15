@@ -8,6 +8,9 @@
     <ul>
         <li>Title: {{ result_json["results"][i]["title"] }}</li>
         <li>Expiration Date: {{ result_json["results"][i]["expiredate"] }}</li>
+
+        <p>Title Details:</p>
+        <p>{{ title_details[i] }}</p>
     </ul>
     {% endfor %}
 
