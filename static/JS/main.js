@@ -11,7 +11,7 @@ $(document).ready(function () {
             start_rating: $('#start-rating').val(),
             end_rating: $('#end-rating').val(),
             min_runtime: $('#min-runtime').val(),
-            max_runtime: $('#max-runtime').val(),
+            max_runtime: $('#max-runtime').val()
         }
 
         $.ajax({
@@ -19,7 +19,14 @@ $(document).ready(function () {
             type : 'POST',
             url : `/${$('#current-list').val()}`,
             dataType : 'json',
-            contentType: 'application/json;charset=UTF-8'
+            contentType: 'application/json;charset=UTF-8',
+            success: function (data) {
+                $.ajax({
+                    type: 'GET',
+                    url: `/${$('#current-list').val()}`,
+                    data: data,
+                });
+            }
         })
 
         event.preventDefault()
