@@ -1,6 +1,6 @@
 import jinja2
-import matplotlib
-import matplotlib.pyplot as plt
+# import matplotlib
+# import matplotlib.pyplot as plt
 import os
 import pytz
 import requests
@@ -11,8 +11,7 @@ from datetime import datetime, timedelta
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, send_file
 from io import BytesIO
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
-from filters import filter_list
+# from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
 
 ################################################################################
@@ -21,12 +20,13 @@ from filters import filter_list
 
 app = Flask(__name__)
 
+# API Info
 # Get the API key from the '.env' file
 load_dotenv()
-API_info = {
+headers = {
     'x-rapidapi-key': os.getenv('API_KEY'),
     'x-rapidapi-host': "unogsng.p.rapidapi.com"
-    }
+}
 # print(API_KEY)
 
 
@@ -68,43 +68,31 @@ def expiring():
     # Use 'request.args' to retrieve the country code from the query parameters
     country = request.args.get('countrycode')
 
-    url = 'https://unogsng.p.rapidapi.com/expiring'
-
     params = {
-        "countrylist": country
-    }
-
-    headers = {
-        'x-rapidapi-key': API_KEY,
-        'x-rapidapi-host': "unogsng.p.rapidapi.com"
+        "countrylist": country,
+        # For testing purposes, limit number of returned titles to 5
+        "limit": 5
     }
     
-    result_json = requests.get(url, params=params, headers=API_info).json()
+    result_json = requests.get(url='https://unogsng.p.rapidapi.com/expiring', params=params, headers=headers).json()
 
     # Save results from initial API call to `output_list`
     output_list = result_json['results']
 
-    # Create empty dictionary to hold results from GET request for title details
-    title_details = {}
+    # Create empty list to hold results from GET request for title details
+    title_details = []
 
     for i in range(len(output_list)):
         # Select the netflixid for each title from the returned JSON object
         netflixid = output_list[i]['netflixid']
         # Send a GET request for title details and add the resulting dictionary to the title_details dictionary
-        title_details += requests.get(url=https://unogsng.p.rapidapi.com/title, params={'netflixid': netflixid}, headers=headers).json()["results"][0]
+        title_details.append(requests.get(url='https://unogsng.p.rapidapi.com/title', params={'netflixid': netflixid}, headers=headers).json()["results"][0])
 
     # Print the results of the API call
     # pp.pprint(result_json)
 
-    # context = {
-    #     'expiredate': result_json['results'][i]['expiredate'].strftime('%A, %B %d, %Y'),
-    #     'countrycode': result_json['results']['countrycode'],
-    #     'netflixid': result_json['results']['netflixid'],
-    #     'title': result_json['results']['title']
-    # }
+    return render_template('expirations.html', result_json = result_json, title_details = title_details)
 
-    # return render_template('expirations.html', **result_json)
-    return render_template('expirations.html', result_json = result_json)
 
 
 
