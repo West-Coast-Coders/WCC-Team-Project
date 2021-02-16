@@ -24,7 +24,8 @@ $(document).ready(function () {
                 $.ajax({
                     type: 'GET',
                     url: `/${$('#current-list').val()}`,
-                    data: data,
+                    data: JSON.stringify(data),
+                    contentType: 'application/json;charset=UTF-8'
                 });
             }
         })

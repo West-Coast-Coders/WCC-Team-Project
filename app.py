@@ -62,7 +62,7 @@ def expiring():
     # Use 'request.args' to retrieve the country code from the query parameters
     country = request.args.get('countrycode')
     filtered_titles = request.json
-    print(filtered_titles)
+    print(f"titles are {filtered_titles}")
 
     params = {
         "countrylist": "78",
@@ -72,8 +72,12 @@ def expiring():
     
     if not filtered_titles:
         result_json = requests.get(url='https://unogsng.p.rapidapi.com/expiring', params=params, headers=headers).json()
+        output_list = result_json['results']
+        print("test1")
     else:
+        print("test2")
         result_json = filtered_titles
+        output_list = result_json
 
     # Save results from initial API call to `output_list`
     output_list = result_json['results']
