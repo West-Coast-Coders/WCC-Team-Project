@@ -6,6 +6,7 @@ import pytz
 import requests
 import sqlite3
 import simplejson
+import json
 
 from pprint import PrettyPrinter
 from datetime import datetime, timedelta
@@ -57,12 +58,10 @@ def home():
     return render_template("index.html")
 
 @app.route('/expiring-soon', methods=['GET', 'POST'])
-def expiring():
+def expiring(result_json=None):
     """Displays results for titles that are expiring soon from Netflix."""
     # Use 'request.args' to retrieve the country code from the query parameters
     country = request.args.get('countrycode')
-    filtered_titles = request.json
-    print(f"titles are {filtered_titles}")
 
     params = {
         "countrylist": "78",
@@ -70,14 +69,10 @@ def expiring():
         "limit": 5
     }
     
-    if not filtered_titles:
+    if not result_json:
         result_json = requests.get(url='https://unogsng.p.rapidapi.com/expiring', params=params, headers=headers).json()
         output_list = result_json['results']
         print("test1")
-    else:
-        print("test2")
-        result_json = filtered_titles
-        output_list = result_json
 
     # Save results from initial API call to `output_list`
     output_list = result_json['results']
@@ -95,14 +90,22 @@ def expiring():
     # pp.pprint(result_json)
 
     if request.method == 'POST':
-        filters_json = request.json
-        print(filters_json)
+        filters = {
+            'type': request.form['type'],
+            'start_year': request.form['start-year'],
+            'end_year': request.form['end-year'],
+            'start_rating': request.form['start-rating'],
+            'end_rating': request.form['end-rating'],
+            'min_runtime': request.form['min-runtime'],
+            'max_runtime': request.form['max-runtime']
+        }
+        print(filters)
         # filters = simplejson.loads(filters_json)
-        filtered_titles = filter_list(filters_json, title_details)
+        filtered_titles = filter_list(filters, title_details)
 
         print(filtered_titles)
 
-        return filtered_titles
+        return render_template('expirations.html', result_json = result_json, title_details = filtered_titles)
 
     # return render_template('expirations.html', **result_json)
     return render_template('expirations.html', result_json = result_json, title_details = title_details)

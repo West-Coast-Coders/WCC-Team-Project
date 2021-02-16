@@ -1,10 +1,6 @@
 import requests
 import os
 
-API_info = {
-    'x-rapidapi-key': os.getenv('API_KEY'),
-    'x-rapidapi-host': "unogsng.p.rapidapi.com"
-    }
 
 def filter_list(filters, titles):
     filtered_titles = titles
@@ -54,3 +50,4 @@ def filter_list(filters, titles):
 
     print("filtering completed")
     return filtered_titles
+
