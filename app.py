@@ -5,7 +5,6 @@ import os
 import pytz
 import requests
 import sqlite3
-import simplejson
 import json
 
 from pprint import PrettyPrinter
