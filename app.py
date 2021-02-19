@@ -58,7 +58,7 @@ def home():
     return render_template("index.html")
 
 @app.route('/expiring-soon', methods=['GET', 'POST'])
-def expiring(result_json=None):
+def expiring(output_list=None):
     """Displays results for titles that are expiring soon from Netflix."""
     # Use 'request.args' to retrieve the country code from the query parameters
     country = request.args.get('countrycode')
@@ -69,13 +69,12 @@ def expiring(result_json=None):
         "limit": 5
     }
     
-    if not result_json:
+    if not output_list:
         result_json = requests.get(url='https://unogsng.p.rapidapi.com/expiring', params=params, headers=headers).json()
+        
+        # Save results from initial API call to `output_list`
         output_list = result_json['results']
-        print("test1")
 
-    # Save results from initial API call to `output_list`
-    output_list = result_json['results']
 
     # Create empty list to hold results from GET request for title details
     title_details = []
@@ -99,16 +98,12 @@ def expiring(result_json=None):
             'min_runtime': request.form['min-runtime'],
             'max_runtime': request.form['max-runtime']
         }
-        print(filters)
-        # filters = simplejson.loads(filters_json)
-        filtered_titles = filter_list(filters, title_details)
 
-        print(filtered_titles)
+        filtered_results = filter_list(filters, title_details, output_list)
 
-        return render_template('expirations.html', result_json = result_json, title_details = filtered_titles)
+        return render_template('expirations.html', output_list = filtered_results[1], title_details = filtered_results[0])
 
-    # return render_template('expirations.html', **result_json)
-    return render_template('expirations.html', result_json = result_json, title_details = title_details)
+    return render_template('expirations.html', output_list = output_list, title_details = title_details)
 
 
 if __name__ == '__main__':

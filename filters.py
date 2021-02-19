@@ -2,8 +2,27 @@ import requests
 import os
 
 
-def filter_list(filters, titles):
-    filtered_titles = titles
+def filter_list(filters, titles_info, list_results):
+
+    def show_only_filtered(filtered_titles_info, list_results):
+        titles_info_titles = []
+        results_titles = list_results
+        j = 0
+
+        for title_info in filtered_titles_info:
+            titles_info_titles.append(title_info['title'])
+
+        for i in range(len(list_results)):
+            result = list_results[i-j]
+
+            if result['title'] not in titles_info_titles:
+                results_titles.remove(result)
+                j += 1
+
+        return results_titles
+
+
+    filtered_titles = titles_info
 
     if filters['type']:
         temp = []
@@ -19,8 +38,8 @@ def filter_list(filters, titles):
         temp = []
 
         for title in filtered_titles:
-            if int(title['year']) > int(filters['start_year']) and \
-            int(title['year']) < int(filters['end_year']):
+            if int(title['year']) >= int(filters['start_year']) and \
+            int(title['year']) <= int(filters['end_year']):
                 temp.append(title)
         
         filtered_titles = temp
@@ -30,8 +49,8 @@ def filter_list(filters, titles):
         temp = []
 
         for title in filtered_titles:
-            if float(title['imbdrating']) > float(filters['start_rating']) and \
-            float(title['imbdrating']) < float(filters['end_rating']):
+            if float(title['imbdrating']) >= float(filters['start_rating']) and \
+            float(title['imbdrating']) <= float(filters['end_rating']):
                 temp.append(title)
         
         filtered_titles = temp
@@ -41,13 +60,12 @@ def filter_list(filters, titles):
         temp = []
 
         for title in filtered_titles:
-            if int(title['netflixruntime']) > int(filters['min_runtime']) and \
-            int(title['netflixruntime']) < int(filters['max_runtime']):
+            if int(title['netflixruntime']) >= int(filters['min_runtime']) and \
+            int(title['netflixruntime']) <= int(filters['max_runtime']):
                 temp.append(title)
         
         filtered_titles = temp
 
-
-    print("filtering completed")
-    return filtered_titles
-
+    filtered_list_results = show_only_filtered(filtered_titles, list_results)
+    final_results = [filtered_titles, filtered_list_results]
+    return final_results

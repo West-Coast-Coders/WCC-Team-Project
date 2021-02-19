@@ -4,10 +4,10 @@
 <section>
     <h1>Leaving Soon from Netflix</h1>
     
-    {% for i in range(result_json["results"]|length) %}
+    {% for i in range(output_list|length) %}
     <ul>
-        <li>Title: {{ result_json["results"][i]["title"] }}</li>
-        <li>Expiration Date: {{ result_json["results"][i]["expiredate"] }}</li>
+        <li>Title: {{ output_list[i]["title"] }}</li>
+        <li>Expiration Date: {{ output_list[i]["expiredate"] }}</li>
 
         <p>Title Details:</p>
         <p>{{ title_details[i] }}</p>
@@ -22,7 +22,7 @@
         <input type="text" name="max-runtime" placeholder="Max Runtime">
         <input type="text" name="start-rating" placeholder="Start Rating">
         <input type="text" name="end-rating" placeholder="End Rating">
-        <input type="hidden" ="current-list" value="expiring-soon">
+        <input type="hidden" name="current-list" value="expiring-soon">
         <input type="submit">
     </form>
     
