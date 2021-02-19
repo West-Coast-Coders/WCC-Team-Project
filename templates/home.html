@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-</nav>
-<h1>Search For Movies, and we'll show you where they are avalible!</h1>
-
+<form action="/search_results" method="GET">
+  <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <form class="d-flex">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="title">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+  </nav>
+  <h1>
+    Search For Movie, and we'll show you where they are avalible!
+  </h1>
+</form>
 {% endblock content %}

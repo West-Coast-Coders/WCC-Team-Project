@@ -57,25 +57,39 @@ def home():
 @app.route('/search_results')
 def results():
     """Search Result"""
+    title = request.args.get('title')
 
 
-    url = "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi"
-
-    querystring = {"q":"get:new7-!1900,2018-!0,5-!0,10-!0-!Any-!Any-!Any-!gt100-!{downloadable}","t":"ns","cl":"all","st":"adv","ob":"Relevance","p":"1","sa":"and"}
+    url = "https://unogsng.p.rapidapi.com/search"
+    params = {
+        "start_year":"1972","orderby":"rating","subtitle":"english","query":title,"audio":"english","offset":"0"
+    }
 
     headers = {
     'x-rapidapi-key': "5a290bcfe7mshae1b67802e67c81p1499cfjsneb78dae05462",
-    'x-rapidapi-host': "unogs-unogs-v1.p.rapidapi.com"
+    'x-rapidapi-host': "unogsng.p.rapidapi.com"
     }
 
-    response = requests.request("GET", url, headers=headers, params=querystring)
-    print(response.text)
-    # context = {
+    result_json = requests.get(url, headers=headers, params=params).json()
 
-    # }
-    # , **context
-    return render_template('results.html')
+    pp.pprint(result_json)
+
+    context = {
+        'title': result_json["results"][0]["title"],
+        'synopsis': result_json["results"][0]["synopsis"],
+        'year': result_json["results"][0]["year"]
+    }
+    return render_template('results.html', **context)
 
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+    # {% for item in range(response["ITEMS"]|length) %}
+    # <ul>
+    #     <li>Name: {{ response["ITEMS"][item]['title'] }}</li>
+    #     <li>Image: {{ response["ITEMS"][item]['image'] }}</li>
+    #     <li>synopsis: {{response["ITEMS"][item]['synopsis'] }}</li>
+    # </ul>
+    # {% endfor %}
