@@ -1,93 +1,69 @@
-html {
-    background-color: #f6edcf;
-    font-family: 'Courier New', Courier, monospace;
+.navbar {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background:#222;
+    color: #f2f2f2;
+    height: 50px
 }
 
-.searchbar input[type=text] {
-    font-size: 25px;
-    width: 1000px;
-    height: 50px;
+
+
+
+
+input[type=search]:focus {
+	width: 600px;
+	background-color: #ccc;
+	border-color: #333;
+	border: solid 1px #fff;
+}
+
+
+#leaving-carousel {
+    display: flex;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
+}
+
+
+.col-md-4{
+    display: inline-block;
+    margin-left:-10px;
   }
-.searchbar{
-    display: flex;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 20px;
-}
+  .col-md-4 img{
+    width:100%;
+    height:auto;
+  }
+    
+  body .carousel-control-prev-icon,
+  body .carousel-indicators li,
+  body .carousel-control-next-icon{
+    background-color:#000;
+  }
+  
+  span.carousel-control-prev-icon {
+   position: relative;
+   bottom: 40px;
+   right: 40px;
+  }
+  
+  span.carousel-control-next-icon {
+   position: relative;
+   bottom: 40px;
+  }
 
-#carousel {
-    padding: 20px;
-    margin: 20px;
+  #leaving-movies {
+      flex-direction: row;
+      border-style: solid;
+      border-width: 1px;
+      margin: 5px;
+  }
+
+  #leaving-shows {
+    flex-direction: row;
     border-style: solid;
-    border-width: 5px;
-    border-color: black;
-    background-color: #daf1f9;
-
-    /* remove this padding */
-    padding-bottom: 500px;
-}
-#row {
-    display: flex;
-}
-#mostwatchedmovies {
-    flex: 50%;
-    padding: 20px;
-    margin: 20px;
-    border-style: solid;
-    border-width: 5px;
-    border-color: black;
-    background-color: #daf1f9;
-
-     /* remove this padding */
-     padding-bottom: 300px;
-}
-
-#topmovies {
-    flex: 50%;
-    padding: 10px;
-    margin: 20px;
-    border-style: solid;
-    border-width: 5px;
-    border-color: black;
-    background-color: #daf1f9;
-}
-
-#lowestratedmovies {
-    flex: 50%;
-    padding: 10px;
-    margin: 20px;
-    border-style: solid;
-    border-width: 5px;
-    border-color: black;
-    background-color: #daf1f9;
-}
-
-nav {
-    background-color: #ccf6c8;
-    text-align: center;
-    border-style: solid;
-    width: 300px;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    color: black;
-}
-
-img {
-    width: 100%;
-    height: auto;
-}
-
-h1, h2 {
-    text-align: center;
-    font-weight: bold;
-    font-size: x-large;
-    line-height: 20px;
+    border-width: 1px;
+    margin: 5px;
 }
