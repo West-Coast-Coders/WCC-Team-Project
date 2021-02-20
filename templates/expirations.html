@@ -3,6 +3,22 @@
 
 <section>
     <h1>Leaving Soon from Netflix</h1>
+
+    <form class=filter-form action='/expiring-soon' method="POST">
+        <input type="text" name="type" placeholder="Type">
+        <div class="min-max-slider" data-legendnum="2">
+            <label for="min">Start Year</label>
+            <input id="min" class="min" name="start-year" type="range" step="1" min="1900" max="2021" />
+            <label for="max">End Year</label>
+            <input id="max" class="max" name="end-year" type="range" step="1" min="1900" max="2021" />
+        </div>
+        <input type="text" name="min-runtime" placeholder="Min Runtime">
+        <input type="text" name="max-runtime" placeholder="Max Runtime">
+        <input type="text" name="start-rating" placeholder="Start Rating">
+        <input type="text" name="end-rating" placeholder="End Rating">
+        <input type="hidden" name="current-list" value="expiring-soon">
+        <input type="submit">
+    </form>
     
     {% for i in range(output_list|length) %}
     <ul> 
@@ -14,18 +30,6 @@
         <p>{{ title_details[i] }}</p>
     </ul>
     {% endfor %}
-
-    <form class=filter-form action='/expiring-soon' method="POST">
-        <input type="text" name="type" placeholder="Type">
-        <input type="text" name="start-year" placeholder="Start Year">
-        <input type="text" name="end-year" placeholder="End Year">
-        <input type="text" name="min-runtime" placeholder="Min Runtime">
-        <input type="text" name="max-runtime" placeholder="Max Runtime">
-        <input type="text" name="start-rating" placeholder="Start Rating">
-        <input type="text" name="end-rating" placeholder="End Rating">
-        <input type="hidden" name="current-list" value="expiring-soon">
-        <input type="submit">
-    </form>
     
 </section>
 {% endblock %}
