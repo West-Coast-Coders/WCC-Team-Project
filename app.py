@@ -73,23 +73,29 @@ def results():
     result_json = requests.get(url, headers=headers, params=params).json()
 
     pp.pprint(result_json)
+    
 
-    context = {
-        'title': result_json["results"][0]["title"],
-        'synopsis': result_json["results"][0]["synopsis"],
-        'year': result_json["results"][0]["year"]
-    }
-    return render_template('results.html', **context)
+    # for i in range(len(result_json)):
+    #     title = result_json["results"][i]["title"]
+    #     synopsis = result_json["results"][i]["synopsis"]
+    #     year = result_json["results"][i]["year"]
+
+    # context = {
+    #     'title': title,
+    #     'synopsis': synopsis,
+    #     'year': year
+    # }
+    return render_template('results.html', result_json=result_json)
 
 
 if __name__ == '__main__':
     app.run(debug=True)
 
 
-    # {% for item in range(response["ITEMS"]|length) %}
-    # <ul>
-    #     <li>Name: {{ response["ITEMS"][item]['title'] }}</li>
-    #     <li>Image: {{ response["ITEMS"][item]['image'] }}</li>
-    #     <li>synopsis: {{response["ITEMS"][item]['synopsis'] }}</li>
-    # </ul>
+    # {% for i in range(result_json["results"]|length) %}
+
+    # <h1>Title: {{ result_json["results"][i]["title"] }}</h1>
+    # <h3>Year: {{ result_json["results"][i]["synopsis"] }}</h3>
+    # <p>Synopsis: {{ result_json["results"][i]["year"] }}</p>
     # {% endfor %}
+
