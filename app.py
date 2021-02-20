@@ -106,13 +106,55 @@ def expiring():
 
     return render_template('expirations.html', result_json = result_json, title_details = title_details)
 
+@app.route('/recently-added')
+def recently_added():
+    """Displays results for titles that were added onto Netflix in the past two months."""
+    # Use 'request.args' to retrieve the country code from the query parameters
+    # country = request.args.get('countrycode')
+
+    params = {
+        # Use a default country code of 78 for USA
+        "countrylist": "78",
+        # For testing purposes, limit number of returned titles to 5
+        "limit": 5
+    }
+    
+    result_json = requests.get(url='https://unogsng.p.rapidapi.com/expiring', params=params, headers=headers).json()
+
+    # Save results from initial API call to `output_list`
+    output_list = result_json['results']
+
+    # Create empty list to hold results from GET request for title details
+    title_details = []
+
+    for i in range(len(output_list)):
+        # Select the netflixid for each title from the returned JSON object
+        netflixid = output_list[i]['netflixid']
+        # Send a GET request for title details and add the resulting dictionary to the title_details dictionary
+        title_details.append(requests.get(url='https://unogsng.p.rapidapi.com/title', params={'netflixid': netflixid}, headers=headers).json()["results"][0])
+
+    # Print the results of the API call
+    # pp.pprint(result_json)
+
+    return render_template('expirations.html', result_json = result_json, title_details = title_details)
+
 @app.route('/title/<netflixid>')
 def title_details(netflixid):
     """Displays all the details for an individual title on a full page."""
+
     # Send a GET request for the details of a specific title using its unique Netflix ID
     details = requests.get(url='https://unogsng.p.rapidapi.com/title', params={'netflixid': netflixid}, headers=headers).json()["results"][0]
+
+    # Send a GET request for the country availability related to a specific title using its unique Netflix ID
+    countries = requests.get(url='https://unogsng.p.rapidapi.com/titlecountries', params={'netflixid': netflixid}, headers=headers).json()["results"]
+
+    # Send a GET request for the genres related to a specific title using its unique Netflix ID
+    genres = requests.get(url='https://unogsng.p.rapidapi.com/titlegenres', params={'netflixid': netflixid}, headers=headers).json()["results"]
+
     # Send the resulting dictionary to a new page to display the details
-    return render_template('title_details.html', details=details)
+    return render_template('title_details.html', details=details, countries=countries, genres=genres)
+
+# Create a function to separate string of languages into a list
 
 
 
