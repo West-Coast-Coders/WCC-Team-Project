@@ -1,3 +1,7 @@
+#home {
+    background-color: #767676;
+}
+
 .navbar {
     position: relative;
     display: flex;
@@ -59,6 +63,12 @@ input[type=search]:focus {
       border-style: solid;
       border-width: 1px;
       margin: 5px;
+      background-color: #969696;
+      padding-top: 10px;
+  }
+
+  #leaving-movies h1 {
+      color: black;
   }
 
   #leaving-shows {
@@ -66,4 +76,7 @@ input[type=search]:focus {
     border-style: solid;
     border-width: 1px;
     margin: 5px;
+    background-color: #969696;
+    padding-top: 10px;
+
 }
