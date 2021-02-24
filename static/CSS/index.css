@@ -71,6 +71,10 @@ input[type=search]:focus {
       color: black;
   }
 
+  #leaving-shows h1 {
+    color: black;
+}
+
   #leaving-shows {
     flex-direction: row;
     border-style: solid;
