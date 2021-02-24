@@ -7,7 +7,7 @@ import requests
 import sqlite3
 
 from pprint import PrettyPrinter
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, send_file
 from io import BytesIO
@@ -112,9 +112,12 @@ def recently_added():
     # Use 'request.args' to retrieve the country code from the query parameters
     # country = request.args.get('countrycode')
 
+    # Find date of two months ago from date of request
+
     params = {
         # Use a default country code of 78 for USA
         "countrylist": "78",
+        "newdate": date().isoformat,
         # For testing purposes, limit number of returned titles to 5
         "limit": 5
     }
