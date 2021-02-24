@@ -1,17 +1,19 @@
 import jinja2
-import matplotlib
-import matplotlib.pyplot as plt
+# import matplotlib
+# import matplotlib.pyplot as plt
 import os
 import pytz
 import requests
 import sqlite3
 import json
+
 from pprint import PrettyPrinter
 from datetime import datetime, timedelta
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, redirect, url_for
 from io import BytesIO
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from filters import filter_list
+# from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
 
 ################################################################################
@@ -20,22 +22,26 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
 app = Flask(__name__)
 
+# API Info
 # Get the API key from the '.env' file
 load_dotenv()
-API_KEY = os.getenv('API_KEY')
-print(API_KEY)
+headers = {
+    'x-rapidapi-key': os.getenv('API_KEY'),
+    'x-rapidapi-host': "unogsng.p.rapidapi.com"
+}
+# print(API_KEY)
 
 
 # Settings for image endpoint
 # Written with help from http://dataviztalk.blogspot.com/2016/01/serving-matplotlib-plot-that-follows.html
-matplotlib.use('agg')
-plt.style.use('ggplot')
+# matplotlib.use('agg')
+# plt.style.use('ggplot')
 
-my_loader = jinja2.ChoiceLoader([
-    app.jinja_loader,
-    jinja2.FileSystemLoader('data'),
-])
-app.jinja_loader = my_loader
+# my_loader = jinja2.ChoiceLoader([
+#     app.jinja_loader,
+#     jinja2.FileSystemLoader('data'),
+# ])
+# app.jinja_loader = my_loader
 
 pp = PrettyPrinter(indent=4)
 
@@ -44,15 +50,59 @@ pp = PrettyPrinter(indent=4)
 ## ROUTES
 ################################################################################
 
+
 @app.route('/')
 def home():
-    """Search function to browse avalible movies on nexflix."""
+    """Displays the homepage"""
+    return render_template("index.html")
 
-    return render_template('home.html')
+@app.route('/expiring-soon', methods=['GET', 'POST'])
+def expiring(output_list=None):
+    """Displays results for titles that are expiring soon from Netflix."""
+    # Use 'request.args' to retrieve the country code from the query parameters
+    country = request.args.get('countrycode')
 
-# def get_letter_for_units(units):
-#     """Returns a shorthand letter for the given units."""
-#     return 'F' if units == 'imperial' else 'C' if units == 'metric' else 'K'
+    params = {
+        "countrylist": "78",
+        # For testing purposes, limit number of returned titles to 5
+        "limit": 5
+    }
+    
+    if not output_list:
+        result_json = requests.get(url='https://unogsng.p.rapidapi.com/expiring', params=params, headers=headers).json()
+        
+        # Save results from initial API call to `output_list`
+        output_list = result_json['results']
+
+
+    # Create empty list to hold results from GET request for title details
+    title_details = []
+
+    for i in range(len(output_list)):
+        # Select the netflixid for each title from the returned JSON object
+        netflixid = output_list[i]['netflixid']
+        # Send a GET request for title details and add the resulting dictionary to the title_details dictionary
+        title_details.append(requests.get(url='https://unogsng.p.rapidapi.com/title', params={'netflixid': netflixid}, headers=headers).json()["results"][0])
+
+    # Print the results of the API call
+    # pp.pprint(result_json)
+
+    if request.method == 'POST':
+        filters = {
+            'type': request.form['type'],
+            'start_year': request.form['start-year'],
+            'end_year': request.form['end-year'],
+            'start_rating': request.form['start-rating'],
+            'end_rating': request.form['end-rating'],
+            'min_runtime': request.form['min-runtime'],
+            'max_runtime': request.form['max-runtime']
+        }
+
+        filtered_results = filter_list(filters, title_details, output_list)
+
+        return render_template('expirations.html', output_list = filtered_results[1], title_details = filtered_results[0])
+
+    return render_template('expirations.html', output_list = output_list, title_details = title_details)
 
 @app.route('/search_results')
 def results():
@@ -62,7 +112,7 @@ def results():
 
     url = "https://unogsng.p.rapidapi.com/search"
     params = {
-        "start_year":"1972","orderby":"rating","subtitle":"english","query":title,"audio":"english","offset":"0"
+        "start_year":"1972","orderby":"rating","query":title,"offset":"0"
     }
 
     headers = {
@@ -72,30 +122,10 @@ def results():
 
     result_json = requests.get(url, headers=headers, params=params).json()
 
-    pp.pprint(result_json)
+    # pp.pprint(result_json)
     
 
-    # for i in range(len(result_json)):
-    #     title = result_json["results"][i]["title"]
-    #     synopsis = result_json["results"][i]["synopsis"]
-    #     year = result_json["results"][i]["year"]
-
-    # context = {
-    #     'title': title,
-    #     'synopsis': synopsis,
-    #     'year': year
-    # }
     return render_template('results.html', result_json=result_json)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-    # {% for i in range(result_json["results"]|length) %}
-
-    # <h1>Title: {{ result_json["results"][i]["title"] }}</h1>
-    # <h3>Year: {{ result_json["results"][i]["synopsis"] }}</h3>
-    # <p>Synopsis: {{ result_json["results"][i]["year"] }}</p>
-    # {% endfor %}
-
