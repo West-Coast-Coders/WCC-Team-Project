@@ -54,35 +54,20 @@ pp = PrettyPrinter(indent=4)
 @app.route('/')
 def home():
     """Displays the homepage"""
-    return render_template("index.html")
+    output_list, title_details = get_expiring(9)
+    return render_template("index.html", output_list=output_list, title_details=title_details)
 
 @app.route('/expiring-soon', methods=['GET', 'POST'])
 def expiring(output_list=None):
     """Displays results for titles that are expiring soon from Netflix."""
     # Use 'request.args' to retrieve the country code from the query parameters
-    country = request.args.get('countrycode')
+    # country = request.args.get('countrycode')
 
-    params = {
-        "countrylist": "78",
-        # For testing purposes, limit number of returned titles to 5
-        "limit": 5
-    }
     
     if not output_list:
-        result_json = requests.get(url='https://unogsng.p.rapidapi.com/expiring', params=params, headers=headers).json()
-        
         # Save results from initial API call to `output_list`
-        output_list = result_json['results']
+        output_list, title_details = get_expiring(5)
 
-
-    # Create empty list to hold results from GET request for title details
-    title_details = []
-
-    for i in range(len(output_list)):
-        # Select the netflixid for each title from the returned JSON object
-        netflixid = output_list[i]['netflixid']
-        # Send a GET request for title details and add the resulting dictionary to the title_details dictionary
-        title_details.append(requests.get(url='https://unogsng.p.rapidapi.com/title', params={'netflixid': netflixid}, headers=headers).json()["results"][0])
 
     # Print the results of the API call
     # pp.pprint(result_json)
@@ -97,12 +82,35 @@ def expiring(output_list=None):
             'min_runtime': request.form['min-runtime'],
             'max_runtime': request.form['max-runtime']
         }
-
+       
         filtered_results = filter_list(filters, title_details, output_list)
 
         return render_template('expirations.html', output_list = filtered_results[1], title_details = filtered_results[0])
 
     return render_template('expirations.html', output_list = output_list, title_details = title_details)
+
+
+def get_expiring(limit:int):
+    """Makes an API call to unogsNG to get a list of titles expiring soon. Limit is how many results will be returned."""
+    params = {
+        "countrylist": "78",
+        "limit": limit
+    }
+
+    result_json = requests.get(url='https://unogsng.p.rapidapi.com/expiring', params=params, headers=headers).json()
+    output_list = result_json['results']
+
+    # Create empty list to hold results from GET request for title details
+    title_details = []
+
+    for i in range(len(output_list)):
+        # Select the netflixid for each title from the returned JSON object
+        netflixid = output_list[i]['netflixid']
+        # Send a GET request for title details and add the resulting dictionary to the title_details dictionary
+        title_details.append(requests.get(url='https://unogsng.p.rapidapi.com/title', params={'netflixid': netflixid}, headers=headers).json()["results"][0])
+
+    return output_list, title_details
+
 
 
 if __name__ == '__main__':
