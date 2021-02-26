@@ -4,13 +4,11 @@
 <section>
     <h1>Recently Added to Netflix</h1>
     
-    {% for i in range(result_json["results"]|length) %}
+    {% for i in range(results|length) %}
     <ul>
-        <li>Title: {{ result_json["results"][i]["title"] }}</li>
-        <li>Expiration Date: {{ result_json["results"][i]["expiredate"] }}</li>
-
-        <p>Title Details:</p>
-        <p>{{ title_details[i] }}</p>
+        <li>Title: {{ results[i]["title"] }}</li>
+        <li><img src='{{ results[i]["img"] }}' width="500" height="600"></li>
+        <li>Description: {{ results[i]["synopsis"] }}</li>
     </ul>
     {% endfor %}
     
