@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section>
+    <h1>Recently Added to Netflix</h1>
+    
+    {% for i in range(results|length) %}
+    <ul>
+        <li>Title: {{ results[i]["title"] }}</li>
+        <li><img src='{{ results[i]["img"] }}' width="500" height="600"></li>
+        <li>Description: {{ results[i]["synopsis"] }}</li>
+    </ul>
+    {% endfor %}
+    
+</section>
+{% endblock %}

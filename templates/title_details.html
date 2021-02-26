@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section>
+    <h1>Details</h1>
+
+        <p>Title Details:</p>
+        <p>{{ details }}</p>
+
+        <p>Available in the following countries:</p>
+        {% for i in range(countries|length) %}
+        <ul>
+            <li>{{ countries[i]["country"] }}</li>
+            <ul>
+                <li>Date Added: {{ countries[i]["newdate"] }}</li>
+                <li>Audio Languages: {{ countries[i]["audio"] }}</li>
+                <li>Subtitle Languages: {{ countries[i]["subtitle"] }}</li>
+            </ul>
+        </ul>
+        {% endfor %}
+
+        <p>Genres:</p>
+        {% for i in range(genres|length) %}
+        <ul>
+            <li>{{ genres[i]["genre"] }}</li>
+        </ul>
+        {% endfor %}
+
+    
+</section>
+{% endblock %}
