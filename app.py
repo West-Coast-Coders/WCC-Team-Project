@@ -54,8 +54,21 @@ pp = PrettyPrinter(indent=4)
 @app.route('/')
 def home():
     """Displays the homepage"""
-    output_list, title_details = get_expiring(9)
+    output_list, title_details = get_expiring(9), get_expiring(9)
     return render_template("index.html", output_list=output_list, title_details=title_details)
+
+@app.route('/country-id')
+def countrycode():
+    url = "https://unogsng.p.rapidapi.com/countries"
+
+    headers = {
+        'x-rapidapi-key': "2e473e01d3msh716bf7f4c960569p101e32jsn9d46bb61a5dc",
+        'x-rapidapi-host': "unogsng.p.rapidapi.com"
+        }
+
+    response = requests.request("GET", url, headers=headers)
+
+    print(response.text)  
 
 @app.route('/expiring-soon', methods=['GET', 'POST'])
 def expiring(output_list=None):
@@ -66,7 +79,7 @@ def expiring(output_list=None):
     
     if not output_list:
         # Save results from initial API call to `output_list`
-        output_list, title_details = get_expiring(5)
+        output_list, title_details = get_expiring(5), get_expiring(5)
 
 
     # Print the results of the API call
@@ -85,24 +98,9 @@ def expiring(output_list=None):
        
         filtered_results = filter_list(filters, title_details, output_list)
 
-    return render_template('expirations.html', output_list = filtered_results[1], title_details = filtered_results[0])
+        return render_template('expirations.html', output_list = filtered_results[1], title_details = filtered_results[0])
 
-
-
-@app.route('/country-id')
-def countrycode():
-    url = "https://unogsng.p.rapidapi.com/countries"
-
-    headers = {
-        'x-rapidapi-key': "2e473e01d3msh716bf7f4c960569p101e32jsn9d46bb61a5dc",
-        'x-rapidapi-host': "unogsng.p.rapidapi.com"
-        }
-
-    response = requests.request("GET", url, headers=headers)
-
-    print(response.text)  
-
-    
+    return render_template('expirations.html', output_list = output_list, title_details = title_details)
 
 
 def get_expiring(limit:int):
