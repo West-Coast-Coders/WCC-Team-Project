@@ -4,7 +4,7 @@
 <section>
     <h1>Recently Added to Netflix</h1>
 
-    <form class=filter-form action='/expiring-soon' method="POST">
+    <form class=filter-form action='/recently-added' method="POST">
         <input type="text" name="type" placeholder="Type">
         <div class="min-max-slider" data-legendnum="2">
             <label for="min">Start Year</label>
@@ -24,7 +24,7 @@
             <label for="max">Max IMDB Rating</label>
             <input id="max" class="max" name="end-rating" type="range" step="1" min="0" max="10" />
         </div>
-        <input type="hidden" name="current-list" value="expiring-soon">
+        <input type="hidden" name="current-list" value="recently-added">
         <input type="submit">
     </form>
     
