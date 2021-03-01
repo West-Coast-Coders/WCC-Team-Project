@@ -54,8 +54,10 @@ pp = PrettyPrinter(indent=4)
 @app.route('/')
 def home():
     """Displays the homepage"""
-    output_list, title_details = get_expiring(9)
-    return render_template("index.html", output_list=output_list, title_details=title_details)
+    output_list_1, title_details_1 = get_expiring(9)
+    output_list_2 = get_recent(9)
+    return render_template("index.html", output_list_1=output_list_1, title_details_1=title_details_1, 
+                                         output_list_2=output_list_2)
 
 @app.route('/country-id')
 def countrycode():
@@ -124,17 +126,39 @@ def get_expiring(limit:int):
         # Send a GET request for title details and add the resulting dictionary to the title_details dictionary
         title_details.append(requests.get(url='https://unogsng.p.rapidapi.com/title', params={'netflixid': netflixid}, headers=headers).json()["results"][0])
 
-    # Print the results of the API call
-    # pp.pprint(result_json)
-
-    print(title_details)
     return output_list, title_details
 
 @app.route('/recently-added')
-def recently_added():
+def recently_added(output_list=None):
     """Displays results for titles that were added onto Netflix in the past three months."""
     # Use 'request.args' to retrieve the country code from the query parameters
     # country = request.args.get('countrycode')
+
+    if not output_list:
+        # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
+        output_list = get_recent(5)
+    
+
+    if request.method == 'POST':
+        filters = {
+            'type': request.form['type'],
+            'start_year': request.form['start-year'],
+            'end_year': request.form['end-year'],
+            'start_rating': request.form['start-rating'],
+            'end_rating': request.form['end-rating'],
+            'min_runtime': request.form['min-runtime'],
+            'max_runtime': request.form['max-runtime']
+        }
+       
+        filtered_results = filter_list(filters, output_list)
+
+        return render_template('expirations.html', output_list = filtered_results)
+
+    return render_template('recently_added.html', results = output_list)
+
+
+def get_recent(limit:int):
+    """Makes an API call to unogsNG to get a list of titles recently added. Limit is how many results will be returned."""
 
     # Find date of two months ago from date of request
     three_months_ago = date.today() - timedelta(days=90)
@@ -144,15 +168,16 @@ def recently_added():
         "countrylist": "78",
         "newdate": three_months_ago.isoformat,
         # For testing purposes, limit number of returned titles to 5
-        "limit": 5
+        "limit": limit
     }
     
     result_json = requests.get(url='https://unogsng.p.rapidapi.com/search', params=params, headers=headers).json()
 
     # Save results from initial API call to `output_list`
-    results = result_json['results']
+    output_list = result_json['results']
+    
+    return output_list
 
-    return render_template('recently_added.html', results = results)
 
 @app.route('/title/<netflixid>')
 def title_details(netflixid):
@@ -346,56 +371,6 @@ def title_details(netflixid):
             "countrycode": "ZA"
         }"""
 
-
-
-
-# FILTERS TESTING:
-# @app.route('/process-filters', methods=['POST'])
-# def process():
-#     title_type = request.form['type']
-#     start_year = request.form['start_year']
-#     order_by = request.form['order_by']
-#     audiosubtitle_andor = request.form['audiosubtitle_andor']
-#     start_rating = request.form['start_rating']
-#     end_rating = request.form['end_rating']
-#     subtitle = request.form['subtitle']
-#     country_list = request.form['country_list']
-#     audio = request.form['audio']
-#     country_andorunique = request.form['country_andorunique']
-#     end_year = request.form['end_year']
-#     current_list = request.form['current_list']
-
-#     filters = {
-#         "type":title_type
-#         "start_year":start_year,
-#         "orderby":order_by,
-#         "audiosubtitle_andor":audiosubtitle_andor,
-#         "start_rating":start_rating,
-#         "end_rating":end_rating,
-#         "subtitle":"english",
-#         "countrylist":country_list,
-#         "audio":audio,
-#         "country_andorunique":country_andorunique,
-#         "end_year":end_year
-#     }
-@app.route('/search_results')
-def results():
-    """Search Result"""
-    title = request.args.get('title')
-
-
-    url = "https://unogsng.p.rapidapi.com/search"
-    params = {
-        "start_year":"1972","orderby":"rating","query":title,"offset":"0"
-    }
-
-
-    result_json = requests.get(url, headers=headers, params=params).json()
-
-    # pp.pprint(result_json)
-    
-
-    return render_template('results.html', result_json=result_json)
 
 
 if __name__ == '__main__':

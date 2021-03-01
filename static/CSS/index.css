@@ -58,7 +58,7 @@ input[type=search]:focus {
    bottom: 40px;
   }
 
-  #leaving-movies {
+  #leaving-soon {
       flex-direction: row;
       border-style: solid;
       border-width: 1px;
@@ -67,15 +67,15 @@ input[type=search]:focus {
       padding-top: 10px;
   }
 
-  #leaving-movies h1 {
+  #leaving-soon h1 {
       color: black;
   }
 
-  #leaving-shows h1 {
+  #recently-added h1 {
     color: black;
 }
 
-  #leaving-shows {
+  #recently-added {
     flex-direction: row;
     border-style: solid;
     border-width: 1px;
@@ -84,3 +84,6 @@ input[type=search]:focus {
     padding-top: 10px;
 
 }
+
+
+
