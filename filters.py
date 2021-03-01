@@ -62,7 +62,7 @@ def filter_list(filters, titles_info, list_results=None):
 
     # Filtering IMDB rating range
     temp = []
-
+    
     for title in filtered_titles:
         if not title['imdbrating']:
             temp.append(title)
@@ -75,12 +75,20 @@ def filter_list(filters, titles_info, list_results=None):
 
     # Filtering runtime range
     temp = []
+    runtime_key = None
+
+    # Because the key for the title API call and the search API call are different in regards to runtime, this if statement
+    # is to ensure that the proper key is used depening on how the parameters are given to the function
+    if list_results:
+        runtime_key = 'netflixruntime'
+    else:
+        runtime_key = 'runtime'
 
     for title in filtered_titles:
-        if title['netflixruntime'] == 0:
+        if title[runtime_key] == 0:
             temp.append(title)
-        elif int(title['netflixruntime']) >= int(filters['min_runtime']) and \
-        int(title['netflixruntime']) <= int(filters['max_runtime']):
+        elif int(title[runtime_key]) >= int(filters['min_runtime']) and \
+        int(title[runtime_key]) <= int(filters['max_runtime']):
             temp.append(title)
     
     filtered_titles = temp

@@ -24,3 +24,6 @@ span.value.upper::before {content: "-\00a0"; display: inline-block; margin-left:
   border-radius: 100%;
 }
 .min-max-slider > input::-webkit-slider-runnable-track {cursor: pointer;}
+
+#runtime-select span.value.lower::after {content: "\00a0mins"; display: inline-block;}
+#runtime-select span.value.upper::after {content: "\00a0mins"; display: inline-block;}
