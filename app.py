@@ -80,7 +80,7 @@ def expiring(output_list=None):
 
     
     if not output_list:
-        # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
+        # Save results from initial API call to `output_list`
         output_list, title_details = get_expiring(5)
 
 
