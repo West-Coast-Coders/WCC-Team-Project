@@ -2,77 +2,81 @@
 {% block content %}
 
 <section>
-    <h1>Details</h1>
+    <div id="info_container">
+        <div id="img_box">
+            <img id="title_img" src="{{details['img']}}">
+        </div>  
+        <div id="info_box">
+            <p>Title: {{ details['title']}}</p>
+            <p>Type: {{ details['vtype']}}</p>
+            <p>Release Year: {{ details['year']}}</p>
 
-    <img src="{{ details['img']}}">
-    <p>Title: {{ details['title']}}</p>
-    <p>Type: {{ details['vtype']}}</p>
-    <p>Release Year: {{ details['year']}}</p>
+            {% if details['imdbcountry'] != None and details['imdbcountry'] != 'N/A' %}
+            <p>Country of Origin: {{ details['imdbcountry']}}</p>
+            {% else %}
+            <p>Country of Origin is not available for this title.</p>
+            {% endif %}
 
-    {% if details['imdbcountry'] != None and details['imdbcountry'] != 'N/A' %}
-    <p>Country of Origin: {{ details['imdbcountry']}}</p>
-    {% else %}
-    <p>Country of Origin is not available for this title.</p>
-    {% endif %}
+            <p>Synopsis: {{ details['synopsis']}}</p>
 
-    <p>Synopsis: {{ details['synopsis']}}</p>
+            {% if details['matlabel'] != None and details['matlabel'] != 'N/A' %}
+            <p>Maturity: {{ details['matlabel']}}</p>
+            {% else %}
+            <p>Maturity is not available for this title.</p>
+            {% endif %}
 
-    {% if details['matlabel'] != None and details['matlabel'] != 'N/A' %}
-    <p>Maturity: {{ details['matlabel']}}</p>
-    {% else %}
-    <p>Maturity is not available for this title.</p>
-    {% endif %}
+            {% if details['imdbruntime'] != None %}
+                {% if details['vtype'] == 'series' %}
+                <p>Average Episode Runtime: {{ details['imdbruntime']}}</p>
+                {% else %}
+                <p>Runtime: {{ details['imdbruntime']}}</p>
+                {% endif %}
+            {% else %}
+            <p>Runtime is not available for this title.</p>
+            {% endif %}
 
-    {% if details['imdbruntime'] != None %}
-        {% if details['vtype'] == 'series' %}
-        <p>Average Episode Runtime: {{ details['imdbruntime']}}</p>
-        {% else %}
-        <p>Runtime: {{ details['imdbruntime']}}</p>
-        {% endif %}
-    {% else %}
-    <p>Runtime is not available for this title.</p>
-    {% endif %}
+            {% if details['imdbmetascore'] != None and details['imdbmetascore'] != 'N/A' %}
+            <p>Metascore: {{ details['imdbmetascore']}}</p>
+            {% else %}
+            <p>Metascore is not available for this title.</p>
+            {% endif %}
 
-    {% if details['imdbmetascore'] != None and details['imdbmetascore'] != 'N/A' %}
-    <p>Metascore: {{ details['imdbmetascore']}}</p>
-    {% else %}
-    <p>Metascore is not available for this title.</p>
-    {% endif %}
+            {% if details['imdbrating'] != None and details['imdbrating'] != 0.0 %}
+            <p>IMDb Rating: {{ details['imdbrating']}}</p>
+            {% else %}
+            <p>IMDb rating is not available for this title.</p>
+            {% endif %}
 
-    {% if details['imdbrating'] != None and details['imdbrating'] != 0.0 %}
-    <p>IMDb Rating: {{ details['imdbrating']}}</p>
-    {% else %}
-    <p>IMDb rating is not available for this title.</p>
-    {% endif %}
+            <p>IMDb Votes: {{ details['imdbvotes']}}</p>
 
-    <p>IMDb Votes: {{ details['imdbvotes']}}</p>
+            {% if details['imdbawards'] != None and details['imdbawards'] != 'N/A' %}
+            <p>Awards: {{ details['imdbawards']}}</p>
+            {% else %}
+            <p>No awards known for this title.</p>
+            {% endif %}
+        </div>
+    
+        <div id="countries_box">
+            <center><h5>Available in the following countries:</h5></center>
+            {% for i in range(countries|length) %}
+            <ul>
+                <li>{{ countries[i]["country"] }}</li>
+                <ul>
+                    <li>Date Added: {{ countries[i]["newdate"] }}</li>
+                    <li>Audio Languages: {{ countries[i]["audio"] }}</li>
+                    <li>Subtitle Languages: {{ countries[i]["subtitle"] }}</li>
+                </ul>
+            </ul>
+            {% endfor %}
 
-    {% if details['imdbawards'] != None and details['imdbawards'] != 'N/A' %}
-    <p>Awards: {{ details['imdbawards']}}</p>
-    {% else %}
-    <p>No awards known for this title.</p>
-    {% endif %}
-
-
-
-    <p>Available in the following countries:</p>
-    {% for i in range(countries|length) %}
-    <ul>
-        <li>{{ countries[i]["country"] }}</li>
-        <ul>
-            <li>Date Added: {{ countries[i]["newdate"] }}</li>
-            <li>Audio Languages: {{ countries[i]["audio"] }}</li>
-            <li>Subtitle Languages: {{ countries[i]["subtitle"] }}</li>
-        </ul>
-    </ul>
-    {% endfor %}
-
-    <p>Genres:</p>
-    {% for i in range(genres|length) %}
-    <ul>
-        <li>{{ genres[i]["genre"] }}</li>
-    </ul>
-    {% endfor %}
+            <p>Genres:</p>
+            {% for i in range(genres|length) %}
+            <ul>
+                <li>{{ genres[i]["genre"] }}</li>
+            </ul>
+            {% endfor %}
+        </div>
+    </div>
 
     
 

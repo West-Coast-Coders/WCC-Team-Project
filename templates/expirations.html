@@ -33,12 +33,11 @@
     <div id="title-grid">
 
     {% for i in range(output_list|length) %}
-    <ul> 
-        <img src="{{ title_details[i]['img'] }}" alt="{{ output_list[i]['title'] }}">
-        <li>Title: {{ output_list[i]["title"] }}</li>
-        <li>Expiration Date: {{ output_list[i]["expiredate"] }}</li>
-
-        
+    <ul id="title_list"> 
+        <a href='/title/{{title_details[i]["nfid"]}}'><img src="{{ title_details[i]['img'] }}" alt="{{ output_list[i]['title'] }}"></a>
+        <li id="title">{{ output_list[i]["title"]}}</li>
+        <li>Expiration: {{ output_list[i]["expiredate"] }}</li>
+        <span><a href='/title/{{title_details[i]["nfid"]}}'>More Info:</a></span>
     </ul>
     {% endfor %}
     </div>
