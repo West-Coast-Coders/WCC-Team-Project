@@ -324,7 +324,28 @@ def title_details(netflixid):
             "id": 447,
             "countrycode": "ZA"
         }"""
+@app.route('/search_results')
+def results():
+    """Search Result"""
+    title = request.args.get('title')
 
+
+    url = "https://unogsng.p.rapidapi.com/search"
+    params = {
+        "start_year":"1972","orderby":"rating","query":title,"offset":"0"
+    }
+
+    headers = {
+    'x-rapidapi-key': "5a290bcfe7mshae1b67802e67c81p1499cfjsneb78dae05462",
+    'x-rapidapi-host': "unogsng.p.rapidapi.com"
+    }
+
+    result_json = requests.get(url, headers=headers, params=params).json()
+
+    # pp.pprint(result_json)
+    
+
+    return render_template('results.html', result_json=result_json)
 
 
 if __name__ == '__main__':
