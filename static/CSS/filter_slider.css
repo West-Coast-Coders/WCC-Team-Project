@@ -1,0 +1,75 @@
+.min-max-slider {position: relative; width: 250px; text-align: center; margin-bottom: 50px;}
+.min-max-slider > label {display: none;}
+span.value {height: 1.7em; font-weight: bold; display: inline-block;}
+span.value.upper::before {content: "-\00a0"; display: inline-block; margin-left: 0.4em;}
+.min-max-slider > .legend {display: flex; justify-content: space-between;}
+.min-max-slider > .legend > * {font-size: small; opacity: 0.75;}
+.min-max-slider > input {cursor: pointer; position: absolute;}
+
+/* webkit specific styling */
+.min-max-slider > input {
+  -webkit-appearance: none;
+  outline: none!important;
+  background: transparent;
+  background-image: linear-gradient(to bottom, transparent 0%, transparent 30%, silver 30%, silver 60%, transparent 60%, transparent 100%);
+}
+.min-max-slider > input::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 14px; /* Set a specific slider handle width */
+  height: 14px; /* Slider handle height */
+  background: #eee; /* Green background */
+  cursor: pointer; /* Cursor on hover */
+  border: 1px solid gray;
+  border-radius: 100%;
+}
+.min-max-slider > input::-webkit-slider-runnable-track {cursor: pointer;}
+
+#year-select span.value.lower::before {content: "Year Released:\00a0"; display: inline;}
+
+#runtime-select span.value.lower::before {content: "Runtime:\00a0"; display: inline-block;}
+#runtime-select span.value.lower::after {content: "\00a0mins"; display: inline-block;}
+#runtime-select span.value.upper::after {content: "\00a0mins"; display: inline-block;}
+
+#rating-select span.value.lower::before {content: "IMDB Rating:\00a0"; display: inline-block;}
+
+#sliders {
+  background-color: #969696;
+  flex-direction: row;
+  text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-style: solid;
+  border-width: 1px;
+}
+
+#title-grid {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  justify-content: flex-start;
+}
+
+ul {
+  flex-direction: row;
+  background-color: #969696;
+  width: 300px;
+  word-wrap: break-word;
+  list-style-type: none;
+  border-style: solid;
+  border-width: 1px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+}
+
+ul li, p {
+  text-align: center;
+}
+
+img {
+  padding-top: 15px;
+}

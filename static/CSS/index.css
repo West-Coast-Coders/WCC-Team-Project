@@ -1,77 +1,89 @@
-html {
-    background-color: #f6edcf;
-    font-family: 'Courier New', Courier, monospace;
+#home {
+    background-color: #767676;
 }
 
-#carousel {
-    padding: 20px;
-    margin: 20px;
-    border-style: solid;
-    border-width: 5px;
-    border-color: black;
-    background-color: #daf1f9;
-
-    /* remove this padding */
-    padding-bottom: 500px;
-}
-#row {
+.navbar {
+    position: relative;
     display: flex;
-}
-#mostwatchedmovies {
-    flex: 50%;
-    padding: 20px;
-    margin: 20px;
-    border-style: solid;
-    border-width: 5px;
-    border-color: black;
-    background-color: #daf1f9;
-
-     /* remove this padding */
-     padding-bottom: 300px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background:#222;
+    color: #f2f2f2;
+    height: 50px
 }
 
-#topmovies {
-    flex: 50%;
-    padding: 10px;
-    margin: 20px;
-    border-style: solid;
-    border-width: 5px;
-    border-color: black;
-    background-color: #daf1f9;
+
+
+
+
+input[type=search]:focus {
+	width: 600px;
+	background-color: #ccc;
+	border-color: #333;
+	border: solid 1px #fff;
 }
 
-#lowestratedmovies {
-    flex: 50%;
-    padding: 10px;
-    margin: 20px;
-    border-style: solid;
-    border-width: 5px;
-    border-color: black;
-    background-color: #daf1f9;
-}
 
-nav {
-    background-color: #ccf6c8;
+#leaving-carousel {
+    display: flex;
     text-align: center;
-    border-style: solid;
-    width: 300px;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+}
+
+
+.col-md-4{
+    display: inline-block;
+    margin-left:-10px;
+  }
+  .col-md-4 img{
+    width:100%;
+    height:auto;
+  }
+    
+  body .carousel-control-prev-icon,
+  body .carousel-indicators li,
+  body .carousel-control-next-icon{
+    background-color:#000;
+  }
+  
+  span.carousel-control-prev-icon {
+   position: relative;
+   bottom: 40px;
+   right: 40px;
+  }
+  
+  span.carousel-control-next-icon {
+   position: relative;
+   bottom: 40px;
+  }
+
+  #leaving-soon {
+      flex-direction: row;
+      border-style: solid;
+      border-width: 1px;
+      margin: 5px;
+      background-color: #969696;
+      padding-top: 10px;
+  }
+
+  #leaving-soon h1 {
+      color: black;
+  }
+
+  #recently-added h1 {
     color: black;
 }
 
-img {
-    width: 100%;
-    height: auto;
+  #recently-added {
+    flex-direction: row;
+    border-style: solid;
+    border-width: 1px;
+    margin: 5px;
+    background-color: #969696;
+    padding-top: 10px;
+
 }
 
-h1, h2 {
-    text-align: center;
-    font-weight: bold;
-    font-size: x-large;
-    line-height: 20px;
-}
+
+

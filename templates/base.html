@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BetterNetflix</title>
+        <link rel="stylesheet" href="/static/CSS/index.css">
+        <link rel="stylesheet" href="/static/CSS/filter_slider.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+
+    </head>
+    <body id="home">
+        <nav class="navbar">
+            <a href="/">Home</a>
+            <input type="search" placeholder="Search..." aria-label="Search">
+            <a href="#contact">Contact</a>
+        </nav>
+        <main>
+            {% block content %}
+            {% endblock %}
+            <section>
+                <p>
+                    This project was developed by Make School students © 2021.
+                </p>
+            </section>
+        </main>
+    </body>
+</html>
+<script src="static/JS/filter_slider.js"></script>
