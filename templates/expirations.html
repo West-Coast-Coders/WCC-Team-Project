@@ -1,9 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-
+<center>
 <section>
+    <div id="sliders">
     <h1>Leaving Soon from Netflix</h1>
-
+    <center>
     <form class=filter-form action='/expiring-soon' method="POST">
         <input type="text" name="type" placeholder="Type">
         <div class="min-max-slider" data-legendnum="2">
@@ -24,17 +25,23 @@
             <label for="max">Max IMDB Rating</label>
             <input id="max" class="max" name="end-rating" type="range" step="1" min="0" max="10" />
         </div>
-        <input type="hidden" name="current-list" value="expiring-soon">
         <input type="submit">
     </form>
-    
+    </center>
+    </div>
+
+    <div id="title-grid">
+
     {% for i in range(output_list|length) %}
     <ul> 
         <img src="{{ title_details[i]['img'] }}" alt="{{ output_list[i]['title'] }}">
         <li>Title: {{ output_list[i]["title"] }}</li>
         <li>Expiration Date: {{ output_list[i]["expiredate"] }}</li>
+
+        
     </ul>
     {% endfor %}
-    
+    </div>
 </section>
+</center>
 {% endblock %}

@@ -2,9 +2,9 @@ import requests
 import os
 
 
-def filter_list(filters, titles_info, list_results):
-    """Takes in a list of specific titles, another list with details about each title, and finally, filter
-       parameters. Returns a list with both list filtered. """
+def filter_list(filters, titles_info, list_results=None):
+    """Takes in a list of specific titles, another list with details about each title (optional), and finally, filter
+       parameters. Returns a list with given list filtered """
 
     def show_only_filtered(filtered_titles_info, list_results):
         """Filters the main list of titles based on what was filtered from the list containing the title details"""
@@ -85,9 +85,15 @@ def filter_list(filters, titles_info, list_results):
     
     filtered_titles = temp
 
-    # Now that the list of titles is filtered, pass that onto the show_only_filtered function to additionally filter the main
-    # list
-    filtered_list_results = show_only_filtered(filtered_titles, list_results)
-    # Putting the two filtered lists into one list to return
-    final_results = [filtered_titles, filtered_list_results]
-    return final_results
+
+    if list_results:
+        # Now that the list of titles is filtered, pass that onto the show_only_filtered function to additionally filter the main
+        # list
+        filtered_list_results = show_only_filtered(filtered_titles, list_results)
+
+        # Putting the two filtered lists into one list to return
+        final_results = [filtered_titles, filtered_list_results]
+
+        return final_results
+    else:
+        return filtered_titles
