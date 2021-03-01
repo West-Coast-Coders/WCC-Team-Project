@@ -33,11 +33,16 @@
     <div id="title-grid">
     
     {% for i in range(results|length) %}
-    <ul>
-        <li><img src='{{ results[i]["img"] }}'></li>
-        <li id="title">{{ results[i]["title"] }}</li>
-        <li>{{ results[i]["synopsis"] }}</li>
-    </ul>
+        <ul id="title_list">
+            <a href='/title/{{results[i]["nfid"]}}'><li><img src='{{ results[i]["img"] }}'></li></a>
+            <li id="title">{{ results[i]["title"] }}</li>
+            <li>{{ results[i]["synopsis"] }}</li>
+            <li>{{ results[i]["details"] }}</li>
+
+            <br>
+            <a href='/title/{{results[i]["nfid"]}}'><li>More Info:</li></a>
+
+        </ul>
     {% endfor %}
     </div>
 </section>
