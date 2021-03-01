@@ -94,8 +94,8 @@ def expiring():
             'end_year': request.form['end-year'],
             'start_rating': request.form['start-rating'],
             'end_rating': request.form['end-rating'],
-            'min_runtime': (request.form['min-runtime'] * 60 ),
-            'max_runtime': (request.form['max-runtime'] * 60 )
+            'min_runtime': request.form['min-runtime'],
+            'max_runtime': request.form['max-runtime']
         }
        
         filtered_results = filter_list(filters, title_details, output_list)

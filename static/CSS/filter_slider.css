@@ -1,9 +1,9 @@
-.min-max-slider {position: relative; width: 200px; text-align: center; margin-bottom: 50px;}
+.min-max-slider {position: relative; width: 250px; text-align: center; margin-bottom: 50px;}
 .min-max-slider > label {display: none;}
 span.value {height: 1.7em; font-weight: bold; display: inline-block;}
 span.value.upper::before {content: "-\00a0"; display: inline-block; margin-left: 0.4em;}
 .min-max-slider > .legend {display: flex; justify-content: space-between;}
-.min-max-slider > .legend > * {font-size: small; opacity: 0.25;}
+.min-max-slider > .legend > * {font-size: small; opacity: 0.75;}
 .min-max-slider > input {cursor: pointer; position: absolute;}
 
 /* webkit specific styling */
@@ -25,8 +25,13 @@ span.value.upper::before {content: "-\00a0"; display: inline-block; margin-left:
 }
 .min-max-slider > input::-webkit-slider-runnable-track {cursor: pointer;}
 
+#year-select span.value.lower::before {content: "Year Released:\00a0"; display: inline;}
+
+#runtime-select span.value.lower::before {content: "Runtime:\00a0"; display: inline-block;}
 #runtime-select span.value.lower::after {content: "\00a0mins"; display: inline-block;}
 #runtime-select span.value.upper::after {content: "\00a0mins"; display: inline-block;}
+
+#rating-select span.value.lower::before {content: "IMDB Rating:\00a0"; display: inline-block;}
 
 #sliders {
   background-color: #969696;

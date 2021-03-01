@@ -87,8 +87,8 @@ def filter_list(filters, titles_info, list_results=None):
     for title in filtered_titles:
         if title[runtime_key] == 0:
             temp.append(title)
-        elif int(title[runtime_key]) >= int(filters['min_runtime']) and \
-        int(title[runtime_key]) <= int(filters['max_runtime']):
+        elif int(float(title[runtime_key])) >= (int(float(filters['min_runtime'])) * 60) and \
+        int(float(title[runtime_key])) <= (int(float(filters['max_runtime'])) * 60):
             temp.append(title)
     
     filtered_titles = temp
