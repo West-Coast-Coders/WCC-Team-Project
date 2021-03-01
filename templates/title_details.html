@@ -4,8 +4,16 @@
 <section>
     <h1>Details</h1>
 
-        <p>Title Details:</p>
-        <p>{{ details }}</p>
+    {% for title in details[0] %}    
+    <img src="{{ title['img']}}">
+    <p>Title: {{ title['title']}}</p>
+    <p>Type: {{ title['vtype']}}</p>
+    <p>Release Year: {{ title['year']}}</p>
+    <p>Country of Origin: {{ title['title']}}</p>
+    <p>Synopsis: {{ title['synopsis']}}</p>
+    <p>Maturity: {{ title['matlabel']}}</p>
+    
+    <p>Title: {{ title['title']}}</p>
 
         <p>Available in the following countries:</p>
         {% for i in range(countries|length) %}
@@ -25,6 +33,8 @@
             <li>{{ genres[i]["genre"] }}</li>
         </ul>
         {% endfor %}
+
+    {% endfor %}
 
     
 </section>
