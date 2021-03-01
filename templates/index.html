@@ -10,28 +10,24 @@
 
         <title>Better Netflix - Our Slogan Here</title>
     </head>
-
+    <nav class="navbar">
+        <a href="#home">Home</a>
+        <form action="/search_results" method="GET">
+            <nav>
+                <div class="container-fluid">
+                    <form autocomplete="off">
+                        <div class="autocomplete">
+                            <input id="myInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="title">
+                            <button type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+        </form>
+        <script src="static/JS/autosearch.js"></script>
+        <a href="#contact">Contact</a>
+    </nav>
     <body id="home">
-        <nav class="navbar">
-            <a href="#home">Home</a>
-            <form action="/search_results" method="GET">
-                <nav>
-                    <div class="container-fluid">
-                        <form autocomplete="off">
-                            <div class="autocomplete">
-                                <input id="myInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="title">
-                                <button type="submit">Search</button>
-                            </div>
-                        </form>
-                        
-                    </div>
-                </nav>
-            </form>
-            <script src="static/JS/autosearch.js"></script>
-            <a href="#contact">Contact</a>
-        </nav>
-
-        
         <!--                          -->
         <!-- Left and Right Carousels -->
         <!--                          -->
@@ -93,7 +89,7 @@
                                         <p>{{ output_list_2[2]['synopsis'] }}</p>
 
                                     </div>
-                                    </div>
+                                </div>
 
 
                                     <!-- Slide 2 -->
@@ -177,8 +173,8 @@
                                         </div>
                                     </div>
                             </div>
+                        </div>
                     </div>
-                </div>
             </div>
             </a>
 
@@ -335,27 +331,6 @@
                 </div>
         </div>
         </a>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-
-    
-    <div id="contact">
-
-    </div>   
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      </div>
     </body>
 </html>
