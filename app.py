@@ -54,7 +54,7 @@ pp = PrettyPrinter(indent=4)
 @app.route('/')
 def home():
     """Displays the homepage"""
-    output_list, title_details = get_expiring(9), get_expiring(9)
+    output_list, title_details = get_expiring(9)
     return render_template("index.html", output_list=output_list, title_details=title_details)
 
 @app.route('/country-id')
@@ -79,7 +79,7 @@ def expiring(output_list=None):
     
     if not output_list:
         # Save results from initial API call to `output_list`
-        output_list, title_details = get_expiring(5), get_expiring(5)
+        output_list, title_details = get_expiring(5)
 
 
     # Print the results of the API call
@@ -127,7 +127,8 @@ def get_expiring(limit:int):
     # Print the results of the API call
     # pp.pprint(result_json)
 
-    return render_template('expirations.html', result_json = result_json, title_details = title_details)
+    print(title_details)
+    return output_list, title_details
 
 @app.route('/recently-added')
 def recently_added():
@@ -377,7 +378,24 @@ def title_details(netflixid):
 #         "country_andorunique":country_andorunique,
 #         "end_year":end_year
 #     }
+@app.route('/search_results')
+def results():
+    """Search Result"""
+    title = request.args.get('title')
 
+
+    url = "https://unogsng.p.rapidapi.com/search"
+    params = {
+        "start_year":"1972","orderby":"rating","query":title,"offset":"0"
+    }
+
+
+    result_json = requests.get(url, headers=headers, params=params).json()
+
+    # pp.pprint(result_json)
+    
+
+    return render_template('results.html', result_json=result_json)
 
 
 if __name__ == '__main__':

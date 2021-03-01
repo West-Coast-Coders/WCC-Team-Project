@@ -14,7 +14,19 @@
     <body id="home">
         <nav class="navbar">
             <a href="#home">Home</a>
-            <input type="search" placeholder="Search..." aria-label="Search">
+            <form action="/search_results" method="GET">
+                <nav>
+                    <div class="container-fluid">
+                        <form autocomplete="off">
+                            <div class="autocomplete">
+                                <input id="myInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="title">
+                                <!-- <button class="btn btn-outline-success" type="submit">Search</button> -->
+                            </div>
+                        </form>
+                    </div>
+                </nav>
+            </form>
+            <script src="static/JS/autosearch.js"></script>
             <a href="#contact">Contact</a>
         </nav>
 
