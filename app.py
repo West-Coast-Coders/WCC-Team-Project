@@ -4,15 +4,15 @@ import jinja2
 import os
 import pytz
 import requests
-import sqlite3
+# import sqlite3
 import json
 
 from pprint import PrettyPrinter
-from datetime import datetime, timedelta, date
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, send_file, redirect, url_for
-from io import BytesIO
+# from io import BytesIO
 from filters import filter_list
+from api_calls import get_expiring, get_recent
 # from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
 
@@ -73,15 +73,15 @@ def countrycode():
     print(response.text)  
 
 @app.route('/expiring-soon', methods=['GET', 'POST'])
-def expiring(output_list=None):
+def expiring():
     """Displays results for titles that are expiring soon from Netflix."""
     # Use 'request.args' to retrieve the country code from the query parameters
     # country = request.args.get('countrycode')
 
     
-    if not output_list:
-        # Save results from initial API call to `output_list`
-        output_list, title_details = get_expiring(5)
+    
+    # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
+    output_list, title_details = get_expiring(5)
 
 
     # Print the results of the API call
@@ -105,38 +105,14 @@ def expiring(output_list=None):
     return render_template('expirations.html', output_list = output_list, title_details = title_details)
 
 
-def get_expiring(limit:int):
-    """Makes an API call to unogsNG to get a list of titles expiring soon. Limit is how many results will be returned."""
-    params = {
-        # Use a default country code of 78 for USA
-        "countrylist": "78",
-        # For testing purposes, limit number of returned titles to 5
-        "limit": limit
-    }
-
-    result_json = requests.get(url='https://unogsng.p.rapidapi.com/expiring', params=params, headers=headers).json()
-    output_list = result_json['results']
-
-    # Create empty list to hold results from GET request for title details
-    title_details = []
-
-    for i in range(len(output_list)):
-        # Select the netflixid for each title from the returned JSON object
-        netflixid = output_list[i]['netflixid']
-        # Send a GET request for title details and add the resulting dictionary to the title_details dictionary
-        title_details.append(requests.get(url='https://unogsng.p.rapidapi.com/title', params={'netflixid': netflixid}, headers=headers).json()["results"][0])
-
-    return output_list, title_details
-
-@app.route('/recently-added')
-def recently_added(output_list=None):
+@app.route('/recently-added', methods=['GET', 'POST'])
+def recently_added():
     """Displays results for titles that were added onto Netflix in the past three months."""
     # Use 'request.args' to retrieve the country code from the query parameters
     # country = request.args.get('countrycode')
 
-    if not output_list:
-        # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
-        output_list = get_recent(5)
+    # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
+    output_list = get_recent(5)
     
 
     if request.method == 'POST':
@@ -152,31 +128,9 @@ def recently_added(output_list=None):
        
         filtered_results = filter_list(filters, output_list)
 
-        return render_template('expirations.html', output_list = filtered_results)
+        return render_template('recently_added.html', results = filtered_results)
 
     return render_template('recently_added.html', results = output_list)
-
-
-def get_recent(limit:int):
-    """Makes an API call to unogsNG to get a list of titles recently added. Limit is how many results will be returned."""
-
-    # Find date of two months ago from date of request
-    three_months_ago = date.today() - timedelta(days=90)
-
-    params = {
-        # Use a default country code of 78 for USA
-        "countrylist": "78",
-        "newdate": three_months_ago.isoformat,
-        # For testing purposes, limit number of returned titles to 5
-        "limit": limit
-    }
-    
-    result_json = requests.get(url='https://unogsng.p.rapidapi.com/search', params=params, headers=headers).json()
-
-    # Save results from initial API call to `output_list`
-    output_list = result_json['results']
-    
-    return output_list
 
 
 @app.route('/title/<netflixid>')
