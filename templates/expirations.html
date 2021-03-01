@@ -35,10 +35,8 @@
     {% for i in range(output_list|length) %}
     <ul> 
         <img src="{{ title_details[i]['img'] }}" alt="{{ output_list[i]['title'] }}">
-        <li>Title: {{ output_list[i]["title"] }}</li>
-        <li>Expiration Date: {{ output_list[i]["expiredate"] }}</li>
-
-        
+        <li id="title">{{ output_list[i]["title"]}}</li>
+        <li>Expiration: {{ output_list[i]["expiredate"] }}</li>
     </ul>
     {% endfor %}
     </div>

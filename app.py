@@ -81,7 +81,7 @@ def expiring(output_list=None):
     
     if not output_list:
         # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
-        output_list, title_details = get_expiring(5)
+        output_list, title_details = get_expiring(15)
 
 
     # Print the results of the API call
@@ -136,7 +136,7 @@ def recently_added(output_list=None):
 
     if not output_list:
         # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
-        output_list = get_recent(5)
+        output_list = get_recent(15)
     
 
     if request.method == 'POST':

@@ -30,8 +30,8 @@ span.value.upper::before {content: "-\00a0"; display: inline-block; margin-left:
   background-color: #969696;
   flex-direction: row;
   text-align: center;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 300px;
+  margin-right: 300px;
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 10px;
@@ -49,14 +49,14 @@ span.value.upper::before {content: "-\00a0"; display: inline-block; margin-left:
 ul {
   flex-direction: row;
   background-color: #969696;
-  width: 300px;
+  width: 200px;
   word-wrap: break-word;
   list-style-type: none;
   border-style: solid;
   border-width: 1px;
   margin-left: auto;
   margin-right: auto;
-  padding: 10px;
+  padding: 5px;
 }
 
 ul li, p {
@@ -64,5 +64,11 @@ ul li, p {
 }
 
 img {
-  padding-top: 15px;
+  padding-top: 10px;
+}
+
+#title {
+  padding-top: 5px;
+  padding-bottom: 3px;
+  font-weight: bolder;
 }
