@@ -1,4 +1,4 @@
-.min-max-slider {position: relative; width: 250px; text-align: center; margin-bottom: 50px;}
+.min-max-slider {position: relative; width: 700px; text-align: center; margin-bottom: 50px;}
 .min-max-slider > label {display: none;}
 span.value {height: 1.7em; font-weight: bold; display: inline-block;}
 span.value.upper::before {content: "-\00a0"; display: inline-block; margin-left: 0.4em;}
@@ -37,8 +37,8 @@ span.value.upper::before {content: "-\00a0"; display: inline-block; margin-left:
   background-color: #969696;
   flex-direction: row;
   text-align: center;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 300px;
+  margin-right: 300px;
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 10px;
@@ -53,23 +53,77 @@ span.value.upper::before {content: "-\00a0"; display: inline-block; margin-left:
   justify-content: flex-start;
 }
 
-ul {
+#title_list {
   flex-direction: row;
   background-color: #969696;
-  width: 300px;
+  width: 200px;
   word-wrap: break-word;
   list-style-type: none;
   border-style: solid;
   border-width: 1px;
   margin-left: auto;
   margin-right: auto;
-  padding: 10px;
+  padding: 5px;
 }
 
-ul li, p {
+#title_list li {
   text-align: center;
 }
 
+#title_list span {
+  position:absolute;
+  bottom:0;
+  right:0;
+}
+
 img {
-  padding-top: 15px;
+  padding-top: 10px;
+}
+
+
+
+#title {
+  padding-top: 5px;
+  padding-bottom: 3px;
+  font-weight: bolder;
+}
+
+#info_container {
+  display: flex;
+  justify-content: space-around;
+}
+
+#img_box img {
+  flex-direction: row;
+  height: 700px;
+  width: auto;
+  margin-left: 5px;
+}
+
+
+#info_box {
+  flex-direction: row;
+  border-style: solid;
+  border-width: 1px;
+  margin: 5px;
+  background-color: #969696;
+  padding-top: 10px;
+  height: 700px;
+  width: 33%;
+  text-align: left;
+  padding-left: 5px;
+}
+
+#countries_box {
+  flex-direction: row;
+  overflow-y: scroll;
+  list-style-type: none;
+  border-style: solid;
+  border-width: 1px;
+  margin: 5px;
+  background-color: #969696;
+  padding-top: 10px;
+  height: 700px;
+  width: 33%;
+  padding-left: 5px;
 }
