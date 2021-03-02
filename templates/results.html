@@ -8,7 +8,7 @@
 
     {% for i in range(result_json["results"]|length) %}
 
-    <h1>Title: {{ result_json["results"][i]["title"] }}</h1>
+    <h1><a href="title_details.html">Title: {{ result_json["results"][i]["title"] }}</a></h1>
     <img src="{{result_json["results"][i]["img"]}}" alt="Movie/Show image" width="500" height="600"> 
     <h3>Year: {{ result_json["results"][i]["year"] }}</h3>
     <p>Synopsis: {{ result_json["results"][i]["synopsis"] }}</p>
