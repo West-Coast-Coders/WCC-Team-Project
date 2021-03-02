@@ -111,14 +111,9 @@ def recently_added():
     # Use 'request.args' to retrieve the country code from the query parameters
     # country = request.args.get('countrycode')
 
-<<<<<<< HEAD
-    # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
-    output_list = get_recent(5)
-=======
     if not output_list:
         # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
         output_list = get_recent(15)
->>>>>>> frontend
     
 
     if request.method == 'POST':
