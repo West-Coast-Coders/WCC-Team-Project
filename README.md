@@ -13,6 +13,6 @@ Netflix Guide uses the [unogsNG API](https://rapidapi.com/unogs/api/unogsng) for
 
 ## Deployment
 
-Start using Netflix Guide today! Visit here.
+Start using Netflix Guide today! Visit [here](https://wcc-netflix-guide.herokuapp.com).
 
 The homepage displays the search bar at the top, along with two carousels below: one for Recently Added, and one for Expiring Soon. Each carousel scrolls through nine thumbnail images of titles belonging to their respective list. Clicking on the list section (Recently Added or Expiring Soon) will lead to a new page displaying all of the titles in a grid for that list. If the user clicks on a thumbnail image on any page, it will lead to a new page displaying all of the details for that title (name, release year, runtime, synopsis, maturity level, IMDb rating, Metascore rating, country availability, genres, etc.). 
