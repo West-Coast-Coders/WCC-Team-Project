@@ -81,7 +81,7 @@ def expiring():
     
     
     # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
-    output_list, title_details = get_expiring(15)
+    output_list, title_details = get_expiring(75)
 
 
     # Print the results of the API call
@@ -112,7 +112,7 @@ def recently_added():
     # country = request.args.get('countrycode')
 
     # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
-    output_list = get_recent(5)
+    output_list = get_recent(75)
     
 
     if request.method == 'POST':
