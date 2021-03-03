@@ -11,6 +11,10 @@ Netflix Guide also presents two lists for titles available in the U.S.: Recently
 
 Netflix Guide uses the [unogsNG API](https://rapidapi.com/unogs/api/unogsng) for all of its data. The API calls and routes are handled using the `flask` and `requests` libraries, and the results are displayed with Jinja2 templates. The code for the sliders for the filters was obtained from [this StackOverflow post](https://stackoverflow.com/questions/4753946/html5-slider-with-two-inputs-possible/64612997#64612997). We also used [Bootstrap](https://getbootstrap.com/docs/4.6/getting-started/introduction/) for CSS styling.
 
+## Front-end Technology
+
+NetflixGuide uses flexbox and bootstrap for all of its UI.  
+
 ## Deployment
 
 Start using Netflix Guide today! Visit [here](https://wcc-netflix-guide.herokuapp.com).
