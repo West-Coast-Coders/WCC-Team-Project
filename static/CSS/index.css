@@ -18,6 +18,12 @@ input[type=search] {
     width:200px;
 }
 
+#search_button {
+    border-radius: 8px;
+    background-color: whitesmoke;
+    margin-top: -9px;
+}
+
 input[type=search]:focus {
 	width: 600px;
 	background-color: #ccc;
