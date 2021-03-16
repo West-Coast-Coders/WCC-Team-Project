@@ -16,7 +16,12 @@
     <body id="home">
         <nav class="navbar">
             <a href="/">Home</a>
-            <input type="search" placeholder="Search..." aria-label="Search">
+            <form action="/search_results" method="GET">
+                
+                <input name="title" type="search" placeholder="Search..." aria-label="Search">
+                <button id="search_button" type="submit">Search</button>    
+            </form>
+            <script src="static/JS/autosearch.js"></script>
             <a href="#contact">Contact</a>
         </nav>
         <main>
@@ -24,7 +29,7 @@
             {% endblock %}
             <section>
                 <p>
-                    This project was developed by Make School students © 2021.
+                    This project was developed by West Coast Coders © 2021.
                 </p>
             </section>
         </main>
