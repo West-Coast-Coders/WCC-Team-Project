@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-        <title>Better Netflix - Our Slogan Here</title>
+        <title>NetflixGuide - A Better Netflix Experience</title>
     </head>
     <nav class="navbar">
         <a href="#home">Home</a>
@@ -28,6 +28,25 @@
         <a href="#contact">Contact</a>
     </nav>
     <body id="home">
+        <nav class="navbar">
+            <a href="#home">Home</a>
+            <form action="/search_results" method="GET">
+                <nav>
+                    <div class="container-fluid">
+                        <form autocomplete="off">
+                            <div class="autocomplete">
+                                <input id="myInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="title">          
+                                <button id="search_button" type="submit">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </nav>
+            </form>
+            <script src="static/JS/autosearch.js"></script>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        
         <!--                          -->
         <!-- Left and Right Carousels -->
         <!--                          -->

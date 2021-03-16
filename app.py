@@ -79,9 +79,9 @@ def expiring():
     # country = request.args.get('countrycode')
 
     
-    if not output_list:
-        # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
-        output_list, title_details = get_expiring(15)
+    
+    # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
+    output_list, title_details = get_expiring(75)
 
 
     # Print the results of the API call
@@ -111,9 +111,8 @@ def recently_added():
     # Use 'request.args' to retrieve the country code from the query parameters
     # country = request.args.get('countrycode')
 
-    if not output_list:
-        # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
-        output_list = get_recent(15)
+    # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
+    output_list = get_recent(75)
     
 
     if request.method == 'POST':
