@@ -1,13 +1,13 @@
 import os
 import requests
-from datetime import datetime, timedelta, date
+from datetime import timedelta, date
 
 headers = {
-    'x-rapidapi-key': os.getenv('API_KEY'),
+    'x-rapidapi-key': os.getenv('NETFLIX_API_KEY'),
     'x-rapidapi-host': "unogsng.p.rapidapi.com"
 }
 
-def get_expiring(limit:int):
+def netflix_get_expiring(limit:int):
     """Makes an API call to unogsNG to get a list of titles expiring soon. Limit is how many results will be returned."""
     params = {
         # Use a default country code of 78 for USA
@@ -31,7 +31,7 @@ def get_expiring(limit:int):
     return output_list, title_details
 
 
-def get_recent(limit:int):
+def netflix_get_recent(limit:int):
     """Makes an API call to unogsNG to get a list of titles recently added. Limit is how many results will be returned."""
 
     # Find date of two months ago from date of request

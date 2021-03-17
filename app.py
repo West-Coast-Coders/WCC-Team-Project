@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, request, send_file, redirect, url_for
 # from io import BytesIO
 from filters import filter_list
-from api_calls import get_expiring, get_recent
+from netflix_api_calls import netflix_get_expiring, netflix_get_recent
 # from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 
 
@@ -25,12 +25,10 @@ app = Flask(__name__)
 # API Info
 # Get the API key from the '.env' file
 load_dotenv()
-headers = {
-    'x-rapidapi-key': os.getenv('API_KEY'),
+netflix_headers = {
+    'x-rapidapi-key': os.getenv('NETFLIX_API_KEY'),
     'x-rapidapi-host': "unogsng.p.rapidapi.com"
 }
-# print(API_KEY)
-
 
 # Settings for image endpoint
 # Written with help from http://dataviztalk.blogspot.com/2016/01/serving-matplotlib-plot-that-follows.html
@@ -54,8 +52,8 @@ pp = PrettyPrinter(indent=4)
 @app.route('/')
 def home():
     """Displays the homepage"""
-    output_list_1, title_details_1 = get_expiring(9)
-    output_list_2 = get_recent(9)
+    output_list_1, title_details_1 = netflix_get_expiring(9)
+    output_list_2 = netflix_get_recent(9)
     return render_template("index.html", output_list_1=output_list_1, title_details_1=title_details_1, 
                                          output_list_2=output_list_2)
 
@@ -63,14 +61,10 @@ def home():
 def countrycode():
     url = "https://unogsng.p.rapidapi.com/countries"
 
-    headers = {
-        'x-rapidapi-key': "2e473e01d3msh716bf7f4c960569p101e32jsn9d46bb61a5dc",
-        'x-rapidapi-host': "unogsng.p.rapidapi.com"
-        }
-
-    response = requests.request("GET", url, headers=headers)
+    response = requests.request("GET", url, headers=netflix_headers)
 
     print(response.text)  
+
 
 @app.route('/expiring-soon', methods=['GET', 'POST'])
 def expiring():
@@ -81,7 +75,7 @@ def expiring():
     
     
     # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
-    output_list, title_details = get_expiring(75)
+    output_list, title_details = netflix_get_expiring(75)
 
 
     # Print the results of the API call
@@ -112,7 +106,7 @@ def recently_added():
     # country = request.args.get('countrycode')
 
     # Save results from initial API call to `output_list` and get addtional title details from "get_expiring"
-    output_list = get_recent(75)
+    output_list = netflix_get_recent(75)
     
 
     if request.method == 'POST':
@@ -138,192 +132,18 @@ def title_details(netflixid):
     """Displays all the details for an individual title on a full page."""
 
     # Send a GET request for the details of a specific title using its unique Netflix ID
-    details = requests.get(url='https://unogsng.p.rapidapi.com/title', params={'netflixid': netflixid}, headers=headers).json()["results"][0]
+    details = requests.get(url='https://unogsng.p.rapidapi.com/title', params={'netflixid': netflixid}, headers=netflix_headers).json()["results"][0]
 
     # Send a GET request for the country availability related to a specific title using its unique Netflix ID
-    countries = requests.get(url='https://unogsng.p.rapidapi.com/titlecountries', params={'netflixid': netflixid}, headers=headers).json()["results"]
+    countries = requests.get(url='https://unogsng.p.rapidapi.com/titlecountries', params={'netflixid': netflixid}, headers=netflix_headers).json()["results"]
 
     # Send a GET request for the genres related to a specific title using its unique Netflix ID
-    genres = requests.get(url='https://unogsng.p.rapidapi.com/titlegenres', params={'netflixid': netflixid}, headers=headers).json()["results"]
+    genres = requests.get(url='https://unogsng.p.rapidapi.com/titlegenres', params={'netflixid': netflixid}, headers=netflix_headers).json()["results"]
 
     # Send the resulting dictionary to a new page to display the details
     return render_template('title_details.html', details=details, countries=countries, genres=genres)
 
-# Create a function to separate string of languages into a list
 
-
-
-"""
-{
-            "country": "Argentina ",
-            "id": 21,
-            "countrycode": "AR"
-        },
-        {
-            "country": "Australia ",
-            "id": 23,
-            "countrycode": "AU"
-        },
-        {
-            "country": "Belgium ",
-            "id": 26,
-            "countrycode": "BE"
-        },
-        {
-            "country": "Brazil ",
-            "id": 29,
-            "countrycode": "BR"
-        },
-        {
-            "country": "Canada ",
-            "id": 33,
-            "countrycode": "CA"
-        },
-        {
-            "country": "Switzerland ",
-            "id": 34,
-            "countrycode": "CH"
-        },
-        {
-            "country": "Germany ",
-            "id": 39,
-            "countrycode": "DE"
-        },
-        {
-            "country": "France ",
-            "id": 45,
-            "countrycode": "FR"
-        },
-        {
-            "country": "United Kingdom",
-            "id": 46,
-            "countrycode": "GB"
-        },
-        {
-            "country": "Mexico ",
-            "id": 65,
-            "countrycode": "MX"
-        },
-        {
-            "country": "Netherlands ",
-            "id": 67,
-            "countrycode": "NL"
-        },
-        {
-            "country": "Sweden ",
-            "id": 73,
-            "countrycode": "SE"
-        },
-        {
-            "country": "United States",
-            "id": 78,
-            "countrycode": "US"
-        },
-        {
-            "country": "Iceland ",
-            "id": 265,
-            "countrycode": "IS"
-        },
-        {
-            "country": "Japan ",
-            "id": 267,
-            "countrycode": "JP"
-        },
-        {
-            "country": "Portugal ",
-            "id": 268,
-            "countrycode": "PT"
-        },
-        {
-            "country": "Italy ",
-            "id": 269,
-            "countrycode": "IT"
-        },
-        {
-            "country": "Spain ",
-            "id": 270,
-            "countrycode": "ES"
-        },
-        {
-            "country": "Czech Republic ",
-            "id": 307,
-            "countrycode": "CZ"
-        },
-        {
-            "country": "Greece ",
-            "id": 327,
-            "countrycode": "GR"
-        },
-        {
-            "country": "Hong Kong ",
-            "id": 331,
-            "countrycode": "HK"
-        },
-        {
-            "country": "Hungary ",
-            "id": 334,
-            "countrycode": "HU"
-        },
-        {
-            "country": "Israel ",
-            "id": 336,
-            "countrycode": "IL"
-        },
-        {
-            "country": "India ",
-            "id": 337,
-            "countrycode": "IN"
-        },
-        {
-            "country": "South Korea",
-            "id": 348,
-            "countrycode": "KR"
-        },
-        {
-            "country": "Lithuania ",
-            "id": 357,
-            "countrycode": "LT"
-        },
-        {
-            "country": "Poland ",
-            "id": 392,
-            "countrycode": "PL"
-        },
-        {
-            "country": "Romania ",
-            "id": 400,
-            "countrycode": "RO"
-        },
-        {
-            "country": "Russia",
-            "id": 402,
-            "countrycode": "RU"
-        },
-        {
-            "country": "Singapore ",
-            "id": 408,
-            "countrycode": "SG"
-        },
-        {
-            "country": "Slovakia ",
-            "id": 412,
-            "countrycode": "SK"
-        },
-        {
-            "country": "Thailand ",
-            "id": 425,
-            "countrycode": "TH"
-        },
-        {
-            "country": "Turkey ",
-            "id": 432,
-            "countrycode": "TR"
-        },
-        {
-            "country": "South Africa",
-            "id": 447,
-            "countrycode": "ZA"
-        }"""
 @app.route('/search_results')
 def results():
     """Search Result"""
@@ -335,12 +155,8 @@ def results():
         "start_year":"1972","orderby":"rating","query":title,"offset":"0"
     }
 
-    headers = {
-    'x-rapidapi-key': "5a290bcfe7mshae1b67802e67c81p1499cfjsneb78dae05462",
-    'x-rapidapi-host': "unogsng.p.rapidapi.com"
-    }
 
-    result_json = requests.get(url, headers=headers, params=params).json()
+    result_json = requests.get(url, headers=netflix_headers, params=params).json()
 
     # pp.pprint(result_json)
     

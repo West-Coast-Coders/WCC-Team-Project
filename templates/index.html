@@ -1,355 +1,254 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="/static/CSS/index.css">
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<head>
+	<link rel="stylesheet" href="/static/CSS/index.css">
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>StreamingGuide - A Better Streaming Experience</title>
+</head>
 
-        <title>NetflixGuide - A Better Netflix Experience</title>
-    </head>
-    <nav class="navbar">
-        <a href="#home">Home</a>
-        <form action="/search_results" method="GET">
-            <nav>
-                <div class="container-fluid">
-                    <form autocomplete="off">
-                        <div class="autocomplete">
-                            <input id="myInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="title">
-                            <button type="submit">Search</button>
-                        </div>
-                    </form>
-                </div>
-            </nav>
-        </form>
-        <script src="static/JS/autosearch.js"></script>
-        <a href="#contact">Contact</a>
-    </nav>
-    <body id="home">
-        <nav class="navbar">
-            <a href="#home">Home</a>
-            <form action="/search_results" method="GET">
-                <nav>
-                    <div class="container-fluid">
-                        <form autocomplete="off">
-                            <div class="autocomplete">
-                                <input id="myInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="title">          
-                                <button id="search_button" type="submit">Search</button>
-                            </div>
-                        </form>
-                    </div>
-                </nav>
-            </form>
-            <script src="static/JS/autosearch.js"></script>
-            <a href="#contact">Contact</a>
-        </nav>
+<body id="home">
+	<nav class="navbar"> <a href="#home">Home</a>
+		<form action="/search_results" method="GET">
+			<nav>
+				<div class="container-fluid">
+					<form autocomplete="off">
+						<div class="autocomplete">
+							<input id="myInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="title">
+							<button id="search_button" type="submit">Search</button>
+						</div>
+					</form>
+				</div>
+			</nav>
+		</form>
+		<script src="static/JS/autosearch.js"></script> <a href="#contact">Contact</a> </nav>
+	<!--                          -->
+	<!-- Left and Right Carousels -->
+	<!--                          -->
+	<div id="leaving-carousel">
+		<!--               -->
+		<!-- Left Carousel -->
+		<!--               -->
+		<a href="/recently-added" target="_blank">
+			<div id="recently-added">
+				<h1>Recently Added</h1>
+				<div class="container">
+					<div id="demo" class="carousel slide" data-ride="carousel">
+						<!-- Indicators -->
+						<ul class="carousel-indicators mb-0 pb-0">
+							<li data-target="#demo" data-slide-to="0" class="active"></li>
+							<li data-target="#demo" data-slide-to="1"></li>
+							<li data-target="#demo" data-slide-to="2"></li>
+						</ul>
+						<!-- The slideshow -->
+						<div class="carousel-inner no-padding my-5">
+							<!-- Slide 1 -->
+							<div class="carousel-item active">
+								<!-- Item 1 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top" src="{{ output_list_2[0]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ output_list_2[0]['title'] }}</h4>
+									<p>{{ output_list_2[0]['synopsis'] }}</p>
+								</div>
+								<!-- Item 2 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top rounded-bottom" src="{{ output_list_2[1]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ output_list_2[1]['title'] }}</h4>
+									<p>{{ output_list_2[1]['synopsis'] }}</p>
+								</div>
+								<!-- Item 3 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top rounded-bottom" src="{{ output_list_2[2]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ output_list_2[2]['title'] }}</h4>
+									<p>{{ output_list_2[2]['synopsis'] }}</p>
+								</div>
+							</div>
+							<!-- Slide 2 -->
+							<div class="carousel-item">
+								<!-- Item 1 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top" src="{{ output_list_2[3]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ output_list_2[3]['title'] }}</h4>
+									<p>{{ output_list_2[3]['synopsis'] }}</p>
+								</div>
+								<!-- Item 2 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top" src="{{ output_list_2[4]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ output_list_2[4]['title'] }}</h4>
+									<p>{{ output_list_2[4]['synopsis'] }}</p>
+								</div>
+								<!-- Item 3 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top" src="{{ output_list_2[5]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ output_list_2[5]['title'] }}</h4>
+									<p>{{ output_list_2[5]['synopsis'] }}</p>
+								</div>
+							</div>
+							<!-- Slide 3 -->
+							<div class="carousel-item">
+								<!-- Item 1 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top" src="{{ output_list_2[6]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ output_list_2[6]['title'] }}</h4>
+									<p>{{ output_list_2[6]['synopsis'] }}</p>
+								</div>
+								<!-- Item 2 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top" src="{{ output_list_2[7]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ output_list_2[7]['title'] }}</h4>
+									<p>{{ output_list_2[7]['synopsis'] }}</p>
+								</div>
+								<!-- Item 3 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top" src="{{ output_list_2[8]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ output_list_2[8]['title'] }}</h4>
+									<p>{{ output_list_2[8]['synopsis'] }}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a>
+		<!--                -->
+		<!-- Right Carousel -->
+		<!--                -->
+		<a href="/expiring-soon" target="_blank">
+			<div id="leaving-soon">
+				<h1>Leaving Soon</h1>
+				<div class="container">
+					<div id="demo1" class="carousel slide" data-ride="carousel">
+						<!-- Indicators -->
+						<ul class="carousel-indicators mb-0 pb-0">
+							<li data-target="#demo1" data-slide-to="0" class="active"></li>
+							<li data-target="#demo1" data-slide-to="1"></li>
+							<li data-target="#demo1" data-slide-to="2"></li>
+						</ul>
+						<!-- The slideshow -->
+						<div class="carousel-inner no-padding my-5">
+							<!-- Slide 1 -->
+							<div class="carousel-item active">
+								<!-- Item 1 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top" src="{{ title_details_1[0]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ title_details_1[0]['title'] }}</h4>
+									<p>{{ title_details_1[0]['synopsis'] }}
+										<br> Expires: {{ output_list_1[0]['expiredate'] }}</p>
+								</div>
+								<!-- Item 2 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top rounded-bottom" src="{{ title_details_1[1]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ title_details_1[1]['title'] }}</h4>
+									<p>{{ title_details_1[1]['synopsis'] }}
+										<br> Expires: {{ output_list_1[1]['expiredate'] }}</p>
+								</div>
+								<!-- Item 3 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top rounded-bottom" src="{{ title_details_1[2]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ title_details_1[2]['title'] }}</h4>
+									<p>{{ title_details_1[2]['synopsis'] }}
+										<br> Expires: {{ output_list_1[2]['expiredate'] }}</p>
+								</div>
+							</div>
+							<!-- Slide 2 -->
+							<div class="carousel-item">
+								<!-- Item 1 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top" src="{{ title_details_1[3]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ title_details_1[3]['title'] }}</h4>
+									<p>{{ title_details_1[3]['synopsis'] }}
+										<br> Expires: {{ output_list_1[3]['expiredate'] }}</p>
+								</div>
+								<!-- Item 2 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top" src="{{ title_details_1[4]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ title_details_1[4]['title'] }}</h4>
+									<p>{{ title_details_1[4]['synopsis'] }}
+										<br> Expires: {{ output_list_1[4]['expiredate'] }}</p>
+								</div>
+								<!-- Item 3 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top" src="{{ title_details_1[5]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ title_details_1[5]['title'] }}</h4>
+									<p>{{ title_details_1[5]['synopsis'] }}
+										<br> Expires: {{ output_list_1[5]['expiredate'] }}</p>
+								</div>
+							</div>
+							<!-- Slide 3 -->
+							<div class="carousel-item">
+								<!-- Item 1 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top" src="{{ title_details_1[6]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ title_details_1[6]['title'] }}</h4>
+									<p>{{ title_details_1[6]['synopsis'] }}
+										<br> Expires: {{ output_list_1[6]['expiredate'] }}</p>
+								</div>
+								<!-- Item 2 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top" src="{{ title_details_1[7]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ title_details_1[7]['title'] }}</h4>
+									<p>{{ title_details_1[7]['synopsis'] }}
+										<br> Expires: {{ output_list_1[7]['expiredate'] }}</p>
+								</div>
+								<!-- Item 3 -->
+								<div class="col-xs-4 col-sm-4 col-md-4">
+									<a href="#" onclick=abc(this) class="slider_info"> <img class="img-fluid card-img-top" src="{{ title_details_1[8]['img'] }}">
+										<div class="card-img-overlay t_img"> </div>
+									</a>
+									<h4>{{ title_details_1[8]['title'] }}</h4>
+									<p>{{ title_details_1[8]['synopsis'] }}
+										<br> Expires: {{ output_list_1[8]['expiredate'] }}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+	<div id="contact"> </div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
 
-        
-        <!--                          -->
-        <!-- Left and Right Carousels -->
-        <!--                          -->
-
-        <div id="leaving-carousel">
-
-                <!--               -->
-                <!-- Left Carousel -->
-                <!--               -->
-            <a href="/recently-added" target="_blank">
-            <div id="recently-added">
-                <h1>Recently Added</h1>
-                    <div class="container">
-                        <div id="demo" class="carousel slide" data-ride="carousel">
-                            <!-- Indicators -->
-                            <ul class="carousel-indicators mb-0 pb-0">
-                                <li data-target="#demo" data-slide-to="0" class="active"></li>
-                                <li data-target="#demo" data-slide-to="1"></li>
-                                <li data-target="#demo" data-slide-to="2"></li>
-                            </ul>
-                            <!-- The slideshow -->
-                            <div class="carousel-inner no-padding my-5">
-
-                                <!-- Slide 1 -->
-                                <div class="carousel-item active">
-                                    <!-- Item 1 -->
-                                    <div class="col-xs-4 col-sm-4 col-md-4">
-                                        <a href="#" onclick=abc(this) class="slider_info">
-                                        <img class="img-fluid card-img-top" src="{{ output_list_2[0]['img'] }}">
-                                        <div class="card-img-overlay t_img">
-                                        
-                                        </div>
-                                        </a>
-                                        <h4>{{ output_list_2[0]['title'] }}</h4>
-                                        <p>{{ output_list_2[0]['synopsis'] }}</p>
-                                        
-                                    </div>
-                                    <!-- Item 2 -->
-                                    <div class="col-xs-4 col-sm-4 col-md-4">
-                                        <a href="#" onclick=abc(this) class="slider_info">
-                                        <img class="img-fluid card-img-top rounded-bottom" src="{{ output_list_2[1]['img'] }}">
-                                        <div class="card-img-overlay t_img">
-                                            
-                                        </div>
-                                        </a>
-                                        <h4>{{ output_list_2[1]['title'] }}</h4>
-                                        <p>{{ output_list_2[1]['synopsis'] }}</p>
-
-                                    </div>
-                                    <!-- Item 3 -->
-                                    <div class="col-xs-4 col-sm-4 col-md-4">
-                                        <a href="#" onclick=abc(this) class="slider_info">
-                                        <img class="img-fluid card-img-top rounded-bottom" src="{{ output_list_2[2]['img'] }}">
-                                        <div class="card-img-overlay t_img">
-                                            
-                                        </div>
-                                        </a>
-                                        <h4>{{ output_list_2[2]['title'] }}</h4>
-                                        <p>{{ output_list_2[2]['synopsis'] }}</p>
-
-                                    </div>
-                                </div>
-
-
-                                    <!-- Slide 2 -->
-                                    <div class="carousel-item">
-                                        <!-- Item 1 -->
-                                        <div class="col-xs-4 col-sm-4 col-md-4">
-                                            <a href="#" onclick=abc(this) class="slider_info">
-                                            <img class="img-fluid card-img-top" src="{{ output_list_2[3]['img'] }}">
-                                            <div class="card-img-overlay t_img">
-                                                
-                                            </div>
-                                            </a>
-                                            <h4>{{ output_list_2[3]['title'] }}</h4>
-                                            <p>{{ output_list_2[3]['synopsis'] }}</p>
-
-                                        </div>
-                                        <!-- Item 2 -->
-                                        <div class="col-xs-4 col-sm-4 col-md-4">
-                                            <a href="#" onclick=abc(this) class="slider_info">
-                                            <img class="img-fluid card-img-top" src="{{ output_list_2[4]['img'] }}">
-                                            <div class="card-img-overlay t_img">
-                                                
-                                            </div>
-                                            </a>
-                                            <h4>{{ output_list_2[4]['title'] }}</h4>
-                                            <p>{{ output_list_2[4]['synopsis'] }}</p>
-
-                                        </div>
-                                        <!-- Item 3 -->
-                                        <div class="col-xs-4 col-sm-4 col-md-4">
-                                            <a href="#" onclick=abc(this) class="slider_info">
-                                            <img class="img-fluid card-img-top" src="{{ output_list_2[5]['img'] }}">
-                                            <div class="card-img-overlay t_img">
-                                                
-                                            </div>
-                                            </a>
-                                            <h4>{{ output_list_2[5]['title'] }}</h4>
-                                            <p>{{ output_list_2[5]['synopsis'] }}</p>
-                                            
-                                        </div>
-                                    </div>
-
-
-                                    <!-- Slide 3 -->
-                                    <div class="carousel-item">
-                                        <!-- Item 1 -->
-                                        <div class="col-xs-4 col-sm-4 col-md-4">
-                                            <a href="#" onclick=abc(this) class="slider_info">
-                                            <img class="img-fluid card-img-top" src="{{ output_list_2[6]['img'] }}">
-                                            <div class="card-img-overlay t_img">
-                                                
-                                            </div>
-                                            </a>
-                                            <h4>{{ output_list_2[6]['title'] }}</h4>
-                                            <p>{{ output_list_2[6]['synopsis'] }}</p>
-                                            
-                                        </div>
-                                        <!-- Item 2 -->
-                                        <div class="col-xs-4 col-sm-4 col-md-4">
-                                            <a href="#" onclick=abc(this) class="slider_info">
-                                            <img class="img-fluid card-img-top" src="{{ output_list_2[7]['img'] }}">
-                                            <div class="card-img-overlay t_img">
-                                                
-                                            </div>
-                                            </a>
-                                            <h4>{{ output_list_2[7]['title'] }}</h4>
-                                            <p>{{ output_list_2[7]['synopsis'] }}</p>
-
-                                        </div>
-                                        <!-- Item 3 -->
-                                        <div class="col-xs-4 col-sm-4 col-md-4">
-                                            <a href="#" onclick=abc(this) class="slider_info">
-                                            <img class="img-fluid card-img-top" src="{{ output_list_2[8]['img'] }}">
-                                            <div class="card-img-overlay t_img">
-                                                
-                                            </div>
-                                            </a>
-                                            <h4>{{ output_list_2[8]['title'] }}</h4>
-                                            <p>{{ output_list_2[8]['synopsis'] }}</p>
-
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            </a>
-
-                <!--                -->
-                <!-- Right Carousel -->
-                <!--                -->
-
-            <a href="/expiring-soon" target="_blank">
-            <div id="leaving-soon">
-                <h1>Leaving Soon</h1>
-                <div class="container">
-                    <div id="demo1" class="carousel slide" data-ride="carousel">
-                        <!-- Indicators -->
-                        <ul class="carousel-indicators mb-0 pb-0">
-                            <li data-target="#demo1" data-slide-to="0" class="active"></li>
-                            <li data-target="#demo1" data-slide-to="1"></li>
-                            <li data-target="#demo1" data-slide-to="2"></li>
-                        </ul>
-                        <!-- The slideshow -->
-                        <div class="carousel-inner no-padding my-5">
-
-                            <!-- Slide 1 -->
-                            <div class="carousel-item active">
-                                <!-- Item 1 -->
-                                <div class="col-xs-4 col-sm-4 col-md-4">
-                                    <a href="#" onclick=abc(this) class="slider_info">
-                                    <img class="img-fluid card-img-top" src="{{ title_details_1[0]['img'] }}">
-                                    <div class="card-img-overlay t_img">
-                                    
-                                    </div>
-                                    </a>
-                                    <h4>{{ title_details_1[0]['title'] }}</h4>
-                                    <p>{{ title_details_1[0]['synopsis'] }} <br>
-                                       Expires: {{ output_list_1[0]['expiredate'] }}</p>
-                                       
-                                </div>
-                                <!-- Item 2 -->
-                                <div class="col-xs-4 col-sm-4 col-md-4">
-                                    <a href="#" onclick=abc(this) class="slider_info">
-                                    <img class="img-fluid card-img-top rounded-bottom" src="{{ title_details_1[1]['img'] }}">
-                                    <div class="card-img-overlay t_img">
-                                        
-                                    </div>
-                                    </a>
-                                    <h4>{{ title_details_1[1]['title'] }}</h4>
-                                    <p>{{ title_details_1[1]['synopsis'] }} <br>
-                                       Expires: {{ output_list_1[1]['expiredate'] }}</p>
-
-                                </div>
-                                <!-- Item 3 -->
-                                <div class="col-xs-4 col-sm-4 col-md-4">
-                                    <a href="#" onclick=abc(this) class="slider_info">
-                                    <img class="img-fluid card-img-top rounded-bottom" src="{{ title_details_1[2]['img'] }}">
-                                    <div class="card-img-overlay t_img">
-                                        
-                                    </div>
-                                    </a>
-                                    <h4>{{ title_details_1[2]['title'] }}</h4>
-                                    <p>{{ title_details_1[2]['synopsis'] }} <br>
-                                        Expires: {{ output_list_1[2]['expiredate'] }}</p>
-
-                                </div>
-                                </div>
-
-
-                                <!-- Slide 2 -->
-                                <div class="carousel-item">
-                                    <!-- Item 1 -->
-                                    <div class="col-xs-4 col-sm-4 col-md-4">
-                                        <a href="#" onclick=abc(this) class="slider_info">
-                                        <img class="img-fluid card-img-top" src="{{ title_details_1[3]['img'] }}">
-                                        <div class="card-img-overlay t_img">
-                                            
-                                        </div>
-                                        </a>
-                                        <h4>{{ title_details_1[3]['title'] }}</h4>
-                                        <p>{{ title_details_1[3]['synopsis'] }} <br>
-                                           Expires: {{ output_list_1[3]['expiredate'] }}</p>
-
-                                    </div>
-                                    <!-- Item 2 -->
-                                    <div class="col-xs-4 col-sm-4 col-md-4">
-                                        <a href="#" onclick=abc(this) class="slider_info">
-                                        <img class="img-fluid card-img-top" src="{{ title_details_1[4]['img'] }}">
-                                        <div class="card-img-overlay t_img">
-                                            
-                                        </div>
-                                        </a>
-                                        <h4>{{ title_details_1[4]['title'] }}</h4>
-                                        <p>{{ title_details_1[4]['synopsis'] }} <br>
-                                           Expires: {{ output_list_1[4]['expiredate'] }}</p>
-
-                                    </div>
-                                    <!-- Item 3 -->
-                                    <div class="col-xs-4 col-sm-4 col-md-4">
-                                        <a href="#" onclick=abc(this) class="slider_info">
-                                        <img class="img-fluid card-img-top" src="{{ title_details_1[5]['img'] }}">
-                                        <div class="card-img-overlay t_img">
-                                            
-                                        </div>
-                                        </a>
-                                        <h4>{{ title_details_1[5]['title'] }}</h4>
-                                        <p>{{ title_details_1[5]['synopsis'] }} <br>
-                                           Expires: {{ output_list_1[5]['expiredate'] }}</p>
-                                           
-                                    </div>
-                                </div>
-
-
-                                <!-- Slide 3 -->
-                                <div class="carousel-item">
-                                    <!-- Item 1 -->
-                                    <div class="col-xs-4 col-sm-4 col-md-4">
-                                        <a href="#" onclick=abc(this) class="slider_info">
-                                        <img class="img-fluid card-img-top" src="{{ title_details_1[6]['img'] }}">
-                                        <div class="card-img-overlay t_img">
-                                            
-                                        </div>
-                                        </a>
-                                        <h4>{{ title_details_1[6]['title'] }}</h4>
-                                        <p>{{ title_details_1[6]['synopsis'] }} <br>
-                                           Expires: {{ output_list_1[6]['expiredate'] }}</p>
-                                           
-                                    </div>
-                                    <!-- Item 2 -->
-                                    <div class="col-xs-4 col-sm-4 col-md-4">
-                                        <a href="#" onclick=abc(this) class="slider_info">
-                                        <img class="img-fluid card-img-top" src="{{ title_details_1[7]['img'] }}">
-                                        <div class="card-img-overlay t_img">
-                                            
-                                        </div>
-                                        </a>
-                                        <h4>{{ title_details_1[7]['title'] }}</h4>
-                                        <p>{{ title_details_1[7]['synopsis'] }} <br>
-                                           Expires: {{ output_list_1[7]['expiredate'] }}</p>
-
-                                    </div>
-                                    <!-- Item 3 -->
-                                    <div class="col-xs-4 col-sm-4 col-md-4">
-                                        <a href="#" onclick=abc(this) class="slider_info">
-                                        <img class="img-fluid card-img-top" src="{{ title_details_1[8]['img'] }}">
-                                        <div class="card-img-overlay t_img">
-                                            
-                                        </div>
-                                        </a>
-                                        <h4>{{ title_details_1[8]['title'] }}</h4>
-                                        <p>{{ title_details_1[8]['synopsis'] }} <br>
-                                           Expires: {{ output_list_1[8]['expiredate'] }}</p>
-
-                                    </div>
-                                </div>
-                        </div>
-                    </div>
-                </div>
-        </div>
-        </a>
-      </div>
-    </body>
 </html>
