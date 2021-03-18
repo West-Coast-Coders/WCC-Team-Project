@@ -8,6 +8,16 @@ digital_trends_services = ["hulu", "hbo", "amazon-prime", "disney-plus", "netfli
 # Arriving and leaving: HBO, Hulu, Netflix
 # Only arriving: Disney+, Amazon Prime (split into Movies and TV), Peacock
 
+
+# Pseudocode
+"""
+Iterate through tags until h2 found
+Iterate through h3 tags until h2 found again
+Iterate through list items under each h3
+
+"""
+
+
 def scrape_digitalTrends(service):
     """
     Grabs the HTML code of a Digital Trends new/expiring webpage.
@@ -57,10 +67,11 @@ def arriving_titles(soup_article):
             # Extra info is contained in the rest of the line
             arriving_title_extra = title_split[1].strip(")")
             # If the first character of the extra info is a letter, then 
-            # add that piece to the name and save the release year as extra info
+            # add that piece to the name and save the release year as extra info (if the year is included)
             if arriving_title_extra[0].isalpha():
                 arriving_title_name += ("(" + arriving_title_extra)
-                arriving_title_extra = title_split[2].strip(")")
+                if len(title_split) > 2:
+                    arriving_title_extra = title_split[2].strip(")")
             # Add the new three-tuple with the name, arrival date, and extra info to the return list
             arriving_list.append((arriving_title_name, arrival_date, arriving_title_extra))
 
@@ -83,9 +94,11 @@ def leaving_titles(soup_article):
     leaving_items = []
     for date_section in leaving_sections:
         leaving_items += date_section.find_all("h3")
+    print(leaving_items)
 
     # Iterate through each date 
     for date in leaving_items:
+        print(date)
         # Save the date text
         leaving_date = date.text
         # Iterate through each bullet point
@@ -100,22 +113,24 @@ def leaving_titles(soup_article):
             # add that piece to the name and save the release year as extra info
             if leaving_title_extra[0].isalpha():
                 leaving_title_name += ("(" + leaving_title_extra)
-                leaving_title_extra = title_split[2].strip(")")
+                if len(title_split) > 2:
+                    leaving_title_extra = title_split[2].strip(")")
             # Add the new three-tuple with the name, expiration date, and extra info to the return list
             leaving_list.append((leaving_title_name, leaving_date, leaving_title_extra))
+            print("new tuple")
 
     return leaving_list
     
 
 
-print(arriving_titles(scrape_digitalTrends("hulu")))
+# print(arriving_titles(scrape_digitalTrends("hulu")))
 print(leaving_titles(scrape_digitalTrends("hulu")))
 
-print(arriving_titles(scrape_digitalTrends("hbo")))
-print(leaving_titles(scrape_digitalTrends("hbo")))
+# print(arriving_titles(scrape_digitalTrends("hbo")))
+# print(leaving_titles(scrape_digitalTrends("hbo")))
 
-print(arriving_titles(scrape_digitalTrends("amazon-prime")))
-print(leaving_titles(scrape_digitalTrends("amazon-prime")))
+# print(arriving_titles(scrape_digitalTrends("amazon-prime")))
+# print(leaving_titles(scrape_digitalTrends("amazon-prime")))
 
-print(arriving_titles(scrape_digitalTrends("disney-plus")))
-print(leaving_titles(scrape_digitalTrends("disney-plus")))
+# print(arriving_titles(scrape_digitalTrends("disney-plus")))
+# print(leaving_titles(scrape_digitalTrends("disney-plus")))
