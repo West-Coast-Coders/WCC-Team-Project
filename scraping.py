@@ -9,9 +9,10 @@ digital_trends_services = ["hulu", "hbo", "amazon-prime", "disney-plus", "netfli
 # Only arriving: Disney+, Amazon Prime (split into Movies and TV), Peacock
 
 def scrape_digitalTrends(service):
-    """Parses the HTML code of a webpage.
-    
-    Returns: a list of three-tuples consisting of title names, release years, and expiration/addition dates
+    """
+    Grabs the HTML code of a Digital Trends new/expiring webpage.
+    Input: a string parameter indicating the streaming service to plug into the URL.
+    Returns: a Beautiful Soup object containing the body content of the webpage used for parsing.
     """
 
     # Load the webpage content using the input link
@@ -27,23 +28,79 @@ def scrape_digitalTrends(service):
 
 
 def arriving_titles(soup_article):
+    """
+    Parses the HTML code of a Digital Trends webpage for titles that are arriving soon.
+    Input: a Beautiful Soup object containing the body content of the webpage used for parsing.
+    Returns: a list of three-tuples consisting of title name, addition date, and extra name info.
+    """
 
     # Instantiate empty list that will be filled and returned later
     arriving_list = []
 
-    arriving = soup_article.find_all("h3", string=re.compile("(N|n)ew"))
+    # Find all the sections with arriving titles
+    arriving_section = soup_article.find_all("h2", string=re.compile("(N|n)ew"))
+    # Find all of the date sections
+    arriving_items = arriving_section.find_all("h3")
 
-    for date in arriving:
+    # Iterate through each date 
+    for date in arriving_items:
+        # Save the date text
         arrival_date = date.text
+        # Iterate through each bullet point
         for title in date.find_all("li"):
-            title_split = title.split("(")
+            # Split the line by opening parentheses
+            title_split = title.text.split("(")
+            # The name is the first part of the line
             arriving_title_name = title_split[0]
+            # Extra info is contained in the rest of the line
             arriving_title_extra = title_split[1].strip(")")
-            # if arriving_title_extra.isdigit():
-            #     release_year = arriving_title_extra
+            # If the first character of the extra info is a letter, then 
+            # add that piece to the name and save the release year as extra info
+            if arriving_title_extra[0].isalpha():
+                arriving_title_name += ("(" + arriving_title_extra)
+                arriving_title_extra = title_split[2].strip(")")
+            # Add the new three-tuple with the name, arrival date, and extra info to the return list
             arriving_list.append((arriving_title_name, arrival_date, arriving_title_extra))
 
     return arriving_list
+
+
+def leaving_titles(soup_article):
+    """
+    Parses the HTML code of a Digital Trends webpage for titles that are leaving soon.
+    Input: a Beautiful Soup object containing the body content of the webpage used for parsing.
+    Returns: a list of three-tuples consisting of title name, expiration date, and extra name info.
+    """
+
+    # Instantiate empty list that will be filled and returned later
+    leaving_list = []
+
+    # Find all the sections with expiring titles
+    leaving_section = soup_article.find_all("h2", string=re.compile("(L|l)eaving"))
+    # Find all of the date sections
+    leaving_items = leaving_section.find_all("h3")
+
+    # Iterate through each date 
+    for date in leaving_items:
+        # Save the date text
+        leaving_date = date.text
+        # Iterate through each bullet point
+        for title in date.find_all("li"):
+            # Split the line by opening parentheses
+            title_split = title.text.split("(")
+            # The name is the first part of the line
+            leaving_title_name = title_split[0]
+            # Extra info is contained in the rest of the line
+            leaving_title_extra = title_split[1].strip(")")
+            # If the first character of the extra info is a letter, then 
+            # add that piece to the name and save the release year as extra info
+            if leaving_title_extra[0].isalpha():
+                leaving_title_name += ("(" + leaving_title_extra)
+                leaving_title_extra = title_split[2].strip(")")
+            # Add the new three-tuple with the name, expiration date, and extra info to the return list
+            leaving_list.append((leaving_title_name, leaving_date, leaving_title_extra))
+
+    return leaving_list
     
 
 
