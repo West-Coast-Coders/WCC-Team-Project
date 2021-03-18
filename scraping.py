@@ -38,9 +38,11 @@ def arriving_titles(soup_article):
     arriving_list = []
 
     # Find all the sections with arriving titles
-    arriving_section = soup_article.find_all("h2", string=re.compile("(N|n)ew"))
+    arriving_sections = soup_article.find_all("h2", string=re.compile("(N|n)ew"))
     # Find all of the date sections
-    arriving_items = arriving_section.find_all("h3")
+    arriving_items = []
+    for date_section in arriving_sections:
+        arriving_items += date_section.find_all("h3")
 
     # Iterate through each date 
     for date in arriving_items:
@@ -76,9 +78,11 @@ def leaving_titles(soup_article):
     leaving_list = []
 
     # Find all the sections with expiring titles
-    leaving_section = soup_article.find_all("h2", string=re.compile("(L|l)eaving"))
+    leaving_sections = soup_article.find_all("h2", string=re.compile("(L|l)eaving"))
     # Find all of the date sections
-    leaving_items = leaving_section.find_all("h3")
+    leaving_items = []
+    for date_section in leaving_sections:
+        leaving_items += date_section.find_all("h3")
 
     # Iterate through each date 
     for date in leaving_items:
@@ -104,3 +108,14 @@ def leaving_titles(soup_article):
     
 
 
+print(arriving_titles(scrape_digitalTrends("hulu")))
+print(leaving_titles(scrape_digitalTrends("hulu")))
+
+print(arriving_titles(scrape_digitalTrends("hbo")))
+print(leaving_titles(scrape_digitalTrends("hbo")))
+
+print(arriving_titles(scrape_digitalTrends("amazon-prime")))
+print(leaving_titles(scrape_digitalTrends("amazon-prime")))
+
+print(arriving_titles(scrape_digitalTrends("disney-plus")))
+print(leaving_titles(scrape_digitalTrends("disney-plus")))
