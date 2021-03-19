@@ -49,17 +49,31 @@ def arriving_titles(soup_article):
 
     # Find all the sections with arriving titles
     arriving_sections = soup_article.find_all("h2", string=re.compile("(N|n)ew"))
-    # Find all of the date sections
+    # Find all of the date sections (h3 elements)
     arriving_items = []
-    for date_section in arriving_sections:
-        arriving_items += date_section.find_all("h3")
+    # Find all of the list items under each date section (ul elements)
+    arriving_items_list = []
+    for section in arriving_sections:
+        for section_sibling in section.find_next_siblings():
+            if section_sibling.name == "h3":
+                arriving_items += section_sibling
+            if section_sibling.name == "ul":
+                arriving_items_list += section_sibling
+            if section_sibling.name == "h2":
+                break
+        # for date_section in section.find_next_siblings("h3"):
+        #     arriving_items += date_section
+        # print(arriving_items_list)
 
     # Iterate through each date 
-    for date in arriving_items:
+    for i in range(len(arriving_items)):
         # Save the date text
-        arrival_date = date.text
-        # Iterate through each bullet point
-        for title in date.find_all("li"):
+        arrival_date = arriving_items[i].string
+        # Iterate through each list under each date
+        for title in arriving_items_list[i]:
+            # Ignore new-line characters in the list
+            if title == "\n":
+                continue
             # Split the line by opening parentheses
             title_split = title.text.split("(")
             # The name is the first part of the line
@@ -90,19 +104,29 @@ def leaving_titles(soup_article):
 
     # Find all the sections with expiring titles
     leaving_sections = soup_article.find_all("h2", string=re.compile("(L|l)eaving"))
-    # Find all of the date sections
+    # Find all of the date sections (h3 elements)
     leaving_items = []
-    for date_section in leaving_sections:
-        leaving_items += date_section.find_all("h3")
-    print(leaving_items)
+     # Find all of the list items under each date section (ul elements)
+    leaving_items_list = []
+    for section in leaving_sections:
+        for section_sibling in section.find_next_siblings():
+            if section_sibling.name == "h3":
+                leaving_items += section_sibling
+            if section_sibling.name == "ul":
+                leaving_items_list += section_sibling
+            if section_sibling.name == "h2":
+                break
+    
 
     # Iterate through each date 
-    for date in leaving_items:
-        print(date)
+    for i in range(len(leaving_items)):
         # Save the date text
-        leaving_date = date.text
-        # Iterate through each bullet point
-        for title in date.find_all("li"):
+        leaving_date = leaving_items[i].string
+        # Iterate through each list under each date
+        for title in leaving_items_list[i]:
+            # Ignore new-line characters in the list
+            if title == "\n":
+                continue
             # Split the line by opening parentheses
             title_split = title.text.split("(")
             # The name is the first part of the line
@@ -110,20 +134,19 @@ def leaving_titles(soup_article):
             # Extra info is contained in the rest of the line
             leaving_title_extra = title_split[1].strip(")")
             # If the first character of the extra info is a letter, then 
-            # add that piece to the name and save the release year as extra info
+            # add that piece to the name and save the release year as extra info (if the year is included)
             if leaving_title_extra[0].isalpha():
                 leaving_title_name += ("(" + leaving_title_extra)
                 if len(title_split) > 2:
                     leaving_title_extra = title_split[2].strip(")")
-            # Add the new three-tuple with the name, expiration date, and extra info to the return list
+            # Add the new three-tuple with the name, leaving date, and extra info to the return list
             leaving_list.append((leaving_title_name, leaving_date, leaving_title_extra))
-            print("new tuple")
-
+        
     return leaving_list
     
 
 
-# print(arriving_titles(scrape_digitalTrends("hulu")))
+print(arriving_titles(scrape_digitalTrends("hulu")))
 print(leaving_titles(scrape_digitalTrends("hulu")))
 
 # print(arriving_titles(scrape_digitalTrends("hbo")))
@@ -132,5 +155,5 @@ print(leaving_titles(scrape_digitalTrends("hulu")))
 # print(arriving_titles(scrape_digitalTrends("amazon-prime")))
 # print(leaving_titles(scrape_digitalTrends("amazon-prime")))
 
-# print(arriving_titles(scrape_digitalTrends("disney-plus")))
-# print(leaving_titles(scrape_digitalTrends("disney-plus")))
+print(arriving_titles(scrape_digitalTrends("disney-plus")))
+print(leaving_titles(scrape_digitalTrends("disney-plus")))
