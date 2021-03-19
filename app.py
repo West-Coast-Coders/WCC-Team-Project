@@ -25,9 +25,15 @@ app = Flask(__name__)
 # API Info
 # Get the API key from the '.env' file
 load_dotenv()
+
 netflix_headers = {
     'x-rapidapi-key': os.getenv('NETFLIX_API_KEY'),
     'x-rapidapi-host': "unogsng.p.rapidapi.com"
+}
+
+imdb_headers = {
+    'x-rapidapi-key': os.getenv('IMDB_API_KEY'),
+    'x-rapidapi-host': "imdb8.p.rapidapi.com"
 }
 
 # Settings for image endpoint
@@ -127,21 +133,45 @@ def recently_added():
     return render_template('recently_added.html', results = output_list)
 
 
-@app.route('/title/<netflixid>')
-def title_details(netflixid):
+@app.route('/title/<titleid>')
+def title_details(titleid):
     """Displays all the details for an individual title on a full page."""
 
-    # Send a GET request for the details of a specific title using its unique Netflix ID
-    details = requests.get(url='https://unogsng.p.rapidapi.com/title', params={'netflixid': netflixid}, headers=netflix_headers).json()["results"][0]
+    related_titles = []
+    details = None
 
-    # Send a GET request for the country availability related to a specific title using its unique Netflix ID
-    countries = requests.get(url='https://unogsng.p.rapidapi.com/titlecountries', params={'netflixid': netflixid}, headers=netflix_headers).json()["results"]
+    if not titleid.startswith('tt'):
+        # Send a GET request for the details of a specific title using its unique Netflix ID
+        details = requests.get(url='https://unogsng.p.rapidapi.com/title', params={'netflixid': titleid}, headers=netflix_headers).json()["results"][0]
 
-    # Send a GET request for the genres related to a specific title using its unique Netflix ID
-    genres = requests.get(url='https://unogsng.p.rapidapi.com/titlegenres', params={'netflixid': netflixid}, headers=netflix_headers).json()["results"]
+        # Send a GET request for the country availability related to a specific title using its unique Netflix ID
+        countries = requests.get(url='https://unogsng.p.rapidapi.com/titlecountries', params={'netflixid': titleid}, headers=netflix_headers).json()["results"]
 
-    # Send the resulting dictionary to a new page to display the details
-    return render_template('title_details.html', details=details, countries=countries, genres=genres)
+        # Send a GET request for the genres related to a specific title using its unique Netflix ID
+        genres = requests.get(url='https://unogsng.p.rapidapi.com/titlegenres', params={'netflixid': titleid}, headers=netflix_headers).json()["results"]
+
+        titleid = requests.get(url="https://imdb8.p.rapidapi.com/title/find", params={"q": details['title']}, headers=imdb_headers).json()['results'][0]['id'][7:]
+
+    else:
+        imdb_title_info = requests.get(url="https://imdb8.p.rapidapi.com/title/get-overview-details", params={"tconst": titleid}, headers=imdb_headers).json()
+
+    related_title_ids = requests.get(url="https://imdb8.p.rapidapi.com/title/get-more-like-this", params={"tconst": str(titleid)}, headers=imdb_headers).json()
+
+    for title in related_title_ids:
+        title = title[7:]
+        title_info = requests.get(url="https://imdb8.p.rapidapi.com/title/get-base", params={"tconst": title}, headers=imdb_headers).json()
+
+        title_info['id'] = title_info['id'][7:]
+        title_info['id'] = title_info['id'][:-1]
+
+        related_titles.append(title_info)
+
+    if details:
+        # Send the resulting dictionary to a new page to display the details
+        return render_template('title_details.html', details=details, countries=countries, genres=genres, related_titles=related_titles)
+    else:
+        return render_template('title_details.html', related_titles=related_titles, title_info=imdb_title_info)
+        
 
 
 @app.route('/search_results')
