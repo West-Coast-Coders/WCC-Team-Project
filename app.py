@@ -135,42 +135,94 @@ def recently_added():
 
 @app.route('/title/<titleid>')
 def title_details(titleid):
-    """Displays all the details for an individual title on a full page."""
+    """Displays all the details for an individual title on a full page, along with related titles."""
 
     related_titles = []
+    # Initially setting details to 'None' to be able to check whether or not the title information should come from the Netflix
+    # or IMDB API
     details = None
 
+    # Making relevant API calls based on whether or not the title ID is a Netflix ID or IMDB ID
     if not titleid.startswith('tt'):
         # Send a GET request for the details of a specific title using its unique Netflix ID
-        details = requests.get(url='https://unogsng.p.rapidapi.com/title', params={'netflixid': titleid}, headers=netflix_headers).json()["results"][0]
+        details = requests.get(
+            url='https://unogsng.p.rapidapi.com/title', 
+            params={'netflixid': titleid}, 
+            headers=netflix_headers
+            ).json()["results"][0]
 
         # Send a GET request for the country availability related to a specific title using its unique Netflix ID
-        countries = requests.get(url='https://unogsng.p.rapidapi.com/titlecountries', params={'netflixid': titleid}, headers=netflix_headers).json()["results"]
+        countries = requests.get(
+            url='https://unogsng.p.rapidapi.com/titlecountries', 
+            params={'netflixid': titleid}, 
+            headers=netflix_headers
+            ).json()["results"]
 
         # Send a GET request for the genres related to a specific title using its unique Netflix ID
-        genres = requests.get(url='https://unogsng.p.rapidapi.com/titlegenres', params={'netflixid': titleid}, headers=netflix_headers).json()["results"]
+        genres = requests.get(
+            url='https://unogsng.p.rapidapi.com/titlegenres', 
+            params={'netflixid': titleid}, 
+            headers=netflix_headers
+            ).json()["results"]
 
-        titleid = requests.get(url="https://imdb8.p.rapidapi.com/title/find", params={"q": details['title']}, headers=imdb_headers).json()['results'][0]['id'][7:]
+        # Send a GET request for the IMDB ID of the Netflix title
+        titleid = requests.get(
+            url="https://imdb8.p.rapidapi.com/title/find", 
+            params={"q": details['title']}, 
+            headers=imdb_headers
+            ).json()['results'][0]['id'][7:]
 
     else:
-        imdb_title_info = requests.get(url="https://imdb8.p.rapidapi.com/title/get-overview-details", params={"tconst": titleid}, headers=imdb_headers).json()
+        # Send a GET request for the info of a specific title using its unique IMDB ID
+        imdb_title_info = requests.get(
+            url="https://imdb8.p.rapidapi.com/title/get-overview-details", 
+            params={"tconst": titleid}, 
+            headers=imdb_headers
+            ).json()
 
-    related_title_ids = requests.get(url="https://imdb8.p.rapidapi.com/title/get-more-like-this", params={"tconst": str(titleid)}, headers=imdb_headers).json()
+    # Send a GET request for title ID's related to the searched title
+    related_title_ids = requests.get(
+        url="https://imdb8.p.rapidapi.com/title/get-more-like-this", 
+        params={"tconst": str(titleid)}, 
+        headers=imdb_headers
+        ).json()
 
+    # Send a GET request for a trailer related to the searched title
+    video = requests.get(
+        url="https://imdb8.p.rapidapi.com/title/get-videos", 
+        params={"tconst": titleid}, 
+        headers=imdb_headers
+        ).json()['resource']['videos'][0]['id'][9:]
+
+    # Properly formatting the related title ID's , getting their basic info, and appending that info to the 'related_titles'
+    # list
     for title in related_title_ids:
         title = title[7:]
-        title_info = requests.get(url="https://imdb8.p.rapidapi.com/title/get-base", params={"tconst": title}, headers=imdb_headers).json()
+        title_info = requests.get(
+            url="https://imdb8.p.rapidapi.com/title/get-base", 
+            params={"tconst": title}, 
+            headers=imdb_headers
+            ).json()
 
         title_info['id'] = title_info['id'][7:]
         title_info['id'] = title_info['id'][:-1]
 
         related_titles.append(title_info)
 
+    # Rendering the title info page with all needed information variables based on if the title came from the Netflix API or
+    # IMDB API
     if details:
         # Send the resulting dictionary to a new page to display the details
-        return render_template('title_details.html', details=details, countries=countries, genres=genres, related_titles=related_titles)
+        return render_template(
+            'title_details.html', 
+            details=details, 
+            countries=countries, 
+            genres=genres, 
+            related_titles=related_titles, 
+            video=video
+            )
     else:
-        return render_template('title_details.html', related_titles=related_titles, title_info=imdb_title_info)
+        return render_template('title_details.html', related_titles=related_titles, title_info=imdb_title_info, video=video)
         
 
 
@@ -179,18 +231,15 @@ def results():
     """Search Result"""
     title = request.args.get('title')
 
-
     url = "https://unogsng.p.rapidapi.com/search"
     params = {
         "start_year":"1972","orderby":"rating","query":title,"offset":"0"
     }
 
-
     result_json = requests.get(url, headers=netflix_headers, params=params).json()
 
     # pp.pprint(result_json)
     
-
     return render_template('results.html', result_json=result_json)
 
 

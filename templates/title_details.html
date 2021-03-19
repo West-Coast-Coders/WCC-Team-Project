@@ -4,6 +4,10 @@
 <section>
     <div id="info_container">
 
+        <!-- 
+            Lines 8-89 are displayed if the title information is received from the Netflix API, and lines 91-172 if it
+            is received from the IMDB API 
+        -->
         {% if details %}
 
             <div id="img_box">
@@ -60,7 +64,7 @@
             </div>
         
             <div id="countries_box">
-                <center><h5>Available in the following countries:</h5></center>
+                <center><h5>Available in the following countries on Netflix:</h5></center>
                 {% for i in range(countries|length) %}
                 <ul>
                     <li>{{ countries[i]["country"] }}</li>
@@ -78,6 +82,12 @@
                     <li>{{ genres[i]["genre"] }}</li>
                 </ul>
                 {% endfor %}
+            </div>
+
+            <div>
+                {% if video is defined %}
+                <iframe src="https://www.imdb.com/video/imdb/{{ video }}/imdb/embed?autoplay=false&width=640" width="640" height="360" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" frameborder="no" scrolling="no"></iframe>
+                {% endif %}
             </div>
 
         {% else %}
@@ -136,6 +146,12 @@
                 <li>{{ title_info['genres'][i] }}</li>
             </ul>
             {% endfor %}
+        </div>
+
+        <div>
+            {% if video is defined %}
+            <iframe src="https://www.imdb.com/video/imdb/{{ video }}/imdb/embed?autoplay=false&width=640" width="640" height="360" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" frameborder="no" scrolling="no"></iframe>
+            {% endif %}
         </div>
         
         {% endif %}
