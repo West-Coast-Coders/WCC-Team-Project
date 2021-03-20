@@ -1,0 +1,39 @@
+#info_container {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+#img_box img {
+    flex-direction: row;
+    height: 700px;
+    width: auto;
+    margin-left: 5px;
+  }
+  
+  
+#info_box {
+    flex-direction: row;
+    border-style: solid;
+    border-width: 1px;
+    margin: 5px;
+    background-color: #969696;
+    padding-top: 10px;
+    height: 700px;
+    width: 33%;
+    text-align: left;
+    padding-left: 5px;
+  }
+  
+#countries_box {
+    flex-direction: row;
+    overflow-y: scroll;
+    list-style-type: none;
+    border-style: solid;
+    border-width: 1px;
+    margin: 5px;
+    background-color: #969696;
+    padding-top: 10px;
+    height: 700px;
+    width: 33%;
+    padding-left: 5px;
+  }
