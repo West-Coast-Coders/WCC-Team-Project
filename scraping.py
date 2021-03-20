@@ -61,9 +61,7 @@ def arriving_titles(soup_article):
                 arriving_items_list += section_sibling
             if section_sibling.name == "h2":
                 break
-        # for date_section in section.find_next_siblings("h3"):
-        #     arriving_items += date_section
-        # print(arriving_items_list)
+
 
     # Iterate through each date 
     for i in range(len(arriving_items)):
@@ -74,20 +72,11 @@ def arriving_titles(soup_article):
             # Ignore new-line characters in the list
             if title == "\n":
                 continue
-            # Split the line by opening parentheses
-            title_split = title.text.split("(")
+            # Strip everything after a dash, comma, or open parenthesis to keep only the name
+            title_split = title.text.rsplit("(")[0].rsplit(",")[0].rsplit(":")
             # The name is the first part of the line
             arriving_title_name = title_split[0]
-            # Extra info is contained in the rest of the line
-            arriving_title_extra = title_split[1].strip(")")
-            # If the first character of the extra info is a letter, then 
-            # add that piece to the name and save the release year as extra info (if the year is included)
-            if arriving_title_extra[0].isalpha():
-                arriving_title_name += ("(" + arriving_title_extra)
-                if len(title_split) > 2:
-                    arriving_title_extra = title_split[2].strip(")")
-            # Add the new three-tuple with the name, arrival date, and extra info to the return list
-            arriving_list.append((arriving_title_name, arrival_date, arriving_title_extra))
+            arriving_list.append((arriving_title_name, arrival_date))
 
     return arriving_list
 
@@ -123,24 +112,17 @@ def leaving_titles(soup_article):
         # Save the date text
         leaving_date = leaving_items[i].string
         # Iterate through each list under each date
+        print(leaving_items_list[i])
         for title in leaving_items_list[i]:
             # Ignore new-line characters in the list
             if title == "\n":
                 continue
-            # Split the line by opening parentheses
-            title_split = title.text.split("(")
+            # Strip everything after a dash, comma, or open parenthesis to keep only the name
+            title_split = title.text.rsplit("(")[0].rsplit(",")[0].rsplit(":")
             # The name is the first part of the line
             leaving_title_name = title_split[0]
-            # Extra info is contained in the rest of the line
-            leaving_title_extra = title_split[1].strip(")")
-            # If the first character of the extra info is a letter, then 
-            # add that piece to the name and save the release year as extra info (if the year is included)
-            if leaving_title_extra[0].isalpha():
-                leaving_title_name += ("(" + leaving_title_extra)
-                if len(title_split) > 2:
-                    leaving_title_extra = title_split[2].strip(")")
             # Add the new three-tuple with the name, leaving date, and extra info to the return list
-            leaving_list.append((leaving_title_name, leaving_date, leaving_title_extra))
+            leaving_list.append((leaving_title_name, leaving_date))
         
     return leaving_list
     
@@ -155,5 +137,5 @@ print(leaving_titles(scrape_digitalTrends("hulu")))
 # print(arriving_titles(scrape_digitalTrends("amazon-prime")))
 # print(leaving_titles(scrape_digitalTrends("amazon-prime")))
 
-print(arriving_titles(scrape_digitalTrends("disney-plus")))
-print(leaving_titles(scrape_digitalTrends("disney-plus")))
+# print(arriving_titles(scrape_digitalTrends("disney-plus")))
+# print(leaving_titles(scrape_digitalTrends("disney-plus")))
