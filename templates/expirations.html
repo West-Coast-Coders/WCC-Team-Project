@@ -42,12 +42,12 @@
 
     <div id="title-grid">
 
-    {% for i in range(output_list|length) %}
+    {% for i in range(1, output_list|length) %}
     <ul id="title_list"> 
-        <a href='/title/{{title_details[i]["nfid"]}}'><img src="{{ title_details[i]['img'] }}" alt="{{ output_list[i]['title'] }}"></a>
-        <li id="title">{{ output_list[i]["title"]}}</li>
-        <li>Expiration: {{ output_list[i]["expiredate"] }}</li>
-        <span><a href='/title/{{title_details[i]["nfid"]}}'><li>More Info:</li></a></span>
+        <a href='/title/{{title_details[-i]["nfid"]}}'><img src="{{ title_details[-i]['img'] }}" alt="{{ output_list[-i]['title'] }}"></a>
+        <li id="title">{{ output_list[-i]["title"]}}</li>
+        <li>Expiration: {{ output_list[-i]["expiredate"] }}</li>
+        <span><a href='/title/{{title_details[-i]["nfid"]}}'><li>More Info:</li></a></span>
     </ul>
     {% endfor %}
     </div>
