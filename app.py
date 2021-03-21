@@ -180,6 +180,14 @@ def title_details(titleid):
             headers=imdb_headers
             ).json()
 
+    watch_options = requests.get(
+            url="https://imdb8.p.rapidapi.com/title/get-meta-data", 
+            params={"ids": titleid}, 
+            headers=imdb_headers
+            ).json()[titleid]['waysToWatch']
+
+    print(watch_options)
+
     # Send a GET request for title ID's related to the searched title
     related_title_ids = requests.get(
         url="https://imdb8.p.rapidapi.com/title/get-more-like-this", 
@@ -192,7 +200,10 @@ def title_details(titleid):
         url="https://imdb8.p.rapidapi.com/title/get-videos", 
         params={"tconst": titleid}, 
         headers=imdb_headers
-        ).json()['resource']['videos'][0]['id'][9:]
+        ).json()['resource']
+
+    if 'videos' in video:
+        video['videos'][0]['id'] =  video['videos'][0]['id'][9:]
 
     # Properly formatting the related title ID's , getting their basic info, and appending that info to the 'related_titles'
     # list
@@ -219,10 +230,17 @@ def title_details(titleid):
             countries=countries, 
             genres=genres, 
             related_titles=related_titles, 
-            video=video
+            video=video,
+            watch_options=watch_options
             )
     else:
-        return render_template('title_details.html', related_titles=related_titles, title_info=imdb_title_info, video=video)
+        return render_template(
+            'title_details.html', 
+            related_titles=related_titles, 
+            title_info=imdb_title_info, 
+            video=video,
+            watch_options=watch_options 
+            )
         
 
 

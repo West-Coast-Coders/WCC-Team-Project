@@ -84,12 +84,6 @@
                 {% endfor %}
             </div>
 
-            <div>
-                {% if video is defined %}
-                <iframe src="https://www.imdb.com/video/imdb/{{ video }}/imdb/embed?autoplay=false&width=640" width="640" height="360" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" frameborder="no" scrolling="no"></iframe>
-                {% endif %}
-            </div>
-
         {% else %}
 
         <div id="img_box">
@@ -147,14 +141,38 @@
             </ul>
             {% endfor %}
         </div>
-
-        <div>
-            {% if video is defined %}
-            <iframe src="https://www.imdb.com/video/imdb/{{ video }}/imdb/embed?autoplay=false&width=640" width="640" height="360" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" frameborder="no" scrolling="no"></iframe>
-            {% endif %}
-        </div>
         
         {% endif %}
+
+
+        {% if 'optionGroups' in watch_options %}
+        <div>
+            <h4>Watch Options:</h4>
+            {% for option in watch_options['optionGroups'] %}
+                <h5>{{ option['displayName'] }}</h5>
+                {% for sub_option in option['watchOptions'] %}
+                    {% if sub_option['link']['uri'].startswith('/title') %}
+                        <a href="https://imdb.com{{ sub_option['link']['uri'] }}">
+                        <p>{{ sub_option['primaryText'] }}</p>
+                        </a>
+                    {% else %}
+                        <a href="{{ sub_option['link']['uri'] }}">
+                        <p>{{ sub_option['primaryText'] }}</p>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+
+        </div>
+        {% endif %}
+
+
+        {% if 'videos' in video['resource'] %}
+        <div>
+            <iframe src="https://www.imdb.com/video/imdb/{{ video }}/imdb/embed?autoplay=false&width=640" width="640" height="360" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" frameborder="no" scrolling="no"></iframe>
+        </div>
+        {% endif %}
+
 
         <div>
             <h5>Related Titles:</h5>
