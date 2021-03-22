@@ -60,8 +60,12 @@ def home():
     """Displays the homepage"""
     output_list_1, title_details_1 = netflix_get_expiring(9)
     output_list_2 = netflix_get_recent(9)
-    return render_template("index.html", output_list_1=output_list_1, title_details_1=title_details_1, 
-                                         output_list_2=output_list_2)
+    return render_template(
+        "index.html", 
+        output_list_1=output_list_1, 
+        title_details_1=title_details_1, 
+        output_list_2=output_list_2
+        )
 
 @app.route('/country-id')
 def countrycode():
@@ -186,8 +190,6 @@ def title_details(titleid):
             headers=imdb_headers
             ).json()[titleid]['waysToWatch']
 
-    print(watch_options)
-
     # Send a GET request for title ID's related to the searched title
     related_title_ids = requests.get(
         url="https://imdb8.p.rapidapi.com/title/get-more-like-this", 
@@ -244,10 +246,14 @@ def title_details(titleid):
         
 @app.route('/services/netflix')
 def netflix():
-    output_list_1, title_details_1 = get_expiring(9)
-    output_list_2 = get_recent(9)
-    return render_template("netflix.html", output_list_1=output_list_1, title_details_1=title_details_1, 
-                                         output_list_2=output_list_2)
+    output_list_1, title_details_1 = netflix_get_expiring(9)
+    output_list_2 = netflix_get_recent(9)
+    return render_template(
+        "netflix.html", 
+        output_list_1=output_list_1, 
+        title_details_1=title_details_1, 
+        output_list_2=output_list_2
+        )
 
 
 @app.route('/search_results')
