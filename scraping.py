@@ -56,13 +56,13 @@ def arriving_titles(soup_article):
     for section in arriving_sections:
         for section_sibling in section.find_next_siblings():
             if section_sibling.name == "h3":
-                arriving_items += section_sibling
+                arriving_items.append(section_sibling)
             if section_sibling.name == "ul":
-                arriving_items_list += section_sibling
+                arriving_items_list.append(section_sibling)
             if section_sibling.name == "h2" or section_sibling.name == "h4":
                 break
-    # print(arriving_items_list)
-    print(arriving_items)
+    # print(arriving_items_list[0])
+    # print(arriving_items)
     while "\n" in arriving_items_list:
         arriving_items_list.remove("\n")
 
@@ -72,7 +72,7 @@ def arriving_titles(soup_article):
         # Save the date text
         arrival_date = arriving_items[i].string
         # Iterate through each list under each date
-        for title in arriving_items_list:
+        for title in arriving_items_list[i]:
             # Ignore new-line characters in the list
             if title == "\n":
                 continue
@@ -108,9 +108,9 @@ def leaving_titles(soup_article):
     for section in leaving_sections:
         for section_sibling in section.find_next_siblings():
             if section_sibling.name == "h3":
-                leaving_items += section_sibling
+                leaving_items.append(section_sibling)
             if section_sibling.name == "ul":
-                leaving_items_list += section_sibling
+                leaving_items_list.append(section_sibling)
             if section_sibling.name == "h2" or section_sibling.name == "h4":
                 break
     while "\n" in leaving_items_list:
@@ -121,8 +121,8 @@ def leaving_titles(soup_article):
         # Save the date text
         leaving_date = leaving_items[i].string
         # Iterate through each list under each date
-        print(leaving_items_list)
-        for title in leaving_items_list:
+        # print(leaving_items_list)
+        for title in leaving_items_list[i]:
             # Ignore new-line characters in the list
             if title == "\n":
                 continue
@@ -139,7 +139,7 @@ def leaving_titles(soup_article):
     
 
 
-print(arriving_titles(scrape_digitalTrends("hulu")))
+# print(arriving_titles(scrape_digitalTrends("hulu")))
 print(leaving_titles(scrape_digitalTrends("hulu")))
 
 # print(arriving_titles(scrape_digitalTrends("hbo")))
