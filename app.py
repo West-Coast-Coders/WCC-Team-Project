@@ -242,6 +242,12 @@ def title_details(titleid):
             watch_options=watch_options 
             )
         
+@app.route('/services/netflix')
+def netflix():
+    output_list_1, title_details_1 = get_expiring(9)
+    output_list_2 = get_recent(9)
+    return render_template("netflix.html", output_list_1=output_list_1, title_details_1=title_details_1, 
+                                         output_list_2=output_list_2)
 
 
 @app.route('/search_results')
