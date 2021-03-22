@@ -48,7 +48,7 @@ def arriving_titles(soup_article):
     arriving_list = []
 
     # Find all the sections with arriving titles
-    arriving_sections = soup_article.find_all("h2", string=re.compile("(N|n)ew"))
+    arriving_sections = soup_article.find_all("h2", string=re.compile("((N|n)ew)|((A|a)rriving)"))
     # Find all of the date sections (h3 elements)
     arriving_items = []
     # Find all of the list items under each date section (ul elements)
@@ -59,8 +59,12 @@ def arriving_titles(soup_article):
                 arriving_items.append(section_sibling)
             if section_sibling.name == "ul":
                 arriving_items_list.append(section_sibling)
+            # Skip over the next big or small heading unless it's a section denoting TV/Movies
             if section_sibling.name == "h2" or section_sibling.name == "h4":
-                break
+                if section_sibling.string == "TV" or section_sibling.string == "Movies":
+                    continue
+                else:
+                    break
     # print(arriving_items_list[0])
     # print(arriving_items)
     while "\n" in arriving_items_list:
@@ -72,12 +76,15 @@ def arriving_titles(soup_article):
         # Save the date text
         arrival_date = arriving_items[i].string
         # Iterate through each list under each date
+        # print(arriving_items_list[i])
         for title in arriving_items_list[i]:
             # Ignore new-line characters in the list
             if title == "\n":
                 continue
+            # print(title)
             # Save full title with extraneous details
-            full_title = title.string
+            full_title = title.get_text()
+            # print(full_title)
             # Strip everything after a dash, comma, or open parenthesis to keep only the name
             title_split = full_title.rsplit("(")[0].rsplit(",")[0].rsplit(":")[0]
             # title_split = [full_title]
@@ -103,7 +110,7 @@ def leaving_titles(soup_article):
     leaving_sections = soup_article.find_all("h2", string=re.compile("(L|l)eaving"))
     # Find all of the date sections (h3 elements)
     leaving_items = []
-     # Find all of the list items under each date section (ul elements)
+    # Find all of the list items under each date section (ul elements)
     leaving_items_list = []
     for section in leaving_sections:
         for section_sibling in section.find_next_siblings():
@@ -111,8 +118,12 @@ def leaving_titles(soup_article):
                 leaving_items.append(section_sibling)
             if section_sibling.name == "ul":
                 leaving_items_list.append(section_sibling)
+            # Skip over the next big or small heading unless it's a section denoting TV/Movies
             if section_sibling.name == "h2" or section_sibling.name == "h4":
-                break
+                if section_sibling.string == "TV" or section_sibling.string == "Movies":
+                    continue
+                else:
+                    break
     while "\n" in leaving_items_list:
         leaving_items_list.remove("\n")
 
@@ -139,20 +150,26 @@ def leaving_titles(soup_article):
     
 
 
-# print(arriving_titles(scrape_digitalTrends("hulu")))
-print(leaving_titles(scrape_digitalTrends("hulu")))
+# SUCCESS
+# print(arriving_titles(scrape_digitalTrends("hulu"))) 
+# SUCCESS
+# print(leaving_titles(scrape_digitalTrends("hulu")))
 
+# SUCCESS
 # print(arriving_titles(scrape_digitalTrends("hbo")))
+# SUCCESS
 # print(leaving_titles(scrape_digitalTrends("hbo")))
 
+# SUCCESS
 # print(arriving_titles(scrape_digitalTrends("amazon-prime")))
-# print(leaving_titles(scrape_digitalTrends("amazon-prime")))
 
+# SUCCESS
 # print(arriving_titles(scrape_digitalTrends("disney-plus")))
-# print(leaving_titles(scrape_digitalTrends("disney-plus")))
 
+# SUCCESS
 # print(arriving_titles(scrape_digitalTrends("netflix")))
+# SUCCESS
 # print(leaving_titles(scrape_digitalTrends("netflix")))
 
+# SUCCESS
 # print(arriving_titles(scrape_digitalTrends("peacock")))
-# print(leaving_titles(scrape_digitalTrends("peacock")))
