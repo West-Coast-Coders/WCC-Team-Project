@@ -32,7 +32,7 @@ def scrape_digitalTrends(service):
     soup = bs(page.content, features="html5lib")
 
     # Save actual content of page from the article section
-    content = soup.find("article", attrs={"id": "dt-post-content"})
+    content = soup.find("article")
 
     return content
 
@@ -59,10 +59,10 @@ def arriving_titles(soup_article):
                 arriving_items += section_sibling
             if section_sibling.name == "ul":
                 arriving_items_list += section_sibling
-            if section_sibling.name == "h2":
+            if section_sibling.name == "h2" or section_sibling.name == "h4":
                 break
     # print(arriving_items_list)
-    # print(arriving_items)
+    print(arriving_items)
     while "\n" in arriving_items_list:
         arriving_items_list.remove("\n")
 
@@ -79,9 +79,10 @@ def arriving_titles(soup_article):
             # Save full title with extraneous details
             full_title = title.string
             # Strip everything after a dash, comma, or open parenthesis to keep only the name
-            title_split = title.text.rsplit("(")[0].rsplit(",")[0].rsplit(":")
+            title_split = full_title.rsplit("(")[0].rsplit(",")[0].rsplit(":")[0]
+            # title_split = [full_title]
             # The name is the first part of the line
-            arriving_title_name = title_split[0]
+            arriving_title_name = title_split
             # Add the new three-tuple with the name, leaving date, and title with extra info to the return list
             arriving_list.append((arriving_title_name, arrival_date, full_title))
 
@@ -110,7 +111,7 @@ def leaving_titles(soup_article):
                 leaving_items += section_sibling
             if section_sibling.name == "ul":
                 leaving_items_list += section_sibling
-            if section_sibling.name == "h2":
+            if section_sibling.name == "h2" or section_sibling.name == "h4":
                 break
     while "\n" in leaving_items_list:
         leaving_items_list.remove("\n")
@@ -120,7 +121,7 @@ def leaving_titles(soup_article):
         # Save the date text
         leaving_date = leaving_items[i].string
         # Iterate through each list under each date
-        # print(leaving_items_list[i])
+        print(leaving_items_list)
         for title in leaving_items_list:
             # Ignore new-line characters in the list
             if title == "\n":
@@ -128,9 +129,9 @@ def leaving_titles(soup_article):
             # Save full title with extraneous details
             full_title = title.string
             # Strip everything after a dash, comma, or open parenthesis to keep only the name
-            title_split = title.text.rsplit("(")[0].rsplit(",")[0].rsplit(":")
+            title_split = full_title.rsplit("(")[0].rsplit(",")[0].rsplit(":")[0]
             # The name is the first part of the line
-            leaving_title_name = title_split[0]
+            leaving_title_name = title_split
             # Add the new three-tuple with the name, leaving date, and title with extra info to the return list
             leaving_list.append((leaving_title_name, leaving_date, full_title))
         
@@ -149,3 +150,9 @@ print(leaving_titles(scrape_digitalTrends("hulu")))
 
 # print(arriving_titles(scrape_digitalTrends("disney-plus")))
 # print(leaving_titles(scrape_digitalTrends("disney-plus")))
+
+# print(arriving_titles(scrape_digitalTrends("netflix")))
+# print(leaving_titles(scrape_digitalTrends("netflix")))
+
+# print(arriving_titles(scrape_digitalTrends("peacock")))
+# print(leaving_titles(scrape_digitalTrends("peacock")))
