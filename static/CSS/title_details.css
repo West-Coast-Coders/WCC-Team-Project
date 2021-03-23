@@ -45,7 +45,7 @@
     margin: 5px;
     border-radius: 25px;
     background-color: #242424;
-    color: grey;
+    color: rgb(184, 184, 184);
     padding-top: 10px;
     height: 700px;
     width: 33%;
@@ -64,7 +64,7 @@
     height: 700px;
     width: 33%;
     padding-left: 5px;
-    color: grey;
+    color: rgb(184, 184, 184);
   }
 
 #genres {
@@ -73,7 +73,7 @@
 
 #watch-options {
   flex-direction: row;
-  color: grey;
+  color: rgb(184, 184, 184);
   margin-left: 10px;
 }
 

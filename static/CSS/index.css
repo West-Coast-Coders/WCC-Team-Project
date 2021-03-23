@@ -56,7 +56,8 @@
   /* Add a blue background color to navbar links on hover */
 .navbar a:hover, .dropdown:hover .dropbtn {
     background-color: #405EFF;
-    color: #ddd;
+    color: grey;
+    border-radius: 25px;
 
   }
   
@@ -99,9 +100,14 @@
 }
 
 #contact-link {
-    color: #405EFF;
     margin-top: -20px;
+    color: #405EFF;
 }
+
+#contact-link:hover {
+    color:grey;
+}
+
 
 
 input[type=search] {
