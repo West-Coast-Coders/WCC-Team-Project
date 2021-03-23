@@ -124,4 +124,17 @@ img {
     padding-bottom: 3px;
     font-weight: bolder;
   }
+
+#results-title {
+  background-color: #242424;
+  flex-direction: row;
+  text-align: center;
+  margin-left: 550px;
+  margin-right: 550px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  padding: 10px;
+  border-radius: 25px;
+  color: #405EFF;
+}
   

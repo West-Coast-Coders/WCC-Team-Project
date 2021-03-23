@@ -3,10 +3,31 @@
     justify-content: space-around;
   }
 
-  #bottom_container {
+#middle_container {
     display: flex;
     justify-content: space-around;
+
   }
+
+#bottom_container {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+
+#related-titles {
+    background-color: #242424;
+    flex-direction: row;
+    text-align: center;
+    margin-left: 550px;
+    margin-right: 550px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    padding: 10px;
+    border-radius: 25px;
+    color: #405EFF;
+}
   
 #img_box img {
     flex-direction: row;
@@ -20,6 +41,7 @@
   
 #info_box {
     flex-direction: row;
+    overflow-y: scroll;
     margin: 5px;
     border-radius: 25px;
     background-color: #242424;
@@ -27,9 +49,9 @@
     padding-top: 10px;
     height: 700px;
     width: 33%;
-    text-align: left;
     padding-left: 5px;
   }
+
   
 #countries_box {
     flex-direction: row;
@@ -45,13 +67,19 @@
     color: grey;
   }
 
+#genres {
+  list-style-type: none;
+}
+
 #watch-options {
   flex-direction: row;
   color: grey;
+  margin-left: 10px;
 }
 
 #trailer {
   flex-direction: row;
+  margin-top: 50px;
 }
 
 #title-grid {
@@ -63,7 +91,7 @@
 
 #title-list {
   flex-direction: row;
-  width: 125px;
+  width: 200px;
   height: auto;
   word-wrap: break-word;
   list-style-type: none;

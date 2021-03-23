@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
+<link rel="stylesheet" href="/static/CSS/expirations.css">
+
 
 <section>
     
-    <h1>Number of Results: {{ result_json["total"] }}</h1>
+    <h1 id="results-title">Number of Results: {{ result_json["total"] }}</h1>
 
     <div id="title-grid">
 
