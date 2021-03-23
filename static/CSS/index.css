@@ -9,7 +9,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    background:#222;
+    background:#242424;
     color: #f2f2f2;
     height: 70px;
     padding-bottom: 10px;
@@ -43,19 +43,19 @@
     font-size: 16px; 
     border: none;
     outline: none;
-    color: #627D98;
+    color: #405EFF;
     padding: 14px 16px;
     background-color: inherit;
     font-family: inherit; 
     margin: 0px;
-    margin-top: -15px;
+    margin-top: -20px;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
   }
   
   /* Add a blue background color to navbar links on hover */
 .navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: #627D98;
+    background-color: #405EFF;
     color: #ddd;
 
   }
@@ -64,7 +64,7 @@
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #626262;
+    background-color: #242424;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 9999;
@@ -75,7 +75,7 @@
   /* Links inside the dropdown */
 .dropdown-content a {
     float: none;
-    color: #627D98;
+    color: #405EFF;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
@@ -85,7 +85,7 @@
   /* Add a grey background color to dropdown links on hover */
 .dropdown-content a:hover {
     background-color: #575757;
-    color: #627D98;
+    color: #405EFF;
   }
   
   /* Show the dropdown menu on hover */
@@ -94,34 +94,34 @@
   }
 
 #home-link {
-    color: #627D98;
+    color: #405EFF;
     margin-top: -15px;
 }
 
 #contact-link {
-    color: #627D98;
-    margin-top: -15px;
+    color: #405EFF;
+    margin-top: -20px;
 }
+
 
 input[type=search] {
     width:200px;
+    margin-top: 12px
 }
 
 #search_button {
     border-radius: 25px;
-    background-color: whitesmoke;
-    margin-top: 6px;
+    background-color: whitesmoke; 
+    margin-top: 3px;
 }
 
-input[type=search]{
-    margin-top: 15px;
-}
+
 input[type=search]:focus {
 	width: 600px;
 	background-color: #ccc;
 	border-color: #333;
 	border: solid 1px #fff;
-    margin-top: 15px;
+    margin-top: 12px;
 }
 
 #logos {
@@ -139,7 +139,7 @@ input[type=search]:focus {
     margin-top: 25px;
     padding: 10px;
     border-radius: 25px;
-    color: grey;
+    color: #405EFF;
     margin-bottom: -50px;
 }
 
@@ -240,7 +240,7 @@ input[type=search]:focus {
     margin-top: 25px;
     padding: 10px;
     border-radius: 25px;
-    color: grey;
+    color: #405EFF;
     margin-top: 100px;
 }
 
