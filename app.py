@@ -169,9 +169,9 @@ def expiring_service(service):
        
         filtered_results = filter_list(filters, output_list)
 
-        return render_template('expirations.html', output_list = filtered_results, service=service_title)
+        return render_template('expirations.html', output_list = filtered_results, service_title = service_title)
 
-    return render_template('expirations.html', output_list = output_list, service=service_title)
+    return render_template('expirations.html', output_list = output_list, service_title = service_title)
 
 
 @app.route('/recently-added/<service>', methods=['GET', 'POST'])
@@ -198,9 +198,9 @@ def recently_added_service(service):
        
         filtered_results = filter_list(filters, output_list)
 
-        return render_template('recently_added.html', output_list = filtered_results, service=service_title)
+        return render_template('recently_added.html', output_list = filtered_results, service_title = service_title)
 
-    return render_template('recently_added.html', output_list = output_list, service=service_title)
+    return render_template('recently_added.html', output_list = output_list, service_title = service_title)
 
 
 
@@ -332,6 +332,11 @@ def service(service):
     if service != 'amazon-prime' or service != 'disney-plus':
         output_list_2 = get_expiring(service, 20)
 
+    if service == 'hbo':
+        service_title = 'HBO'
+    else:
+        service_title = service.replace('-', ' ').title()
+
     if service == "hbo":
         service_logo_id = "hbo_max"
     elif service == "disney-plus":
@@ -344,7 +349,8 @@ def service(service):
         output_list_1=output_list_1, 
         output_list_2=output_list_2,
         service=service_logo_id,
-        service_id=service
+        service_id=service,
+        service_title=service_title
         )
 
 
