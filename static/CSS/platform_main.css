@@ -9,7 +9,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    background:#242424;
+    background:#222;
     color: #f2f2f2;
     height: 70px;
     padding-bottom: 10px;
@@ -55,9 +55,9 @@
   
   /* Add a blue background color to navbar links on hover */
 .navbar a:hover, .dropdown:hover .dropbtn {
-    background-color: #405EFF;
-    color: grey;
-    border-radius: 25px;
+  background-color: #405EFF;
+  color: grey;
+  border-radius: 25px;
 
   }
   
@@ -105,9 +105,8 @@
 }
 
 #contact-link:hover {
-    color:grey;
+  color:grey;
 }
-
 
 
 input[type=search] {
@@ -120,8 +119,6 @@ input[type=search] {
     background-color: whitesmoke; 
     margin-top: 3px;
 }
-
-
 input[type=search]:focus {
 	width: 600px;
 	background-color: #ccc;
@@ -130,144 +127,44 @@ input[type=search]:focus {
     margin-top: 12px;
 }
 
-#logos {
-    height: 200;
-    width: auto;
-    border-radius: 25px;
+#service {
+    padding-top: 20px;
+    margin-bottom: -20px;
 }
 
-#about_section {
-    background-color: #242424;
-    flex-direction: row;
-    text-align: center;
-    margin-left: 300px;
-    margin-right: 300px;
-    margin-top: 25px;
-    padding: 10px;
-    border-radius: 25px;
-    color: #405EFF;
-    margin-bottom: -50px;
-}
-
-#services_section {
-    display: flex;
-    flex-wrap: wrap;
-    position: relative;
-    justify-content: space-around;
-    align-content: center;
+#service img {
+    height: 200px;
+    width: 400px;
+    display: block;
     margin-left: auto;
     margin-right: auto;
-}
-
-#netflix {
-    flex-direction: row;
-    padding-top: 100px;
-    margin-left: 11px;
-    margin-right: 11px;
-}
-
-#netflix img {
-    height: 200px;
-    width: 400px;
-}
-
-#hulu {
-    flex-direction: row;
-    padding-top: 100px;
-    margin-left: 11px;
-    margin-right: 11px;
-}
-
-#hulu img {
-    height: 200px;
-    width: 400px;
-}
-
-#disney {
-    flex-direction: row;
-    padding-top: 100px;
-    margin-left: 11px;
-    margin-right: 11px;
-}
-
-#disney img {
-    height: 200px;
-    width: 400px;
-}
-
-#prime {
-    flex-direction: row;
-    padding-top: 100px;
-    margin-left: 11px;
-    margin-right: 11px;
-}
-
-#prime img {
-    height: 200px;
-    width: 400px;
-}
-
-#hbo {
-    flex-direction: row;
-    padding-top: 100px;
-    margin-left: 11px;
-    margin-right: 11px;
- }
-
-#hbo img {
-    height: 200px;
-    width: 400px;
-}
-
-#peacock {
-    flex-direction: row;
-    padding-top: 100px;
-    margin-left: 11px;
-    margin-right: 11px;
-}
-
-#peacock img {
-    height: 200px;
-    width: 400px;
-}
-.container {
-    border-style: solid;    
-    border-width: 2px;
     border-radius: 25px;
-    margin-bottom: 50px;
 }
 
-#recently-added h1 {
-    background-color: #242424;
-    flex-direction: row;
+
+#leaving-carousel {
+    display: flex;
     text-align: center;
-    margin-left: 33%;
-    margin-right: 33%;
-    margin-top: 25px;
-    padding: 10px;
-    border-radius: 25px;
-    color: #405EFF;
-    margin-top: 100px;
+    margin-left: 15px;
+    margin-right: 15px;
+    align-items: center;
+    justify-content: center;
 }
+
 
 .col-md-4{
     display: inline-block;
     margin-left:-10px;
     vertical-align: top;
+
   }
-  .col-md-4 img {
+  .col-md-4 img{
     width:100%;
     height:auto;
     border-radius: 25px;
     margin-bottom: 10px;
+  }
     
-  }
-
-  .col-md-4 h4,
-  .col-md-4 p {
-    color: grey;
-    word-wrap: break-word;
-  }
   body .carousel-control-prev-icon,
   body .carousel-indicators li,
   body .carousel-control-next-icon{
@@ -275,9 +172,51 @@ input[type=search]:focus {
   }
   
 
-  
+  #leaving-soon {
+      flex-direction: row;
+      margin: 5px;
+      padding-top: 10px;
+      border-radius: 25px;
+      color: grey;
+  }
 
+  #leaving-soon h1 {
+      color: black;
+  }
 
+  #recently-added h1 {
+    color: black;
+}
 
+  #recently-added {
+    flex-direction: row;
+    margin: 5px;
+    padding-top: 10px;
+    border-radius: 25px;
+    color: grey;
+}
 
+#recently-added h1,
+#leaving-soon h1 {
+    background-color: #242424;
+    flex-direction: row;
+    text-align: center;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 25px;
+    padding: 10px;
+    border-radius: 25px;
+    color: #405EFF;
+    margin-top: 100px;
+}
+
+.container {
+    border-style: solid;    
+    border-width: 2px;
+    border-radius: 25px;
+    margin-bottom: 50px;
+    height: 620px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
 

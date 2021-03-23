@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% block content %}
+<link rel="stylesheet" href="/static/CSS/title_details.css">
+
+
+<section>
+    <div id="top_container">
+
+        <!-- 
+            Lines 8-89 are displayed if the title information is received from the Netflix API, and lines 91-172 if it
+            is received from the IMDB API 
+        -->
+        {% if details %}
+
+            <div id="img_box">
+                <img id="title_img" src="{{details['img']}}">
+            </div>  
+            <div id="info_box">
+                <center>
+                <h1>{{ details['title']}}</h1>
+                
+
+
+                <p>{{ details['synopsis']}}</p>
+                <p>Release Year: {{ details['year']}}</p>
+
+                {% if details['matlabel'] != None and details['matlabel'] != 'N/A' %}
+                <p>Maturity: {{ details['matlabel']}}</p>
+                {% else %}
+                <p>Maturity is not available for this title.</p>
+                {% endif %}
+
+                {% if details['imdbruntime'] != None %}
+                    {% if details['vtype'] == 'series' %}
+                    <p>Average Episode Runtime: {{ details['imdbruntime']}}</p>
+                    {% else %}
+                    <p>Runtime: {{ details['imdbruntime']}}</p>
+                    {% endif %}
+                {% else %}
+                <p>Runtime is not available for this title.</p>
+                {% endif %}
+
+                {% if details['imdbmetascore'] != None and details['imdbmetascore'] != 'N/A' %}
+                <p>Metascore: {{ details['imdbmetascore']}}</p>
+                {% else %}
+                <p>Metascore is not available for this title.</p>
+                {% endif %}
+
+                {% if details['imdbrating'] != None and details['imdbrating'] != 0.0 %}
+                <p>IMDb Rating: {{ details['imdbrating']}}</p>
+                {% else %}
+                <p>IMDb rating is not available for this title.</p>
+                {% endif %}
+
+                {% if details['imdbawards'] != None and details['imdbawards'] != 'N/A' %}
+                <p>Awards: {{ details['imdbawards']}}</p>
+                {% else %}
+                <p>No awards known for this title.</p>
+                {% endif %}
+            </center>
+            <br>
+          
+            <div id="watch-options">
+                {% if 'optionGroups' in watch_options %}
+                <div>
+                    <center><h2>Watch Options:</h2>
+                    {% for option in watch_options['optionGroups'] %}
+                        
+                        <h6>{{ option['displayName'] }}</h6>
+                        {% for sub_option in option['watchOptions'] %}
+                            {% if sub_option['link']['uri'].startswith('/title') %}
+                                <a href="https://imdb.com{{ sub_option['link']['uri'] }}">
+                                <p>{{ sub_option['primaryText'] }}</p>
+                                </a>
+                                
+                            {% else %}
+                                <a href="{{ sub_option['link']['uri'] }}">
+                                <p>{{ sub_option['primaryText'] }}</p>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    </center>
+                </div>
+                {% endif %}
+            </div>
+            </div>
+        
+            <div id="countries_box">
+                <center>
+                <h2>Genres:</h2>
+                </center>
+                {% for i in range(genres|length) %}
+                <ul id="genres">
+                    <li>{{ genres[i]["genre"] }}</li>
+                </ul>
+                {% endfor %}
+                <br>
+                <center><h2>Available in the following countries on Netflix:</h2></center>
+                {% for i in range(countries|length) %}
+                <ul>
+                    <li>{{ countries[i]["country"] }}</li>
+                    <ul>
+                        <li>Date Added: {{ countries[i]["newdate"] }}</li>
+                        <li>Audio Languages: {{ countries[i]["audio"] }}</li>
+                        <li>Subtitle Languages: {{ countries[i]["subtitle"] }}</li>
+                    </ul>
+                </ul>
+                {% endfor %}
+
+                
+            </div>
+
+        {% else %}
+
+        <div id="img_box">
+            <img id="title_img" src="{{ title_info['title']['image']['url'] }}">
+        </div>  
+        <div id="info_box">
+            <center>
+                <h1> {{ title_info['title']['title'] }}</h1>
+                <br>
+                {% if 'plotOutline' in title_info %}
+                    <p> {{ title_info['plotOutline']['text'] }}</p>
+                {% else %}
+                    {% if 'plotSummary' in title_info %}
+                    <p> {{ title_info['plotSummary']['text'] }}</p>
+                    {% else %}
+                    <p>Synopsis is not available for this title</p>
+                    {% endif %}
+                {% endif %}
+            
+
+            {% if 'certificates' in title_info %}
+            <p>Maturity: {{ title_info['certificates']['US'][0]['certificate'] }}</p>
+            {% else %}
+            <p>Maturity is not available for this title.</p>
+            {% endif %}
+
+            <p>Release Year: {{ title_info['title']['year'] }}</p>
+
+
+            {% if 'runningTimeInMinutes' in title_info['title'] %}
+                {% if title_info['title']['titleType'] == 'tvSeries' %}
+                <p>Average Episode Runtime: {{ title_info['title']['runningTimeInMinutes'] }} mins</p>
+                {% else %}
+                <p>Runtime: {{ title_info['title']['runningTimeInMinutes'] }} mins</p>
+                {% endif %}
+            {% else %}
+                <p>Runtime is not available for this title.</p>
+            {% endif %}
+
+            {% if title_info['title']['titleType'] == 'tvSeries' %}
+            <p>Number of Episodes: {{ title_info['title']['numberOfEpisodes'] }}</p>
+            <p>Produced from {{ title_info['title']['seriesStartYear'] }} - {{ title_info['title']['seriesEndYear'] }}</p>
+            {% endif %}
+
+            {% if 'rating' in title_info['ratings'] %}
+            <p>IMDb Rating: {{ title_info['ratings']['rating'] }}</p>
+            {% else %}
+            <p>IMDb rating is not available for this title.</p>
+            {% endif %}
+            <br>
+            </center>
+
+            <div id="watch-options">
+                {% if 'optionGroups' in watch_options %}
+                <div>
+                    <center><h2>Watch Options:</h2>
+                    {% for option in watch_options['optionGroups'] %}
+                        
+                        <h6>{{ option['displayName'] }}</h6>
+                        {% for sub_option in option['watchOptions'] %}
+                            {% if sub_option['link']['uri'].startswith('/title') %}
+                                <a href="https://imdb.com{{ sub_option['link']['uri'] }}">
+                                <p>{{ sub_option['primaryText'] }}</p>
+                                </a>
+                                
+                            {% else %}
+                                <a href="{{ sub_option['link']['uri'] }}">
+                                <p>{{ sub_option['primaryText'] }}</p>
+                                </a>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    </center>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    
+        <div id="countries_box">
+            <center>
+            <h2>Genres:</h2>
+            </center>
+            {% for i in range(title_info['genres']|length) %}
+            <ul id="genres">
+                <li>{{ title_info['genres'][i] }}</li>
+            </ul>
+            {% endfor %}
+            
+    </div>
+        
+        {% endif %}
+    </div>
+    <div id="middle_container">
+    <div id="trailer">
+        {% if 'videos' in video %}
+        <div>
+            <iframe src="https://www.imdb.com/video/imdb/{{ video['videos'][0]['id'] }}/imdb/embed?autoplay=false&width=854" width="854" height="480" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true" frameborder="no" scrolling="no"></iframe>
+        </div>
+        {% endif %}
+    </div>
+    </div>
+
+    <div id="bottom_container">
+    <div >
+        
+            <h3 id="related-titles">Related Titles:</h3>
+        <div id="title-grid">
+            {% for title in related_titles %}
+            <div id="title-list">
+            <a href="/title/{{ title['id'] }}">
+            {% if 'image' in title %}
+            <img src="{{ title['image']['url'] }}" alt="{{ title['title'] }}">
+            {% else %}
+            <p>No Image Available For This Title</p>
+            {% endif %}
+            <center>
+                <h5 style="color: rgb(184, 184, 184); margin-top: 5px;">{{ title['title'] }}</h5>
+            </center>
+            </a>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+    </div>
+
+    
+
+    
+</section>
+{% endblock %}

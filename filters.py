@@ -2,9 +2,9 @@ import requests
 import os
 
 
-def filter_list(filters, titles_info, list_results):
-    """Takes in a list of specific titles, another list with details about each title, and finally, filter
-       parameters. Returns a list with both list filtered. """
+def filter_list(filters, titles_info, list_results=None):
+    """Takes in a list of specific titles, another list with details about each title (optional), and finally, filter
+       parameters. Returns a list with given list filtered """
 
     def show_only_filtered(filtered_titles_info, list_results):
         """Filters the main list of titles based on what was filtered from the list containing the title details"""
@@ -34,8 +34,9 @@ def filter_list(filters, titles_info, list_results):
 
 
     filtered_titles = titles_info
+    
 
-    # The following if statements below is where the actual filtering of the titles take place. The filtered list starts out 
+    # The following statements below is where the actual filtering of the titles take place. The filtered list starts out 
     # with the full list, in theory, getting smaller and smaller as it moves down the filter checks.
 
     if filters['type']:
@@ -48,41 +49,59 @@ def filter_list(filters, titles_info, list_results):
         filtered_titles = temp
 
 
-    if filters['start_year'] and filters['end_year']:
-        temp = []
+    # Filtering year range
+    temp = []
 
-        for title in filtered_titles:
-            if int(title['year']) >= int(filters['start_year']) and \
-            int(title['year']) <= int(filters['end_year']):
-                temp.append(title)
-        
-        filtered_titles = temp
-
-
-    if filters['start_rating'] and filters['end_rating']:
-        temp = []
-
-        for title in filtered_titles:
-            if float(title['imbdrating']) >= float(filters['start_rating']) and \
-            float(title['imbdrating']) <= float(filters['end_rating']):
-                temp.append(title)
-        
-        filtered_titles = temp
+    for title in filtered_titles:
+        if int(float(title['year'])) >= int(float(filters['start_year'])) and \
+        int(float(title['year'])) <= int(float(filters['end_year'])):
+            temp.append(title)
+    
+    filtered_titles = temp
 
 
-    if filters['min_runtime'] and filters['max_runtime']:
-        temp = []
+    # Filtering IMDB rating range
+    temp = []
+    
+    for title in filtered_titles:
+        if not title['imdbrating']:
+            temp.append(title)
+        elif float(title['imdbrating']) >= float(filters['start_rating']) and \
+        float(title['imdbrating']) <= float(filters['end_rating']):
+            temp.append(title)
+    
+    filtered_titles = temp
 
-        for title in filtered_titles:
-            if int(title['netflixruntime']) >= int(filters['min_runtime']) and \
-            int(title['netflixruntime']) <= int(filters['max_runtime']):
-                temp.append(title)
-        
-        filtered_titles = temp
 
-    # Now that the list of titles is filtered, pass that onto the show_only_filtered function to additionally filter the main
-    # list
-    filtered_list_results = show_only_filtered(filtered_titles, list_results)
-    # Putting the two filtered lists into one list to return
-    final_results = [filtered_titles, filtered_list_results]
-    return final_results
+    # Filtering runtime range
+    temp = []
+    runtime_key = None
+
+    # Because the key for the title API call and the search API call are different in regards to runtime, this if statement
+    # is to ensure that the proper key is used depening on how the parameters are given to the function
+    if list_results:
+        runtime_key = 'netflixruntime'
+    else:
+        runtime_key = 'runtime'
+
+    for title in filtered_titles:
+        if title[runtime_key] == 0:
+            temp.append(title)
+        elif int(float(title[runtime_key])) >= (int(float(filters['min_runtime'])) * 60) and \
+        int(float(title[runtime_key])) <= (int(float(filters['max_runtime'])) * 60):
+            temp.append(title)
+    
+    filtered_titles = temp
+
+
+    if list_results:
+        # Now that the list of titles is filtered, pass that onto the show_only_filtered function to additionally filter the main
+        # list
+        filtered_list_results = show_only_filtered(filtered_titles, list_results)
+
+        # Putting the two filtered lists into one list to return
+        final_results = [filtered_titles, filtered_list_results]
+
+        return final_results
+    else:
+        return filtered_titles
