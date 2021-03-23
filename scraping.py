@@ -37,7 +37,7 @@ def scrape_digitalTrends(service):
     return content
 
 
-def arriving_titles(soup_article):
+def get_arriving_titles(soup_article):
     """
     Parses the HTML code of a Digital Trends webpage for titles that are arriving soon.
     Input: a Beautiful Soup object containing the body content of the webpage used for parsing.
@@ -96,7 +96,7 @@ def arriving_titles(soup_article):
     return arriving_list
 
 
-def leaving_titles(soup_article):
+def get_leaving_titles(soup_article):
     """
     Parses the HTML code of a Digital Trends webpage for titles that are leaving soon.
     Input: a Beautiful Soup object containing the body content of the webpage used for parsing.
@@ -151,25 +151,25 @@ def leaving_titles(soup_article):
 
 
 # SUCCESS
-# print(arriving_titles(scrape_digitalTrends("hulu"))) 
+# print(get_arriving_titles(scrape_digitalTrends("hulu"))) 
 # SUCCESS
-# print(leaving_titles(scrape_digitalTrends("hulu")))
+# print(get_leaving_titles(scrape_digitalTrends("hulu")))
 
 # SUCCESS
-# print(arriving_titles(scrape_digitalTrends("hbo")))
+# print(get_arriving_titles(scrape_digitalTrends("hbo")))
 # SUCCESS
-# print(leaving_titles(scrape_digitalTrends("hbo")))
+# print(get_leaving_titles(scrape_digitalTrends("hbo")))
 
 # SUCCESS
-# print(arriving_titles(scrape_digitalTrends("amazon-prime")))
+# print(get_arriving_titles(scrape_digitalTrends("amazon-prime")))
 
 # SUCCESS
-# print(arriving_titles(scrape_digitalTrends("disney-plus")))
+# print(get_arriving_titles(scrape_digitalTrends("disney-plus")))
 
 # SUCCESS
-# print(arriving_titles(scrape_digitalTrends("netflix")))
+# print(get_arriving_titles(scrape_digitalTrends("netflix")))
 # SUCCESS
-# print(leaving_titles(scrape_digitalTrends("netflix")))
+# print(get_leaving_titles(scrape_digitalTrends("netflix")))
 
 # SUCCESS
-# print(arriving_titles(scrape_digitalTrends("peacock")))
+# print(get_arriving_titles(scrape_digitalTrends("peacock")))
