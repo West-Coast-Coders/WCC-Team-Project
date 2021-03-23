@@ -122,12 +122,12 @@ input[type=search]:focus {
     margin-top: 12px;
 }
 
-#netflix {
+#service {
     padding-top: 20px;
     margin-bottom: -20px;
 }
 
-#netflix img {
+#service img {
     height: 200px;
     width: 400px;
     display: block;
