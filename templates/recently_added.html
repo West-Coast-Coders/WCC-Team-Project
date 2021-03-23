@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="/static/CSS/recently_added.css">
 
 <center>
-<h1 id="recently-added-title">Recently Added to Netflix</h1>
+<h1 id="recently-added-title">Recently Added to {{ service }}</h1>
 <section>
     <div class="wrap-collabsible"> 
         <input id="collapsible2" class="toggle" type="checkbox"> 
@@ -35,25 +35,40 @@
                         <input type="submit">
                     </form>
                     </center>
-                    </div>
-         </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <div id="title-grid">
-    
-    {% for i in range(results|length) %}
-        <ul id="title_list">
-            <a href='/title/{{results[i]["nfid"]}}'><li><img src='{{ results[i]["img"] }}'></li></a>
-            <li id="title">{{ results[i]["title"] }}</li>
-            <li>{{ results[i]["synopsis"] }}</li>
-            <li>{{ results[i]["details"] }}</li>
 
-            <br>
-            <a href='/title/{{results[i]["nfid"]}}'><li>More Info:</li></a>
+    {% if 'nfid' in output_list[0] %}
+        {% for i in range(output_list|length) %}
+            <ul id="title_list">
+                <a href='/title/{{output_list[i]["nfid"]}}'><li><img src='{{ output_list[i]["img"] }}'></li></a>
+                <li id="title">{{ output_list[i]["title"] }}</li>
+                <li>{{ output_list[i]["synopsis"] }}</li>
+                <li>{{ output_list[i]["details"] }}</li>
 
-        </ul>
-    {% endfor %}
+                <br>
+                <a href='/title/{{output_list[i]["nfid"]}}'><li>More Info</li></a>
+
+            </ul>
+        {% endfor %}
+    {% else %}
+        {% for i in range(output_list|length) %}
+            <ul id="title_list">
+                <a href='/title/{{output_list[i]["id"]}}'><li><img src='{{ output_list[i]["img"] }}'></li></a>
+                <li id="title">{{ output_list[i]["title"] }}</li>
+                <li>Arrival: {{ output_list[i]["arrivaldate"] }}</li>
+
+                <br>
+                <a href='/title/{{output_list[i]["id"]}}'><li>More Info</li></a>
+
+            </ul>
+        {% endfor %}
+    {% endif %}
+
     </div>
 </section>
 </center>

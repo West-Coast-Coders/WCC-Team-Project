@@ -11,9 +11,12 @@ from pprint import PrettyPrinter
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, send_file, redirect, url_for
 # from io import BytesIO
+# from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+
 from filters import filter_list
 from netflix_api_calls import netflix_get_expiring, netflix_get_recent
-# from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from imdb_api_calls import get_arriving, get_expiring
+
 
 
 ################################################################################
@@ -76,8 +79,8 @@ def countrycode():
     print(response.text)  
 
 
-@app.route('/expiring-soon', methods=['GET', 'POST'])
-def expiring():
+@app.route('/expiring-soon/netflix', methods=['GET', 'POST'])
+def expiring_netflix():
     """Displays results for titles that are expiring soon from Netflix."""
     # Use 'request.args' to retrieve the country code from the query parameters
     # country = request.args.get('countrycode')
@@ -104,13 +107,18 @@ def expiring():
        
         filtered_results = filter_list(filters, title_details, output_list)
 
-        return render_template('expirations.html', output_list = filtered_results[1], title_details = filtered_results[0])
+        return render_template(
+            'expirations.html', 
+            output_list = filtered_results[1], 
+            title_details = filtered_results[0], 
+            service='Netflix'
+            )
 
-    return render_template('expirations.html', output_list = output_list, title_details = title_details)
+    return render_template('expirations.html', output_list = output_list, title_details = title_details, service="Netflix")
 
 
-@app.route('/recently-added', methods=['GET', 'POST'])
-def recently_added():
+@app.route('/recently-added/netflix', methods=['GET', 'POST'])
+def recently_added_netflix():
     """Displays results for titles that were added onto Netflix in the past three months."""
     # Use 'request.args' to retrieve the country code from the query parameters
     # country = request.args.get('countrycode')
@@ -132,9 +140,68 @@ def recently_added():
        
         filtered_results = filter_list(filters, output_list)
 
-        return render_template('recently_added.html', results = filtered_results)
+        return render_template('recently_added.html', output_list = filtered_results, service='Netflix')
 
-    return render_template('recently_added.html', results = output_list)
+    return render_template('recently_added.html', output_list = output_list, service="Netflix")
+
+
+@app.route('/expiring-soon/<service>', methods=['GET', 'POST'])
+def expiring_service(service):
+    """Displays results for titles that are expiring soon from a number of streaming services."""
+    
+    output_list = get_expiring(service, 25)
+
+    if service == 'hbo':
+        service_title = 'HBO'
+    else:
+        service_title = service.replace('-', ' ').title()
+    
+    if request.method == 'POST':
+        filters = {
+            'type': request.form['type'],
+            'start_year': request.form['start-year'],
+            'end_year': request.form['end-year'],
+            'start_rating': request.form['start-rating'],
+            'end_rating': request.form['end-rating'],
+            'min_runtime': request.form['min-runtime'],
+            'max_runtime': request.form['max-runtime']
+        }
+       
+        filtered_results = filter_list(filters, output_list)
+
+        return render_template('expirations.html', output_list = filtered_results, service=service_title)
+
+    return render_template('expirations.html', output_list = output_list, service=service_title)
+
+
+@app.route('/recently-added/<service>', methods=['GET', 'POST'])
+def recently_added_service(service):
+    """Displays results for titles that are recently added from a number of streaming services."""
+    
+    output_list = get_arriving(service, 25) 
+
+    if service == 'hbo':
+        service_title = 'HBO'
+    else:
+        service_title = service.replace('-', ' ').title()
+    
+    if request.method == 'POST':
+        filters = {
+            'type': request.form['type'],
+            'start_year': request.form['start-year'],
+            'end_year': request.form['end-year'],
+            'start_rating': request.form['start-rating'],
+            'end_rating': request.form['end-rating'],
+            'min_runtime': request.form['min-runtime'],
+            'max_runtime': request.form['max-runtime']
+        }
+       
+        filtered_results = filter_list(filters, output_list)
+
+        return render_template('recently_added.html', output_list = filtered_results, service=service_title)
+
+    return render_template('recently_added.html', output_list = output_list, service=service_title)
+
 
 
 @app.route('/title/<titleid>')
@@ -244,6 +311,7 @@ def title_details(titleid):
             watch_options=watch_options 
             )
         
+
 @app.route('/services/netflix')
 def netflix():
     output_list_1, title_details_1 = netflix_get_expiring(9)
@@ -253,6 +321,30 @@ def netflix():
         output_list_1=output_list_1, 
         title_details_1=title_details_1, 
         output_list_2=output_list_2
+        )
+
+@app.route('/services/<service>')
+def service(service):
+    output_list_1 = get_arriving(service, 20)
+    output_list_2 = []
+    service_logo_id = service
+
+    if service != 'amazon-prime' or service != 'disney-plus':
+        output_list_2 = get_expiring(service, 20)
+
+    if service == "hbo":
+        service_logo_id = "hbo_max"
+    elif service == "disney-plus":
+        service_logo_id = "disney_plus"
+    elif service == "amazon-prime":
+        service_logo_id = "amazon_prime"
+
+    return render_template(
+        "other_platforms.html", 
+        output_list_1=output_list_1, 
+        output_list_2=output_list_2,
+        service=service_logo_id,
+        service_id=service
         )
 
 
