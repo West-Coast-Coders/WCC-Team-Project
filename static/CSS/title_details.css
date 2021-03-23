@@ -1,0 +1,79 @@
+#top_container {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  #bottom_container {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+#img_box img {
+    flex-direction: row;
+    height: 700px;
+    width: auto;
+    margin-left: 5px;
+    border-radius: 25px;
+    padding-top: 10px;
+  }
+  
+  
+#info_box {
+    flex-direction: row;
+    margin: 5px;
+    border-radius: 25px;
+    background-color: #242424;
+    color: grey;
+    padding-top: 10px;
+    height: 700px;
+    width: 33%;
+    text-align: left;
+    padding-left: 5px;
+  }
+  
+#countries_box {
+    flex-direction: row;
+    overflow-y: scroll;
+    list-style-type: none;
+    border-radius: 25px;
+    margin: 5px;
+    background-color: #242424;
+    padding-top: 10px;
+    height: 700px;
+    width: 33%;
+    padding-left: 5px;
+    color: grey;
+  }
+
+#watch-options {
+  flex-direction: row;
+  color: grey;
+}
+
+#trailer {
+  flex-direction: row;
+}
+
+#title-grid {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  justify-content: flex-start;
+}
+
+#title-list {
+  flex-direction: row;
+  width: 125px;
+  height: auto;
+  word-wrap: break-word;
+  list-style-type: none;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+  border-radius: 25px;
+  
+}
+
+#title-list img {
+  border-radius: 25px;
+}

@@ -1,23 +1,54 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>BetterNetflix</title>
+        <title>StreamingGuide</title>
         <link rel="stylesheet" href="/static/CSS/index.css">
         <link rel="stylesheet" href="/static/CSS/filter_slider.css">
         <link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
     </head>
     <body id="home">
         <nav class="navbar">
-            <a href="/">Home</a>
-            <input type="search" placeholder="Search..." aria-label="Search">
-            <a href="#contact">Contact</a>
+            <div class="dropdown">
+                <button class="dropbtn">StreamingGuide 
+                  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="/">Home</a>  
+                    <a href="/services/netflix">Netflix</a>
+                    <a href="#">HBO Max</a>
+                    <a href="#">Disney+</a>
+                    <a href="#">Prime Video</a>
+                    <a href="#">Hulu</a>
+                    <a href="#">Peacock</a>
+
+                </div>
+              </div> 
+            
+            <form action="/search_results" method="GET">
+                    <div class="container-fluid">
+                        <form autocomplete="off">
+                            <div class="autocomplete">
+                                <input id="myInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="title">          
+                                <button id="search_button" type="submit">Search</button>
+                            </div>
+                        </form>
+                    </div>
+            </form>
+            <script src="static/JS/autosearch.js"></script>
+            <a id="contact-link" href="#contact">Contact</a>
         </nav>
         <main>
             {% block content %}

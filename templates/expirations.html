@@ -1,43 +1,53 @@
 {% extends 'base.html' %}
 {% block content %}
+<link rel="stylesheet" href="/static/CSS/expirations.css">
+
 <center>
+<h1 id="leaving-title">Leaving Soon from Netflix</h1>
 <section>
-    <div id="sliders">
-    <h1>Leaving Soon from Netflix</h1>
-    <center>
-    <form class=filter-form action='/expiring-soon' method="POST">
-        <input type="text" name="type" placeholder="Type">
-        <div class="min-max-slider" data-legendnum="3" id="year-select">
-            <label for="min">Start Year</label>
-            <input id="min" class="min" name="start-year" type="range" step="1" min="1950" max="2021" />
-            <label for="max">End Year</label>
-            <input id="max" class="max" name="end-year" type="range" step="1" min="1950" max="2021" />
+    <div class="wrap-collabsible"> 
+        <input id="collapsible2" class="toggle" type="checkbox"> 
+        <label for="collapsible2" class="lbl-toggle">Filters:</label>
+        <div class="collapsible-content">
+            <div class="content-inner">
+                <div id="sliders">
+                    <center>
+                    <form class=filter-form action='/expiring-soon' method="POST">
+                        <input type="text" name="type" placeholder="Type">
+                        <div class="min-max-slider" data-legendnum="3" id="year-select">
+                            <label for="min">Start Year</label>
+                            <input id="min" class="min" name="start-year" type="range" step="1" min="1950" max="2021" />
+                            <label for="max">End Year</label>
+                            <input id="max" class="max" name="end-year" type="range" step="1" min="1950" max="2021" />
+                        </div>
+                        <div class="min-max-slider" data-legendnum="3" id="runtime-select">
+                            <label for="min">Min Runtime</label>
+                            <input id="min" class="min" name="min-runtime" type="range" step="1" min="0" max="300" />
+                            <label for="max">Max Runtime</label>
+                            <input id="max" class="max" name="max-runtime" type="range" step="1" min="0" max="300" />
+                        </div>
+                        <div class="min-max-slider" data-legendnum="3" id="rating-select">
+                            <label for="min">Min IMDB Rating</label>
+                            <input id="min" class="min" name="start-rating" type="range" step="1" min="0" max="10" />
+                            <label for="max">Max IMDB Rating</label>
+                            <input id="max" class="max" name="end-rating" type="range" step="1" min="0" max="10" />
+                        </div>
+                        <input type="submit">
+                    </form>
+                    </center>
+                    </div>
+         </div>
         </div>
-        <div class="min-max-slider" data-legendnum="3" id="runtime-select">
-            <label for="min">Min Runtime</label>
-            <input id="min" class="min" name="min-runtime" type="range" step="1" min="0" max="300" />
-            <label for="max">Max Runtime</label>
-            <input id="max" class="max" name="max-runtime" type="range" step="1" min="0" max="300" />
-        </div>
-        <div class="min-max-slider" data-legendnum="3" id="rating-select">
-            <label for="min">Min IMDB Rating</label>
-            <input id="min" class="min" name="start-rating" type="range" step="1" min="0" max="10" />
-            <label for="max">Max IMDB Rating</label>
-            <input id="max" class="max" name="end-rating" type="range" step="1" min="0" max="10" />
-        </div>
-        <input type="submit">
-    </form>
-    </center>
     </div>
 
     <div id="title-grid">
 
-    {% for i in range(output_list|length) %}
+    {% for i in range(1, output_list|length) %}
     <ul id="title_list"> 
-        <a href='/title/{{title_details[i]["nfid"]}}'><img src="{{ title_details[i]['img'] }}" alt="{{ output_list[i]['title'] }}"></a>
-        <li id="title">{{ output_list[i]["title"]}}</li>
-        <li>Expiration: {{ output_list[i]["expiredate"] }}</li>
-        <span><a href='/title/{{title_details[i]["nfid"]}}'><li>More Info:</li></a></span>
+        <a href='/title/{{title_details[-i]["nfid"]}}'><img src="{{ title_details[-i]['img'] }}" alt="{{ output_list[-i]['title'] }}"></a>
+        <li id="title">{{ output_list[-i]["title"]}}</li>
+        <li>Expiration: {{ output_list[-i]["expiredate"] }}</li>
+        <span><a href='/title/{{title_details[-i]["nfid"]}}'><li>More Info:</li></a></span>
     </ul>
     {% endfor %}
     </div>
