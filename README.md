@@ -22,19 +22,19 @@ Start using StreamingGuide today! Visit [here](https://wcc-streaming-guide.herok
 The homepage displays the search bar at the top, along with a drop-down menu at the top-left corner. The titles under each streaming service can be accessed via the drop-down menu or via the cards in the center of the homepage.
 
 Home page:
-<img width="1437" alt="Home Page" src="https://user-images.githubusercontent.com/37927005/109781105-7a3fc600-7bbc-11eb-8690-0ec6a002b6a5.png">
+<img width="1437" alt="Home Page - Top" src="https://github.com/West-Coast-Coders/WCC-Team-Project/blob/main/Updated%20Demo%20Screenshots/Home%20Page%20-%20Top.png?raw=true">
+<img width="1437" alt="Home Page - Bottom" src="https://github.com/West-Coast-Coders/WCC-Team-Project/blob/main/Updated%20Demo%20Screenshots/Home%20Page%20-%20Bottom.png?raw=true">
 
-Leaving Soon page:
-<img width="1437" alt="Leaving Soon" src="https://user-images.githubusercontent.com/37927005/109781043-6c8a4080-7bbc-11eb-9e44-5e9833bdc6cb.png">
+Platform page (HBO Max):
+<img width="1437" alt="HBO Max" src="https://github.com/West-Coast-Coders/WCC-Team-Project/blob/main/Updated%20Demo%20Screenshots/HBO%20Max.png?raw=true">
 
-Recently Added page:
-<img width="1437" alt="Recently Added" src="https://user-images.githubusercontent.com/37927005/109781576-e4f10180-7bbc-11eb-8866-473633250931.png">
-
-Example Search Results page:
-<img width="1438" alt="Search Query" src="https://user-images.githubusercontent.com/37927005/109781791-0ce06500-7bbd-11eb-9431-a60c4189ecaa.png">
+HBO Recently Added page:
+<img width="1437" alt="HBO Recently Added" src="https://github.com/West-Coast-Coders/WCC-Team-Project/blob/main/Updated%20Demo%20Screenshots/HBO%20Recently%20Added.png?raw=true">
 
 Title Details page:
-<img width="1436" alt="Title Details" src="https://user-images.githubusercontent.com/37927005/109781868-21bcf880-7bbd-11eb-95c4-c4b34c04a7f1.png">
+<img width="1436" alt="Title Details - Top" src="https://github.com/West-Coast-Coders/WCC-Team-Project/blob/main/Updated%20Demo%20Screenshots/Title%20Details%20-%20Top.png?raw=true">
+<img width="1436" alt="Title Details - Bottom" src="https://github.com/West-Coast-Coders/WCC-Team-Project/blob/main/Updated%20Demo%20Screenshots/Title%20Details%20-%20Bottom.png?raw=true">
+
 
 
 
